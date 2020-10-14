@@ -1,0 +1,6 @@
+framework module Pods_listory_listoryUITests {
+  umbrella header "Pods-listory-listoryUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
