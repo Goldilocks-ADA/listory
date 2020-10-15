@@ -71,7 +71,7 @@ class HomeController: UIViewController {
             make.top.equalTo(self.dateLabel.snp.bottom).offset(16)
            make.left.equalTo(self.view.safeAreaLayoutGuide).offset(16)
             make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-16)
-            make.height.equalTo(200)
+            make.height.equalTo(500)
             
         }
         
