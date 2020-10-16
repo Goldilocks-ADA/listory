@@ -16,6 +16,11 @@
 		0284F30625343A010046AB98 /* listoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0284F30525343A010046AB98 /* listoryTests.swift */; };
 		0284F31125343A010046AB98 /* listoryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0284F31025343A010046AB98 /* listoryUITests.swift */; };
 		0284F32825343B7E0046AB98 /* AlbumController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0284F32725343B7E0046AB98 /* AlbumController.swift */; };
+		0284F4162538C2DD0046AB98 /* AGManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0284F4152538C2DD0046AB98 /* AGManager.swift */; };
+		0284F41E2538C3390046AB98 /* AGAudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0284F41D2538C3390046AB98 /* AGAudioRecorder.swift */; };
+		0284F4232538C3680046AB98 /* AGAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0284F4222538C3680046AB98 /* AGAudioPlayer.swift */; };
+		0284F4282538C3870046AB98 /* AGFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0284F4272538C3870046AB98 /* AGFileManager.swift */; };
+		0284F42D2538C3B70046AB98 /* AGPlayerRecorderState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0284F42C2538C3B70046AB98 /* AGPlayerRecorderState.swift */; };
 		174E025C6E8B63C2959453BB /* Pods_listory_listoryUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6E4AEEA8BD6EDB4C9CFB514 /* Pods_listory_listoryUITests.framework */; };
 		B2BDFBCCC5F53A80485F68E0 /* Pods_listory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70A15AC0C4DCFF1A304E26EF /* Pods_listory.framework */; };
 		FD2886E405C846B93F9011FB /* Pods_listoryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33B4A766FFB6D0F6DDC4E9FB /* Pods_listoryTests.framework */; };
@@ -54,6 +59,11 @@
 		0284F31025343A010046AB98 /* listoryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = listoryUITests.swift; sourceTree = "<group>"; };
 		0284F31225343A010046AB98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0284F32725343B7E0046AB98 /* AlbumController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumController.swift; sourceTree = "<group>"; };
+		0284F4152538C2DD0046AB98 /* AGManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AGManager.swift; sourceTree = "<group>"; };
+		0284F41D2538C3390046AB98 /* AGAudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AGAudioRecorder.swift; sourceTree = "<group>"; };
+		0284F4222538C3680046AB98 /* AGAudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AGAudioPlayer.swift; sourceTree = "<group>"; };
+		0284F4272538C3870046AB98 /* AGFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AGFileManager.swift; sourceTree = "<group>"; };
+		0284F42C2538C3B70046AB98 /* AGPlayerRecorderState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AGPlayerRecorderState.swift; sourceTree = "<group>"; };
 		1C04BADCEBF6969D2E561CF9 /* Pods-listoryTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-listoryTests.release.xcconfig"; path = "Target Support Files/Pods-listoryTests/Pods-listoryTests.release.xcconfig"; sourceTree = "<group>"; };
 		33B4A766FFB6D0F6DDC4E9FB /* Pods_listoryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_listoryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6896DCDE56D99A118D4BFAAE /* Pods-listory.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-listory.debug.xcconfig"; path = "Target Support Files/Pods-listory/Pods-listory.debug.xcconfig"; sourceTree = "<group>"; };
@@ -118,6 +128,7 @@
 		0284F2EA25343A000046AB98 /* listory */ = {
 			isa = PBXGroup;
 			children = (
+				0284F4142538C29C0046AB98 /* Sources */,
 				0284F2EB25343A000046AB98 /* AppDelegate.swift */,
 				0284F2ED25343A000046AB98 /* SceneDelegate.swift */,
 				0284F2EF25343A000046AB98 /* HomeController.swift */,
@@ -146,6 +157,18 @@
 				0284F31225343A010046AB98 /* Info.plist */,
 			);
 			path = listoryUITests;
+			sourceTree = "<group>";
+		};
+		0284F4142538C29C0046AB98 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				0284F4152538C2DD0046AB98 /* AGManager.swift */,
+				0284F41D2538C3390046AB98 /* AGAudioRecorder.swift */,
+				0284F4222538C3680046AB98 /* AGAudioPlayer.swift */,
+				0284F4272538C3870046AB98 /* AGFileManager.swift */,
+				0284F42C2538C3B70046AB98 /* AGPlayerRecorderState.swift */,
+			);
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		1364AD2549A96281B564FFF5 /* Pods */ = {
@@ -409,10 +432,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				0284F2F025343A000046AB98 /* HomeController.swift in Sources */,
+				0284F4282538C3870046AB98 /* AGFileManager.swift in Sources */,
 				0284F32825343B7E0046AB98 /* AlbumController.swift in Sources */,
 				0284F2EC25343A000046AB98 /* AppDelegate.swift in Sources */,
 				0284F2F625343A000046AB98 /* listory.xcdatamodeld in Sources */,
 				0284F2EE25343A000046AB98 /* SceneDelegate.swift in Sources */,
+				0284F4232538C3680046AB98 /* AGAudioPlayer.swift in Sources */,
+				0284F41E2538C3390046AB98 /* AGAudioRecorder.swift in Sources */,
+				0284F42D2538C3B70046AB98 /* AGPlayerRecorderState.swift in Sources */,
+				0284F4162538C2DD0046AB98 /* AGManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
