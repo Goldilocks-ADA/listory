@@ -10,13 +10,23 @@ import SnapKit
 
 class AlbumController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
+    
+    
     //MARK:- 1.View Creation Detail Screen
     let cameraButton: UIButton = {
         let button = UIButton(type: UIButton.ButtonType.system)
+        button.layer.cornerRadius = 33
         button.backgroundColor = .red
         button.setTitle("+", for: .normal)
-        button.setTitleColor(.white, for: .highlighted)
+        button.setTitleColor(.white, for: .normal)
+        
         return button
+    }()
+    
+    let sampleImageView: UIImageView = {
+       let imageView = UIImageView()
+        imageView.image = UIImage()
+        return imageView
     }()
     
     override func viewDidLoad() {
@@ -29,21 +39,24 @@ class AlbumController: UIViewController, UIImagePickerControllerDelegate & UINav
         
         //MARK:- 3. Add Constraint
         self.cameraButton.snp.makeConstraints { (make) in
-            make.left.equalTo(self.view.safeAreaLayoutGuide).offset(16)
-            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-16)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-16)
-            make.height.equalTo(50)
+            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+            make.width.equalTo(66)
+            make.height.equalTo(66)
         }
         
-        
+        self.cameraButton.addTarget(self, action: #selector(buttonAddImage), for: .touchUpInside)
     }
     
-    func buttonAddImage(){
+    @objc func buttonAddImage(){
+//        self.navigationController?.pushViewController(CameraViewController(), animated: true)
+        
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         
         //Alert Notification
-        let actionSheet = UIAlertController(title: "Photo Source", message: "Choose a source", preferredStyle: .actionSheet)
+//        let actionSheet = UIAlertController(title: "Photo Source", message: "Choose a source", preferredStyle: .actionSheet)
+        let actionSheet = UIAlertController(title: "Photo Source", message: "Choose a  Source", preferredStyle: .actionSheet)
         
         //Photo From Camera
         actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: {(action: UIAlertAction) in
@@ -67,4 +80,17 @@ class AlbumController: UIViewController, UIImagePickerControllerDelegate & UINav
         
         self.present(actionSheet, animated: true, completion: nil)
     }
+    
+    //MARK: - UIImagePickerControlle DidFinishMediaInfo
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    let image = info [UIImagePickerController.InfoKey.originalImage] as! UIImage
+        sampleImageView.image = image                                         //Populate ImageView and It's Image Property, Then Assign into image
+        picker.dismiss(animated: true, completion: nil)                 //Pass image along delegate
+    }
+    
+    //MARK: - UIImagePickerController DidCancel
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
 }
