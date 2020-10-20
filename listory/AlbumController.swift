@@ -13,6 +13,7 @@ class AlbumController: UIViewController, UIImagePickerControllerDelegate & UINav
     
     
     //MARK:- 1.View Creation Detail Screen
+    //Camera Button
     let cameraButton: UIButton = {
         let button = UIButton(type: UIButton.ButtonType.system)
         button.layer.cornerRadius = 33
@@ -21,21 +22,36 @@ class AlbumController: UIViewController, UIImagePickerControllerDelegate & UINav
         button.setTitleColor(.white, for: .normal)
         return button
     }()
-    
+    //UIImageView Camera
     let sampleImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage()
         return imageView
     }()
     
+    //CollectionView
+    fileprivate let collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        return collectionView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        self.collectionView.backgroundColor = .white
         //MARK:- 2. Add Subview to Main View
         self.title = "Listory Album"
         self.view.addSubview(cameraButton)
         self.view.addSubview(sampleImageView)
-        //        self.view.addSubview(buttonAddImage())
+        self.view.addSubview(collectionView)
+        
+        //Calling CollectionView to View
+        collectionView.delegate = self
+        collectionView.dataSource = self
         
         //MARK:- 3. Add Constraint
         self.cameraButton.snp.makeConstraints { (make) in
@@ -52,8 +68,19 @@ class AlbumController: UIViewController, UIImagePickerControllerDelegate & UINav
             make.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
         
+        self.collectionView.snp.makeConstraints { (make) in
+            make.left.equalTo(self.view.safeAreaLayoutGuide).offset(20)
+            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(20)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-100)
+            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+            make.height.equalTo(100)
+
+        }
+        
         
         self.cameraButton.addTarget(self, action: #selector(buttonAddImage), for: .touchUpInside)
+        
+        
     }
     
     //Open Camera Button
@@ -108,4 +135,23 @@ class AlbumController: UIViewController, UIImagePickerControllerDelegate & UINav
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
+}
+
+extension UIViewController:UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+    
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width/2.5, height: collectionView.frame.width/2)
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 20
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        cell.backgroundColor = .red
+        return cell
+    }
+    
+    
 }
