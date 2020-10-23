@@ -71,9 +71,9 @@ class AlbumController: UIViewController, UIImagePickerControllerDelegate & UINav
         self.collectionView.snp.makeConstraints { (make) in
             make.left.equalTo(self.view.safeAreaLayoutGuide).offset(20)
             make.top.equalTo(self.view.safeAreaLayoutGuide).offset(20)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-100)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
             make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
-            make.height.equalTo(100)
+//            make.height.equalTo(100)
 
         }
         
