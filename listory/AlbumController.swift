@@ -10,10 +10,9 @@ import AVFoundation
 import SnapKit
 
 class AlbumController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIPopoverPresentationControllerDelegate {
-    
-    
-    
+
     //MARK:- 1.View Creation Detail Screen
+    //Camera Button
     let cameraButton: UIButton = {
         let button = UIButton(type: UIButton.ButtonType.system)
         button.layer.cornerRadius = 33
@@ -77,7 +76,7 @@ class AlbumController: UIViewController, UIImagePickerControllerDelegate & UINav
         super.viewDidLoad()
         self.view.backgroundColor = .white
         //MARK:- 2. Add Subview to Main View
-        self.title = "Detail Screen"
+        self.title = "Listory Album"
         self.view.addSubview(cameraButton)
         self.view.addSubview(sampleImageView)
         self.view.addSubview(recordButton)
@@ -388,7 +387,7 @@ class AlbumController: UIViewController, UIImagePickerControllerDelegate & UINav
         imagePickerController.delegate = self
         
         //Alert Notification
-        let actionSheet = UIAlertController(title: "Photo Source", message: "Choose a source", preferredStyle: .actionSheet)
+        let actionSheet = UIAlertController(title: "Listory would like to Access the Camera", message: "So you can take a picture from family albums", preferredStyle: .actionSheet)
         
         //Photo From Camera
         actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: {(action: UIAlertAction) in
@@ -411,6 +410,7 @@ class AlbumController: UIViewController, UIImagePickerControllerDelegate & UINav
         //Cancel Button
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
+        //Popover Position
         if let popoverController = actionSheet.popoverPresentationController {
             popoverController.sourceView = self.view
             popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
