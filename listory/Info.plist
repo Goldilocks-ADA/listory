@@ -24,6 +24,8 @@
 	<string>I want to Access your camera!</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Because We Can!</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>For using microphone</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
