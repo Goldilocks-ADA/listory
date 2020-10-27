@@ -74,11 +74,11 @@ class DashBoardViewController: UIViewController {
             make.height.equalTo(655)
             make.width.equalTo(350)
         }
-        self.startButtonRecord.addTarget(self, action: #selector(moveToAlbumController), for: .touchUpInside)
+        self.startButtonRecord.addTarget(self, action: #selector(moveToListoryAlbumController), for: .touchUpInside)
     }
     
-    @objc func moveToAlbumController(){
-        self.navigationController?.pushViewController(AlbumController(), animated: true)
+    @objc func moveToListoryAlbumController(){
+        self.navigationController?.pushViewController(ListoryAlbumController(), animated: true)
     }
 
     
