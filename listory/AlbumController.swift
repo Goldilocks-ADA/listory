@@ -32,7 +32,7 @@ class AlbumController: UIViewController, UIImagePickerControllerDelegate & UINav
         super.viewDidLoad()
         self.view.backgroundColor = .white
         //MARK:- 2. Add Subview to Main View
-        self.title = "Listory Album"
+        self.title = "Listory Image"
         self.view.addSubview(cameraButton)
         self.view.addSubview(sampleImageView)
         //MARK:- 3. Add Constraint

@@ -21,20 +21,28 @@ class ListoryAlbumController: UIViewController {
         CustomData(title: "String", image: #imageLiteral(resourceName: "beauty1"), url: "")
     ]
     
+    let addButtonSetItemRight: UIBarButtonItem = {
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: Selector(("addTapped:")))
+        return addButton
+    }()
+    
     fileprivate let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
+        layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(CustomeCell.self, forCellWithReuseIdentifier: "cell")
         return collectionView
     }()
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         self.title = "Listory Gallery"
         self.view.addSubview(collectionView)
+        navigationItem.rightBarButtonItem = UIBarButtonItem (barButtonSystemItem: .add, target: self, action: #selector(didTapButton))
         
         //Calling CollectionView to View Controller
         collectionView.delegate = self
@@ -49,6 +57,10 @@ class ListoryAlbumController: UIViewController {
             make.bottom.equalTo(self.view.snp_bottomMargin).offset(-20)
         }
     }
+    
+    @objc private func didTapButton(){
+        self.navigationController?.pushViewController(AlbumController(), animated: true)
+    }
 }
 
 extension UIViewController:UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
@@ -58,7 +70,7 @@ extension UIViewController:UICollectionViewDelegateFlowLayout, UICollectionViewD
     }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return 15
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
