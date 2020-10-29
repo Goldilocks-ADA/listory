@@ -47,6 +47,7 @@ class DashBoardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Listory Dashboard"
         self.view.backgroundColor = .white
         self.view.addSubview(backgroundImageView)
         self.view.addSubview(startButtonRecord)

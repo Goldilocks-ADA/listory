@@ -12,14 +12,14 @@ class AlbumController: UIViewController, UIImagePickerControllerDelegate & UINav
 
     //MARK:- 1.View Creation Detail Screen
     //Camera Button
-    let cameraButton: UIButton = {
-        let button = UIButton(type: UIButton.ButtonType.system)
-        button.layer.cornerRadius = 33
-        button.backgroundColor = .red
-        button.setTitle("+", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        return button
-    }()
+//    let cameraButton: UIButton = {
+//        let button = UIButton(type: UIButton.ButtonType.system)
+//        button.layer.cornerRadius = 33
+//        button.backgroundColor = .red
+//        button.setTitle("+", for: .normal)
+//        button.setTitleColor(.white, for: .normal)
+//        return button
+//    }()
     
     //UIImageView Camera
     let sampleImageView: UIImageView = {
@@ -32,16 +32,17 @@ class AlbumController: UIViewController, UIImagePickerControllerDelegate & UINav
         super.viewDidLoad()
         self.view.backgroundColor = .white
         //MARK:- 2. Add Subview to Main View
-        self.title = "Listory Image"
-        self.view.addSubview(cameraButton)
+        self.title = "Listory Image Preview"
+//        self.view.addSubview(cameraButton)
         self.view.addSubview(sampleImageView)
+
         //MARK:- 3. Add Constraint
-        self.cameraButton.snp.makeConstraints { (make) in
-            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
-            make.width.equalTo(66)
-            make.height.equalTo(66)
-        }
+//        self.cameraButton.snp.makeConstraints { (make) in
+//            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+//            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+//            make.width.equalTo(66)
+//            make.height.equalTo(66)
+//        }
         
         self.sampleImageView.snp.makeConstraints { (make) in
             make.left.equalTo(self.view.safeAreaLayoutGuide)
@@ -50,12 +51,11 @@ class AlbumController: UIViewController, UIImagePickerControllerDelegate & UINav
             make.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
         
-        self.cameraButton.addTarget(self, action: #selector(buttonAddImage), for: .touchUpInside)
+//        self.cameraButton.addTarget(self, action: #selector(buttonAddImage), for: .touchUpInside)
     }
     
     //Open Camera Button
     @objc func buttonAddImage(_ sender: UIBarButtonItem){
-        //        self.navigationController?.pushViewController(CameraViewController(), animated: true)
         
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
