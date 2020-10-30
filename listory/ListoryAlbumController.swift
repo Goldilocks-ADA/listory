@@ -13,12 +13,13 @@ struct CustomData {
     var image = UIImage()
     var url = String()
 }
-    
 
 class ListoryAlbumController: UIViewController {
     
     let data = [
-        CustomData(title: "String", image: #imageLiteral(resourceName: "beauty1"), url: "")
+        CustomData(title: "AddButton", image: #imageLiteral(resourceName: "addButton"), url: "Jogi"),
+        CustomData(title: "Beauty", image: #imageLiteral(resourceName: "beauty1"), url: "Jogi"),
+        CustomData(title: "Beautiful", image: #imageLiteral(resourceName: "beauty2"), url: "Jogi"),
     ]
     
     let addButtonSetItemRight: UIBarButtonItem = {
@@ -31,12 +32,10 @@ class ListoryAlbumController: UIViewController {
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.register(CustomeCell.self, forCellWithReuseIdentifier: "cell")
+        collectionView.register(CustomCell.self, forCellWithReuseIdentifier: "cell")
         return collectionView
     }()
-    
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
@@ -63,39 +62,45 @@ class ListoryAlbumController: UIViewController {
     }
 }
 
-extension UIViewController:UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+extension ListoryAlbumController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width/5, height: collectionView.frame.width/5)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width/4.5, height: collectionView.frame.height/2)
     }
     
-    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 15
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return data.count
     }
     
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CustomeCell
-        cell.backgroundColor = .black
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CustomCell
+        cell.backgroundColor = .white
+        cell.data = self.data[indexPath.row]
         return cell
     }
 }
 
-class CustomeCell: UICollectionViewCell{
+class CustomCell: UICollectionViewCell {
+    var data: CustomData? {
+        didSet {
+            guard let data = data else { return }
+            backGround.image = data.image
+        }
+    }
     
     fileprivate let backGround: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "sampleimage")
+        imageView.image = #imageLiteral(resourceName: "beauty1")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 12
         return imageView
     }()
     
     override init(frame: CGRect){
         super.init(frame: frame)
-        
         contentView.addSubview(backGround)
-        
         self.backGround.snp.makeConstraints { (make) in
             make.top.equalTo(self.contentView.safeAreaLayoutGuide)
             make.left.equalTo(self.contentView.safeAreaLayoutGuide)
