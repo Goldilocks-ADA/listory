@@ -20,6 +20,7 @@ class ListoryAlbumController: UIViewController {
         CustomData(title: "AddButton", image: #imageLiteral(resourceName: "addButton"), url: "Jogi"),
         CustomData(title: "Beauty", image: #imageLiteral(resourceName: "beauty1"), url: "Jogi"),
         CustomData(title: "Beautiful", image: #imageLiteral(resourceName: "beauty2"), url: "Jogi"),
+        CustomData(title: "Beautiful", image: #imageLiteral(resourceName: "beauty3"), url: "Jogi")
     ]
     
     let addButtonSetItemRight: UIBarButtonItem = {
