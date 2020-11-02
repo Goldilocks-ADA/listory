@@ -36,7 +36,7 @@ class ListoryAlbumController: UIViewController {
         collectionView.register(CustomCell.self, forCellWithReuseIdentifier: "cell")
         return collectionView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
