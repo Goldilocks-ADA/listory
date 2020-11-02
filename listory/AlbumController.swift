@@ -8,8 +8,10 @@
 import UIKit
 import AVFoundation
 import SnapKit
+import UIKit
+import PencilKit
 
-class AlbumController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIPopoverPresentationControllerDelegate {
+class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObserver, UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIPopoverPresentationControllerDelegate, UIScreenshotServiceDelegate {
     
     
     
@@ -64,18 +66,44 @@ class AlbumController: UIViewController, UIImagePickerControllerDelegate & UINav
         return imageView
     }()
     
+    let pencilFingerButton: UIButton = {
+        let button = UIButton(type: UIButton.ButtonType.system)
+        button.layer.cornerRadius = 33
+        button.backgroundColor = .red
+        button.setTitle("Pencil", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        return button
+    }()
+    
     var recorder: AVAudioRecorder!
-    
     var player: AVAudioPlayer!
-    
     var meterTimer: Timer!
-    
     var soundFileURL: URL!
     var recordings = [URL]()
+    
+    var canvasView: PKCanvasView!
+    var undoBarButtonitem: UIBarButtonItem!
+    var redoBarButtonItem: UIBarButtonItem!
+    var toolPicker: PKToolPicker!
+    var drawing = PKDrawing()
+    
+    /// On iOS 14.0, this is no longer necessary as the finger vs pencil toggle is a global setting in the toolpicker
+  //  var pencilFingerBarButtonItem: UIBarButtonItem!
+
+    /// Standard amount of overscroll allowed in the canvas.
+    static let canvasOverscrollHeight: CGFloat = 500
+    
+    /// Data model for the drawing displayed by this view controller.
+    var dataModelController: DataModelController!
+    
+    /// Private drawing state.
+    var drawingIndex: Int = 0
+    var hasModifiedDrawing = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        
         //MARK:- 2. Add Subview to Main View
         self.title = "Detail Screen"
         self.view.addSubview(cameraButton)
@@ -84,10 +112,10 @@ class AlbumController: UIViewController, UIImagePickerControllerDelegate & UINav
         self.view.addSubview(stopButton)
         self.view.addSubview(playButton)
         self.view.addSubview(statusLabel)
+        self.view.addSubview(pencilFingerButton)
         
         stopButton.isEnabled = false
         playButton.isEnabled = false
-        //        self.view.addSubview(buttonAddImage())
         
         //MARK:- 3. Add Constraint
         self.cameraButton.snp.makeConstraints { (make) in
@@ -118,6 +146,13 @@ class AlbumController: UIViewController, UIImagePickerControllerDelegate & UINav
             make.height.equalTo(66)
         }
         
+        self.pencilFingerButton.snp.makeConstraints { (make) in
+            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-400)
+            make.width.equalTo(66)
+            make.height.equalTo(66)
+        }
+        
         self.statusLabel.snp.makeConstraints{(make)in
             make.top.equalTo(self.view.safeAreaLayoutGuide).offset(16)
             make.left.equalTo(self.view.safeAreaLayoutGuide).offset(150 )
@@ -129,12 +164,12 @@ class AlbumController: UIViewController, UIImagePickerControllerDelegate & UINav
             make.right.equalTo(self.view.safeAreaLayoutGuide)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
-
         
         self.cameraButton.addTarget(self, action: #selector(buttonAddImage), for: .touchUpInside)
         self.recordButton.addTarget(self, action: #selector(record), for: .touchUpInside)
         self.stopButton.addTarget(self, action: #selector(stop), for: .touchUpInside)
         self.playButton.addTarget(self, action: #selector(play), for: .touchUpInside)
+        self.pencilFingerButton.addTarget(self, action: #selector(viewWillAppear), for: .touchUpInside)
     }
     
     @objc func updateAudioMeter(_ timer: Timer) {
@@ -148,6 +183,119 @@ class AlbumController: UIViewController, UIImagePickerControllerDelegate & UINav
                 recorder.updateMeters()
             }
         }
+    }
+    
+    /// Set up the drawing initially.
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Set up the canvas view with the first drawing from the data model.
+        canvasView.delegate = self
+        canvasView.drawing = dataModelController.drawings[drawingIndex]
+        canvasView.alwaysBounceVertical = true
+        
+        // Set up the tool picker
+        if #available(iOS 14.0, *) {
+            toolPicker = PKToolPicker()
+        } else {
+            // Set up the tool picker, using the window of our parent because our view has not
+            // been added to a window yet.
+            let window = parent?.view.window
+            toolPicker = PKToolPicker.shared(for: window!)
+        }
+        
+        toolPicker.setVisible(true, forFirstResponder: canvasView)
+        toolPicker.addObserver(canvasView)
+        toolPicker.addObserver(self)
+        updateLayout(for: toolPicker)
+        canvasView.becomeFirstResponder()
+        
+        // Before iOS 14, add a button to toggle finger drawing.
+        //if #available(iOS 14.0, *) { } else {
+           // pencilFingerBarButtonItem = UIBarButtonItem(title: "Enable Finger Drawing",
+            //                                            style: .plain,
+          //                                              target: self,
+              //                                          action: #selector(toggleFingerPencilDrawing(_:)))
+           // navigationItem.rightBarButtonItems?.append(pencilFingerBarButtonItem)
+         //   canvasView.allowsFingerDrawing = false
+       // }
+        
+        // Always show a back button.
+        navigationItem.leftItemsSupplementBackButton = true
+        
+        // Set this view controller as the delegate for creating full screenshots.
+        parent?.view.window?.windowScene?.screenshotService?.delegate = self
+    }
+    
+    /// When the view is resized, adjust the canvas scale so that it is zoomed to the default `canvasWidth`.
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        let canvasScale = canvasView.bounds.width / DataModel.canvasWidth
+        canvasView.minimumZoomScale = canvasScale
+        canvasView.maximumZoomScale = canvasScale
+        canvasView.zoomScale = canvasScale
+        
+        // Scroll to the top.
+        updateContentSizeForDrawing()
+        canvasView.contentOffset = CGPoint(x: 0, y: -canvasView.adjustedContentInset.top)
+    }
+    
+    /// When the view is removed, save the modified drawing, if any.
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // Update the drawing in the data model, if it has changed.
+        if hasModifiedDrawing {
+            dataModelController.updateDrawing(canvasView.drawing, at: drawingIndex)
+        }
+        
+        // Remove this view controller as the screenshot delegate.
+        view.window?.windowScene?.screenshotService?.delegate = nil
+    }
+    
+    /// Hide the home indicator, as it will affect latency.
+    override var prefersHomeIndicatorAutoHidden: Bool {
+        return true
+    }
+    
+    /// Action method: Turn finger drawing on or off, but only on devices before iOS 14.0
+    @objc private func toggleFingerPencilDrawing(_ sender: Any) {
+        if #available(iOS 14.0, *) { } else {
+            canvasView.allowsFingerDrawing.toggle()
+            _ = canvasView.allowsFingerDrawing ? "Disable Finger Drawing" : "Enable Finger Drawing"
+          //  pencilFingerButton.title = title
+        }
+    }
+    
+    /// Helper method to set a new drawing, with an undo action to go back to the old one.
+    func setNewDrawingUndoable(_ newDrawing: PKDrawing) {
+        let oldDrawing = canvasView.drawing
+        undoManager?.registerUndo(withTarget: self) {
+            $0.setNewDrawingUndoable(oldDrawing)
+        }
+        canvasView.drawing = newDrawing
+    }
+    
+    /// Delegate method: Note that the drawing has changed.
+    func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
+        hasModifiedDrawing = true
+        updateContentSizeForDrawing()
+    }
+    
+    /// Helper method to set a suitable content size for the canvas view.
+    func updateContentSizeForDrawing() {
+        // Update the content size to match the drawing.
+        let drawing = canvasView.drawing
+        let contentHeight: CGFloat
+        
+        // Adjust the content size to always be bigger than the drawing height.
+        if !drawing.bounds.isNull {
+            contentHeight = max(canvasView.bounds.height, (drawing.bounds.maxY + AlbumController.canvasOverscrollHeight) * canvasView.zoomScale)
+        } else {
+            contentHeight = canvasView.bounds.height
+        }
+        canvasView.contentSize = CGSize(width: DataModel.canvasWidth * canvasView.zoomScale, height: contentHeight)
     }
     
     override func didReceiveMemoryWarning() {
@@ -188,6 +336,15 @@ class AlbumController: UIViewController, UIImagePickerControllerDelegate & UINav
             recordWithPermission(false)
         }
     }
+    
+    /// Action method: Turn finger drawing on or off, but only on devices before iOS 14.0
+  //  @objc private func toggleFingerPencilDrawing(_ sender: Any) {
+    //    if #available(iOS 14.0, *) { } else {
+      //      canvasView.allowsFingerDrawing.toggle()
+        //    let title = canvasView.allowsFingerDrawing ? "Disable Finger Drawing" : "Enable Finger Drawing"
+          //  pencilFingerBarButtonItem.title = title
+       // }
+   // }
     
     @objc private func stop(_ sender: UIButton) {
         
@@ -323,6 +480,37 @@ class AlbumController: UIViewController, UIImagePickerControllerDelegate & UINav
             print("could not make session active")
             print(error.localizedDescription)
         }
+    }
+    
+    /// Delegate method: Note that the tool picker has changed which part of the canvas view
+    /// it obscures, if any.
+    func toolPickerFramesObscuredDidChange(_ toolPicker: PKToolPicker) {
+        updateLayout(for: toolPicker)
+    }
+    
+    /// Delegate method: Note that the tool picker has become visible or hidden.
+    func toolPickerVisibilityDidChange(_ toolPicker: PKToolPicker) {
+        updateLayout(for: toolPicker)
+    }
+    
+    func updateLayout(for toolPicker: PKToolPicker) {
+        let obscuredFrame = toolPicker.frameObscured(in: view)
+        
+        // If the tool picker is floating over the canvas, it also contains
+        // undo and redo buttons.
+        if obscuredFrame.isNull {
+            canvasView.contentInset = .zero
+            navigationItem.leftBarButtonItems = []
+        }
+        
+        // Otherwise, the bottom of the canvas should be inset to the top of the
+        // tool picker, and the tool picker no longer displays its own undo and
+        // redo buttons.
+        else {
+            canvasView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: view.bounds.maxY - obscuredFrame.minY, right: 0)
+            navigationItem.leftBarButtonItems = [undoBarButtonitem, redoBarButtonItem]
+        }
+        canvasView.scrollIndicatorInsets = canvasView.contentInset
     }
     
     @objc func routeChange(_ notification: Notification) {
@@ -486,6 +674,7 @@ extension AlbumController: AVAudioPlayerDelegate {
     
     func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
         print("\(#function)")
+        
         
         if let e = error {
             print("\(e.localizedDescription)")
