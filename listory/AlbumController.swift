@@ -11,16 +11,6 @@ import SnapKit
 class AlbumController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIPopoverPresentationControllerDelegate {
     
     //MARK:- 1.View Creation Detail Screen
-    //Camera Button
-    let cameraButton: UIButton = {
-        let button = UIButton(type: UIButton.ButtonType.system)
-        button.layer.cornerRadius = 33
-        button.backgroundColor = .red
-        button.setTitle("+", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        return button
-    }()
-    
     //UIImageView Camera
     let sampleImageView: UIImageView = {
         let imageView = UIImageView()
@@ -33,7 +23,6 @@ class AlbumController: UIViewController, UIImagePickerControllerDelegate & UINav
         self.view.backgroundColor = .white
         //MARK:- 2. Add Subview to Main View
         self.title = "Listory Image Preview"
-        self.view.addSubview(cameraButton)
         self.view.addSubview(sampleImageView)
         
         let imagePickerController = UIImagePickerController()
