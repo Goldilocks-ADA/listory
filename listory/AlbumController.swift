@@ -15,6 +15,7 @@ import PhotosUI
 class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObserver, UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIPopoverPresentationControllerDelegate, UIScreenshotServiceDelegate {
     
     
+class AlbumController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIPopoverPresentationControllerDelegate {
     
     //MARK:- 1.View Creation Detail Screen
     let cameraButton: UIButton = {
@@ -61,6 +62,7 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         return label
     }()
     
+    //UIImageView Camera
     let sampleImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage()
@@ -137,6 +139,7 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         //MARK:- 2. Add Subview to Main View
         self.title = "Detail Screen"
         self.view.addSubview(cameraButton)
+        self.title = "Listory Image Preview"
         self.view.addSubview(sampleImageView)
         self.view.addSubview(recordButton)
         self.view.addSubview(stopButton)
@@ -453,7 +456,7 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         imagePickerController.delegate = self
         
         //Alert Notification
-        let actionSheet = UIAlertController(title: "Photo Source", message: "Choose a source", preferredStyle: .actionSheet)
+        let actionSheet = UIAlertController(title: "Listory would like to Access the Camera", message: "So you can take a picture from family albums", preferredStyle: .actionSheet)
         
         //Photo From Camera
         actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: {(action: UIAlertAction) in
@@ -476,10 +479,17 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         //Cancel Button
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
+        //Popover Position
         if let popoverController = actionSheet.popoverPresentationController {
             popoverController.sourceView = self.view
             popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
             popoverController.permittedArrowDirections = []
+        }
+        self.sampleImageView.snp.makeConstraints { (make) in
+        make.left.equalTo(self.view.safeAreaLayoutGuide)
+        make.top.equalTo(self.view.safeAreaLayoutGuide)
+        make.right.equalTo(self.view.safeAreaLayoutGuide)
+        make.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
         
         self.present(actionSheet, animated: true, completion: nil)
@@ -595,7 +605,7 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         self.title = ""
         picker.dismiss(animated: true, completion: nil)
     }
-    
+
     //MARK: - UIImagePickerController DidCancel
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
