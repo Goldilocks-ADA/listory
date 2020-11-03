@@ -45,7 +45,7 @@ class HomeController: UIViewController {
            make.left.equalTo(self.view.safeAreaLayoutGuide)
             make.right.equalTo(self.view.safeAreaLayoutGuide)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide)
-       
+
             
         }
         

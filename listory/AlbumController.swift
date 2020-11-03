@@ -10,6 +10,7 @@ import AVFoundation
 import SnapKit
 import UIKit
 import PencilKit
+import PhotosUI
 
 class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObserver, UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIPopoverPresentationControllerDelegate, UIScreenshotServiceDelegate {
     
@@ -66,14 +67,14 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         return imageView
     }()
     
-    let pencilFingerButton: UIButton = {
-        let button = UIButton(type: UIButton.ButtonType.system)
-        button.layer.cornerRadius = 33
-        button.backgroundColor = .red
-        button.setTitle("Pencil", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        return button
-    }()
+   // let pencilFingerButton: UIButton = {
+   //     let button = UIButton(type: UIButton.ButtonType.system)
+    //    button.layer.cornerRadius = 33
+    //    button.backgroundColor = .red
+     //   button.setTitle("Pencil", for: .normal)
+      //  button.setTitleColor(.white, for: .normal)
+      //  return button
+   // }()
     
     let saveToAirDropButton: UIButton = {
         let button = UIButton()
@@ -94,13 +95,13 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
     }()
     
     lazy var backgroundImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "peta")
-        imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.clipsToBounds = true
+        let pencilbackgroundView = UIImageView()
+        pencilbackgroundView.image = UIImage(named: "peta")
+        pencilbackgroundView.contentMode = .scaleAspectFit
+        pencilbackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        pencilbackgroundView.clipsToBounds = true
         
-        return imageView
+        return pencilbackgroundView
     }()
     
     lazy var canvasView: PKCanvasView = {
@@ -128,8 +129,10 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-        //setUpView()
-        //setupPencilKit()
+       // view.backgroundColor = .white
+      //  navigationController?.navigationBar.isHidden = true
+        setupView()
+        setupPencilKit()
         
         //MARK:- 2. Add Subview to Main View
         self.title = "Detail Screen"
@@ -139,7 +142,7 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         self.view.addSubview(stopButton)
         self.view.addSubview(playButton)
         self.view.addSubview(statusLabel)
-        self.view.addSubview(pencilFingerButton)
+     //   self.view.addSubview(pencilFingerButton)
         
         stopButton.isEnabled = false
         playButton.isEnabled = false
@@ -173,12 +176,12 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
             make.height.equalTo(66)
         }
         
-        self.pencilFingerButton.snp.makeConstraints { (make) in
-            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-400)
-            make.width.equalTo(66)
-            make.height.equalTo(66)
-        }
+    //    self.pencilFingerButton.snp.makeConstraints { (make) in
+    //        make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+     //       make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-400)
+     //       make.width.equalTo(66)
+     //       make.height.equalTo(66)
+     //   }
         
         self.statusLabel.snp.makeConstraints{(make)in
             make.top.equalTo(self.view.safeAreaLayoutGuide).offset(16)
@@ -196,7 +199,7 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         self.recordButton.addTarget(self, action: #selector(record), for: .touchUpInside)
         self.stopButton.addTarget(self, action: #selector(stop), for: .touchUpInside)
         self.playButton.addTarget(self, action: #selector(play), for: .touchUpInside)
-        self.pencilFingerButton.addTarget(self, action: #selector(viewWillAppear), for: .touchUpInside)
+    //    self.pencilFingerButton.addTarget(self, action: #selector(viewWillAppear), for: .touchUpInside)
     }
     
     @objc func updateAudioMeter(_ timer: Timer) {
@@ -507,25 +510,31 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         
         cameraButton.bottomAnchor.constraint(equalTo: backgroundView.topAnchor, constant: -16).isActive = true
         cameraButton.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor).isActive = true
-        
-        backgroundView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        backgroundView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        backgroundView.widthAnchor.constraint(equalToConstant: 500).isActive = true
-        backgroundView.heightAnchor.constraint(equalToConstant: 500).isActive = true
-        
-        backgroundView.addSubview(backgroundImageView)
-        backgroundImageView.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor).isActive = true
-        backgroundImageView.centerYAnchor.constraint(equalTo: backgroundView.centerYAnchor).isActive = true
-        backgroundImageView.widthAnchor.constraint(equalToConstant: 500).isActive = true
-        backgroundImageView.heightAnchor.constraint(equalToConstant: 500).isActive = true
+                
+        //layer 1
+        backgroundView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
+        backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+        backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+        backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
+       
+        backgroundView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
+        backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+        backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+        backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
         
         backgroundView.addSubview(canvasView)
-        canvasView.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor).isActive = true
-        canvasView.centerYAnchor.constraint(equalTo: backgroundView.centerYAnchor).isActive = true
-        canvasView.widthAnchor.constraint(equalToConstant: 500).isActive = true
-        canvasView.heightAnchor.constraint(equalToConstant: 500).isActive = true
-        
+        canvasView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
+        canvasView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+        canvasView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -0).isActive = true
+        canvasView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -0).isActive = true
     }
+    
+   // self.onboardingImageView.snp.makeConstraints{ (make) in
+     //   make.top.equalTo(self.view.safeAreaLayoutGuide)
+       //make.left.equalTo(self.view.safeAreaLayoutGuide)
+    //  make.right.equalTo(self.view.safeAreaLayoutGuide)
+     //   make.bottom.equalTo(self.view.safeAreaLayoutGuide)
+    //}
     
     func updateLayout(for toolPicker: PKToolPicker) {
         let obscuredFrame = toolPicker.frameObscured(in: view)
@@ -557,21 +566,25 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         return .landscapeRight
     }
     
-   // @objc func saveImage() {
-     //   UIGraphicsBeginImageContextWithOptions(backgroundView.bounds.size, false, UIScreen.main.scale)
-    //    backgroundView.drawHierarchy(in: backgroundView.bounds, afterScreenUpdates: true)
+    func didSelect(image: UIImage?) {
+        self.backgroundImageView.image = image
+    }
+    
+    @objc func saveImage() {
+        UIGraphicsBeginImageContextWithOptions(backgroundView.bounds.size, false, UIScreen.main.scale)
+        backgroundView.drawHierarchy(in: backgroundView.bounds, afterScreenUpdates: true)
         
-      //  let image = UIGraphicsGetImageFromCurrentImageContext()
-       // UIGraphicsEndImageContext()
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
         
-       // if image != nil {
-         //   PHPhotoLibrary.shared().performChanges({
-           //     PHAssetChangeRequest.creationRequestForAsset(from: image!)
-           // }, completionHandler: {success, error in
+        if image != nil {
+            PHPhotoLibrary.shared().performChanges({
+                PHAssetChangeRequest.creationRequestForAsset(from: image!)
+            }, completionHandler: {success, error in
                 
-           // })
-       // }
-    //}
+            })
+        }
+    }
     
     
     
