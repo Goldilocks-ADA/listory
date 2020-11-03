@@ -24,6 +24,7 @@ class AlbumController: UIViewController, UIImagePickerControllerDelegate & UINav
         //MARK:- 2. Add Subview to Main View
         self.title = "Listory Image Preview"
         self.view.addSubview(sampleImageView)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButton))
         
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
@@ -66,6 +67,17 @@ class AlbumController: UIViewController, UIImagePickerControllerDelegate & UINav
         }
         
         self.present(actionSheet, animated: true, completion: nil)
+    }
+    
+    //Button Done
+    @objc func doneButton (_ sender: UIButton){
+        let jpg = self.sampleImageView.image?.jpegData(compressionQuality: 0.75)
+        if let png = self.sampleImageView.image?.pngData(){
+            DataBaseHelper.instance.saveImageInCoreData(at: png)
+        }
+        
+        var arrayImage = DataBaseHelper.instance.getAllImages()
+        self.sampleImageView.image = UIImage(data: arrayImage[0].image!)
     }
     
     //MARK: - UIImagePickerControlle DidFinishMediaInfo

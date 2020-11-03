@@ -37,6 +37,9 @@ class ListoryAlbumController: UIViewController {
         return collectionView
     }()
     
+    var imgData = [Foto]()
+    var dataHelper = DataBaseHelper()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
@@ -70,6 +73,7 @@ extension ListoryAlbumController: UICollectionViewDelegateFlowLayout, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        return imgData.count
         return data.count
     }
     

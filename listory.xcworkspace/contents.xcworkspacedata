@@ -2,10 +2,10 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:GalleryFoto+CoreDataClass.swift">
+      location = "group:Foto+CoreDataClass.swift">
    </FileRef>
    <FileRef
-      location = "group:GalleryFoto+CoreDataProperties.swift">
+      location = "group:Foto+CoreDataProperties.swift">
    </FileRef>
    <FileRef
       location = "group:listory.xcodeproj">

@@ -16,6 +16,7 @@
 		0284F31125343A010046AB98 /* listoryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0284F31025343A010046AB98 /* listoryUITests.swift */; };
 		0284F32825343B7E0046AB98 /* AlbumController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0284F32725343B7E0046AB98 /* AlbumController.swift */; };
 		1324E740253A2960006BFCAE /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1324E73F253A2960006BFCAE /* CameraViewController.swift */; };
+		1372ADF82551E01000B46690 /* DataBaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1372ADF72551E01000B46690 /* DataBaseHelper.swift */; };
 		13BCBDF125428E500078E820 /* ListoryAlbumController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BCBDF025428E500078E820 /* ListoryAlbumController.swift */; };
 		174E025C6E8B63C2959453BB /* Pods_listory_listoryUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6E4AEEA8BD6EDB4C9CFB514 /* Pods_listory_listoryUITests.framework */; };
 		1FF2337D2539D30D003BDC19 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF2337C2539D30D003BDC19 /* DashboardViewController.swift */; };
@@ -57,6 +58,7 @@
 		0284F31225343A010046AB98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0284F32725343B7E0046AB98 /* AlbumController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumController.swift; sourceTree = "<group>"; };
 		1324E73F253A2960006BFCAE /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		1372ADF72551E01000B46690 /* DataBaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBaseHelper.swift; sourceTree = "<group>"; };
 		13BCBDF025428E500078E820 /* ListoryAlbumController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListoryAlbumController.swift; sourceTree = "<group>"; };
 		1C04BADCEBF6969D2E561CF9 /* Pods-listoryTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-listoryTests.release.xcconfig"; path = "Target Support Files/Pods-listoryTests/Pods-listoryTests.release.xcconfig"; sourceTree = "<group>"; };
 		1FF2337C2539D30D003BDC19 /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 				0284F2FC25343A000046AB98 /* Info.plist */,
 				0284F2F425343A000046AB98 /* listory.xcdatamodeld */,
 				0284F32725343B7E0046AB98 /* AlbumController.swift */,
+				1372ADF72551E01000B46690 /* DataBaseHelper.swift */,
 				1FF2337C2539D30D003BDC19 /* DashboardViewController.swift */,
 				1324E73F253A2960006BFCAE /* CameraViewController.swift */,
 				1FF23410253C973C003BDC19 /* HomeController.swift */,
@@ -418,6 +421,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FF2337D2539D30D003BDC19 /* DashboardViewController.swift in Sources */,
+				1372ADF82551E01000B46690 /* DataBaseHelper.swift in Sources */,
 				0284F32825343B7E0046AB98 /* AlbumController.swift in Sources */,
 				0284F2EC25343A000046AB98 /* AppDelegate.swift in Sources */,
 				1FF23411253C973C003BDC19 /* HomeController.swift in Sources */,
