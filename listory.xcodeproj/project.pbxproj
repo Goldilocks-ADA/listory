@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		020870A9254FE1FB005F508C /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020870A8254FE1FB005F508C /* DataModel.swift */; };
-		020870AE254FE331005F508C /* PencilKitDrawNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020870AD254FE331005F508C /* PencilKitDrawNavigationController.swift */; };
 		0284F2EC25343A000046AB98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0284F2EB25343A000046AB98 /* AppDelegate.swift */; };
 		0284F2EE25343A000046AB98 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0284F2ED25343A000046AB98 /* SceneDelegate.swift */; };
 		0284F2F625343A000046AB98 /* listory.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0284F2F425343A000046AB98 /* listory.xcdatamodeld */; };
@@ -43,8 +41,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		020870A8254FE1FB005F508C /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
-		020870AD254FE331005F508C /* PencilKitDrawNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PencilKitDrawNavigationController.swift; sourceTree = "<group>"; };
 		0284F2E825343A000046AB98 /* listory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = listory.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0284F2EB25343A000046AB98 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0284F2ED25343A000046AB98 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -136,8 +132,6 @@
 				1FF2337C2539D30D003BDC19 /* DashboardViewController.swift */,
 				1324E73F253A2960006BFCAE /* CameraViewController.swift */,
 				1FF23410253C973C003BDC19 /* HomeController.swift */,
-				020870A8254FE1FB005F508C /* DataModel.swift */,
-				020870AD254FE331005F508C /* PencilKitDrawNavigationController.swift */,
 			);
 			path = listory;
 			sourceTree = "<group>";
@@ -425,10 +419,8 @@
 				0284F2EC25343A000046AB98 /* AppDelegate.swift in Sources */,
 				1FF23411253C973C003BDC19 /* HomeController.swift in Sources */,
 				0284F2F625343A000046AB98 /* listory.xcdatamodeld in Sources */,
-				020870A9254FE1FB005F508C /* DataModel.swift in Sources */,
 				0284F2EE25343A000046AB98 /* SceneDelegate.swift in Sources */,
 				1324E740253A2960006BFCAE /* CameraViewController.swift in Sources */,
-				020870AE254FE331005F508C /* PencilKitDrawNavigationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
