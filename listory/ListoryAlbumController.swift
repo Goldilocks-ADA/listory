@@ -18,7 +18,7 @@ struct CustomData {
 class ListoryAlbumController: UIViewController {
     
     let data = [
-        CustomData(title: <#T##String#>, image: <#T##UIImage#>, url: <#T##String#>)
+        CustomData(title: "", image: #imageLiteral(resourceName: "beauty2"), url: "")
     ]
     
     fileprivate let collectionView: UICollectionView = {
