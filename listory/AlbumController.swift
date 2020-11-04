@@ -134,40 +134,61 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
            // navigationItem.rightBarButtonItem =
             
             //MARK:- 2. Add Subview to Main View
-            self.title = "Detail Screen"
             self.view.addSubview(cameraButton)
             self.title = "Listory Image Preview"
             self.view.addSubview(sampleImageView)
-            //   self.view.addSubview(pencilFingerButton)
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButton))
             
             stopButton.isEnabled = false
             playButton.isEnabled = false
             
-            //MARK:- 3. Add Constraint
-            self.cameraButton.snp.makeConstraints { (make) in
-                make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
-                make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
-                make.width.equalTo(66)
-                make.height.equalTo(66)
+            let imagePickerController = UIImagePickerController()
+            imagePickerController.delegate = self
+            
+            //Alert Notification
+            let actionSheet = UIAlertController(title: "Listory would like to Access the Camera", message: "So you can take a picture from family albums", preferredStyle: .actionSheet)
+            
+            //Photo From Camera
+            actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: {(action: UIAlertAction) in
+                if UIImagePickerController.isSourceTypeAvailable(.camera){
+                    imagePickerController.sourceType = .camera
+                    self.present(imagePickerController, animated: true, completion: nil)
+                }
+                else {
+                    print("Camera not available")
+                }
+            }))
+            
+            //Photo from Photo Library
+            actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (action: UIAlertAction) in
+                imagePickerController.sourceType = .photoLibrary
+                self.present(imagePickerController, animated: true, completion: nil)
+            }))
+            
+            
+            //Cancel Button
+            actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            
+            //Popover Position
+            if let popoverController = actionSheet.popoverPresentationController {
+                popoverController.sourceView = self.view
+                popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+                popoverController.permittedArrowDirections = []
             }
             
-            //    self.pencilFingerButton.snp.makeConstraints { (make) in
-            //        make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
-            //       make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-400)
-            //       make.width.equalTo(66)
-            //       make.height.equalTo(66)
-            //   }
-            
+            //MARK:- 3. Add Constraint
             self.sampleImageView.snp.makeConstraints { (make) in
                 make.left.equalTo(self.view.safeAreaLayoutGuide)
                 make.top.equalTo(self.view.safeAreaLayoutGuide)
                 make.right.equalTo(self.view.safeAreaLayoutGuide)
                 make.bottom.equalTo(self.view.safeAreaLayoutGuide)
             }
-            
-            self.cameraButton.addTarget(self, action: #selector(buttonAddImage), for: .touchUpInside)
-            //    self.pencilFingerButton.addTarget(self, action: #selector(viewWillAppear), for: .touchUpInside)
+            self.present(actionSheet, animated: true, completion: nil)
         }
+    
+    @objc func saveButton() {
+        
+    }
         
         @objc func updateAudioMeter(_ timer: Timer) {
             
