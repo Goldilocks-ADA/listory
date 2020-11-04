@@ -79,7 +79,7 @@ class DashBoardViewController: UIViewController {
     }
     
     @objc func moveToAlbumController(){
-        self.navigationController?.pushViewController(AlbumController(), animated: true)
+        self.navigationController?.pushViewController(ListoryAlbumController(), animated: true)
     }
 }
 
