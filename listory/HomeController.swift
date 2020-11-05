@@ -11,23 +11,13 @@ import SnapKit
 class HomeController: UIViewController {
 
 //    //MARK: 1. View Creation
-//
-
     var position = 0
     
     let onboardingImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "onboarding_1")
-        //imageView.backgroundColor = .green
         return imageView
     }()
-
-//    let startButton: UIButton = {
-//        let button = UIButton(type: UIButton.ButtonType.custom)
-//        button.setImage(UIImage(named: "onboardingStart"), for: .normal)
-//        return button
-//    }()
-//
     
     @objc func tapDetected() {
         if position == 0 {
@@ -45,6 +35,7 @@ class HomeController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Onboarding Screen"
         self.view.backgroundColor = .white
         let singleTap = UITapGestureRecognizer(target: self, action: #selector(tapDetected))
         onboardingImageView.isUserInteractionEnabled = true
