@@ -128,11 +128,7 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         override func viewDidLoad() {
             super.viewDidLoad()
             self.view.backgroundColor = .white
-            // view.backgroundColor = .white
-            //  navigationController?.navigationBar.isHidden = true
             setupPencilKit()
-           // navigationItem.rightBarButtonItem =
-            
             //MARK:- 2. Add Subview to Main View
             self.view.addSubview(cameraButton)
             self.title = "Listory Image Preview"
