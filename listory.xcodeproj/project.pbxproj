@@ -15,6 +15,7 @@
 		0284F30625343A010046AB98 /* listoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0284F30525343A010046AB98 /* listoryTests.swift */; };
 		0284F31125343A010046AB98 /* listoryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0284F31025343A010046AB98 /* listoryUITests.swift */; };
 		0284F32825343B7E0046AB98 /* AlbumController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0284F32725343B7E0046AB98 /* AlbumController.swift */; };
+		1318252525540C3100E2A82F /* DataBaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1318252425540C3100E2A82F /* DataBaseHelper.swift */; };
 		13BCBDF125428E500078E820 /* ListoryAlbumController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BCBDF025428E500078E820 /* ListoryAlbumController.swift */; };
 		174E025C6E8B63C2959453BB /* Pods_listory_listoryUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6E4AEEA8BD6EDB4C9CFB514 /* Pods_listory_listoryUITests.framework */; };
 		1FF2337D2539D30D003BDC19 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF2337C2539D30D003BDC19 /* DashboardViewController.swift */; };
@@ -55,6 +56,7 @@
 		0284F31025343A010046AB98 /* listoryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = listoryUITests.swift; sourceTree = "<group>"; };
 		0284F31225343A010046AB98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0284F32725343B7E0046AB98 /* AlbumController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumController.swift; sourceTree = "<group>"; };
+		1318252425540C3100E2A82F /* DataBaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBaseHelper.swift; sourceTree = "<group>"; };
 		13BCBDF025428E500078E820 /* ListoryAlbumController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListoryAlbumController.swift; sourceTree = "<group>"; };
 		1C04BADCEBF6969D2E561CF9 /* Pods-listoryTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-listoryTests.release.xcconfig"; path = "Target Support Files/Pods-listoryTests/Pods-listoryTests.release.xcconfig"; sourceTree = "<group>"; };
 		1FF2337C2539D30D003BDC19 /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				0284F2FC25343A000046AB98 /* Info.plist */,
 				0284F2F425343A000046AB98 /* listory.xcdatamodeld */,
 				0284F32725343B7E0046AB98 /* AlbumController.swift */,
+				1318252425540C3100E2A82F /* DataBaseHelper.swift */,
 				1FF2337C2539D30D003BDC19 /* DashboardViewController.swift */,
 				1FF23410253C973C003BDC19 /* HomeController.swift */,
 				13BCBDF025428E500078E820 /* ListoryAlbumController.swift */,
@@ -418,6 +421,7 @@
 				0284F32825343B7E0046AB98 /* AlbumController.swift in Sources */,
 				0284F2EC25343A000046AB98 /* AppDelegate.swift in Sources */,
 				1FF23411253C973C003BDC19 /* HomeController.swift in Sources */,
+				1318252525540C3100E2A82F /* DataBaseHelper.swift in Sources */,
 				13BCBDF125428E500078E820 /* ListoryAlbumController.swift in Sources */,
 				0284F2F625343A000046AB98 /* listory.xcdatamodeld in Sources */,
 				0284F2EE25343A000046AB98 /* SceneDelegate.swift in Sources */,

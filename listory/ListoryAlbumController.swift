@@ -8,6 +8,14 @@
 import UIKit
 import SnapKit
 
+protocol AddListoryAlbumControllerDelegate {
+    func updateAlbum(img: Image)
+}
+
+protocol AddListoryAlbumControllerDataSource {
+    func updateAlbum(img: Image)
+}
+
 struct CustomData {
     var title = String()
     var image = UIImage()
@@ -36,6 +44,10 @@ class ListoryAlbumController: UIViewController {
         collectionView.register(CustomCell.self, forCellWithReuseIdentifier: "cell")
         return collectionView
     }()
+   
+    var delegate: AddListoryAlbumControllerDelegate!
+    var dataSource: AddListoryAlbumControllerDataSource!
+    var images = [Image]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,13 +82,14 @@ extension ListoryAlbumController: UICollectionViewDelegateFlowLayout, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return data.count
+        return images.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CustomCell
-        cell.backgroundColor = .white
-        cell.data = self.data[indexPath.row]
+//        cell.backgroundColor = .white
+//        cell.data = self.data[indexPath.row]
+        cell.backGround.image = UIImage(data: images[indexPath.row].imgDefault!)
         return cell
     }
 }
