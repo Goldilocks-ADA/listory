@@ -12,11 +12,11 @@ import UIKit
 import PencilKit
 import PhotosUI
 
-protocol AlbumControllerDelegate {
+protocol EditAlbumControllerDelegate {
     func updateStories(story: Story)
 }
 
-class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObserver, UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIPopoverPresentationControllerDelegate, UIScreenshotServiceDelegate {
+class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObserver, UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIPopoverPresentationControllerDelegate, UIScreenshotServiceDelegate {
     
     //MARK:- 1.View Creation Detail Screen
     let cameraButton: UIButton = {
@@ -113,11 +113,16 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
     var toolPicker: PKToolPicker!
     var imageDataBase = DataBaseHelper()
     var delegate: AlbumControllerDelegate?
+    var story: Story!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        setupData()
+        setupRecorder()
         setupPencilKit()
+        setupView()
+
         //MARK:- 2. Add Subview to Main View
         self.view.addSubview(cameraButton)
         self.title = "Listory Image Preview"
@@ -127,41 +132,6 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         stopButton.isEnabled = false
         playButton.isEnabled = false
         
-        let imagePickerController = UIImagePickerController()
-        imagePickerController.delegate = self
-        
-        //Alert Notification
-        let actionSheet = UIAlertController(title: "Listory would like to Access the Camera", message: "So you can take a picture from family albums", preferredStyle: .actionSheet)
-        
-        //Photo From Camera
-        actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: {(action: UIAlertAction) in
-            if UIImagePickerController.isSourceTypeAvailable(.camera){
-                imagePickerController.sourceType = .camera
-                self.present(imagePickerController, animated: true, completion: nil)
-            }
-            else {
-                print("Camera not available")
-            }
-        }))
-        
-        //Photo from Photo Library
-        actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (action: UIAlertAction) in
-            imagePickerController.sourceType = .photoLibrary
-            self.present(imagePickerController, animated: true, completion: nil)
-        }))
-        
-        
-        //Cancel Button
-        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-//        self.present(actionSheet, animated: true, completion: nil)
-        
-        //Popover Position
-        if let popoverController = actionSheet.popoverPresentationController {
-            popoverController.sourceView = self.view
-            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-            popoverController.permittedArrowDirections = []
-        }
-        
         //MARK:- 3. Add Constraint
         self.sampleImageView.snp.makeConstraints { (make) in
             make.left.equalTo(self.view.safeAreaLayoutGuide)
@@ -169,14 +139,22 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
             make.right.equalTo(self.view.safeAreaLayoutGuide)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
-        self.present(actionSheet, animated: true, completion: nil)
+
     }
     
-//    var images = [Image]()                    <- Database Entity
-//    var imageDataBase = DataBaseHelper()      <- DataBaseHelper
-
-    
-    
+    func setupData(){
+        if let image = story.image{
+            sampleImageView.image = UIImage(data: image)
+        }
+        if let savedDrawing = story.drawing {
+            do {
+                try canvasView.drawing = PKDrawing(data: savedDrawing)
+            } catch  {
+                print("Can not load drawing")
+            }
+        }
+    }
+     
     @objc func saveButton() {
         let format = DateFormatter()
         format.dateFormat="yyyy-MM-dd-HH-mm-ss"
@@ -578,7 +556,7 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
 }
 
 // MARK: AVAudioRecorderDelegate
-extension AlbumController: AVAudioRecorderDelegate {
+extension EditAlbumController: AVAudioRecorderDelegate {
     
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder,
                                          successfully flag: Bool) {
@@ -617,7 +595,7 @@ extension AlbumController: AVAudioRecorderDelegate {
 }
 
 // MARK: AVAudioPlayerDelegate
-extension AlbumController: AVAudioPlayerDelegate {
+extension EditAlbumController: AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         print("\(#function)")
         print("finished playing \(flag)")

@@ -8,14 +8,6 @@
 import UIKit
 import SnapKit
 
-protocol AddListoryAlbumControllerDelegate {
-    func updateAlbum(img: Image)
-}
-
-protocol AddListoryAlbumControllerDataSource {
-    func updateAlbum(img: Image)
-}
-
 struct CustomData {
     var title = String()
     var image = UIImage()
@@ -45,15 +37,15 @@ class ListoryAlbumController: UIViewController {
         return collectionView
     }()
    
-    var delegate: AddListoryAlbumControllerDelegate!
-    var dataSource: AddListoryAlbumControllerDataSource!
-    var images = [Image]()
+    var stories = [Story]()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         self.title = "Listory Gallery"
         self.view.addSubview(collectionView)
+        loadStories()
         navigationItem.rightBarButtonItem = UIBarButtonItem (barButtonSystemItem: .add, target: self, action: #selector(didTapButton))
         
         //Calling CollectionView to View Controller
@@ -70,26 +62,40 @@ class ListoryAlbumController: UIViewController {
         }
     }
     
+    func loadStories() {
+        if let loadedStories =  DataBaseHelper.shareInstance.retrieveAllStories(){
+            stories = loadedStories
+        }
+    }
+    
     @objc private func didTapButton(){
         self.navigationController?.pushViewController(AlbumController(), animated: true)
+        let vc = self.navigationController?.topViewController as! AlbumController
+        vc.delegate = self
     }
 }
 
 extension ListoryAlbumController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.navigationController?.pushViewController(EditAlbumController(), animated: true)
+        let vc = self.navigationController?.topViewController as! EditAlbumController
+        vc.story = stories[indexPath.row]
+    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width/4.5, height: collectionView.frame.height/2)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return images.count
+        return stories.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CustomCell
 //        cell.backgroundColor = .white
 //        cell.data = self.data[indexPath.row]
-        cell.backGround.image = UIImage(data: images[indexPath.row].imgDefault!)
+        cell.backGround.image = UIImage(data: stories[indexPath.row].image!)
         return cell
     }
 }
@@ -125,5 +131,12 @@ class CustomCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension ListoryAlbumController: AlbumControllerDelegate {
+    func updateStories(story: Story) {
+        stories.append(story)
+        collectionView.reloadData()
     }
 }

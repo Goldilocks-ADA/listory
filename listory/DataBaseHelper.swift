@@ -14,23 +14,24 @@ class DataBaseHelper {
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-    func addNewImage(name: String, isWithoutAudio: Bool, imgDefault: Data, imgEdited: Data) -> Image {
-        let imageInstance = Image(context: context)
+    func addNewStory(name: String, isWithAudio: Bool, image: Data, drawing: Data, audioPath: String) -> Story {
+        let storyInstance = Story (context: context)
         do {
-            imageInstance.name = name
-            imageInstance.isWithAudio = isWithoutAudio
-            imageInstance.imgDefault = imgDefault
-            imageInstance.imgEdited = imgEdited
+            storyInstance.name = name
+            storyInstance.isWithAudio = isWithAudio
+            storyInstance.image = image
+            storyInstance.drawing = drawing
+            storyInstance.audioPath = audioPath
             try context.save()
             print("Image is saved")
         } catch {
             print("Error saving data \(error)", error.localizedDescription)
         }
-        return imageInstance
+        return storyInstance
     }
     
-    func retrieveAllImage() -> [Image]? {
-        let request: NSFetchRequest<Image> = Image.fetchRequest()
+    func retrieveAllStories() -> [Story]? {
+        let request: NSFetchRequest<Story> = Story.fetchRequest()
         do {
             return try context.fetch(request)
         } catch {
