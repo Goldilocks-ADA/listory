@@ -100,7 +100,7 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         canvasView.tool = PKInkingTool(.marker, color: .black, width: 10)
         canvasView.delegate = self
         canvasView.drawingPolicy = .anyInput
-        canvasView.backgroundColor = .white
+        canvasView.backgroundColor = .clear
         canvasView.isOpaque = false
         return canvasView
     }()

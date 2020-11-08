@@ -99,9 +99,8 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         canvasView.tool = PKInkingTool(.marker, color: .black, width: 10)
         canvasView.delegate = self
         canvasView.drawingPolicy = .anyInput
-        canvasView.backgroundColor = .white
+        canvasView.backgroundColor = .clear
         canvasView.isOpaque = false
-//        canvasView.bringSubviewToFront(canvasView)
         return canvasView
     }()
     
@@ -119,9 +118,11 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        setupData()
         setupPencilKit()
+        setupRecorder()
+        setupView()
         self.title = "Listory Image Preview"
-
         self.view.addSubview(sampleImageView)
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButton))
 
@@ -129,15 +130,12 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         playButton.isEnabled = false
         
         //MARK:- 3. Add Constraint
-        self.sampleImageView.snp.makeConstraints { (make) in
-            make.left.equalTo(self.view.safeAreaLayoutGuide)
-            make.top.equalTo(self.view.safeAreaLayoutGuide)
-            make.right.equalTo(self.view.safeAreaLayoutGuide)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide)
-        }
-        setupData()
-        setupView()
-        setupRecorder()
+//        self.sampleImageView.snp.makeConstraints { (make) in
+//            make.left.equalTo(self.view.safeAreaLayoutGuide)
+//            make.top.equalTo(self.view.safeAreaLayoutGuide)
+//            make.right.equalTo(self.view.safeAreaLayoutGuide)
+//            make.bottom.equalTo(self.view.safeAreaLayoutGuide)
+//        }
     }
     
     //MARK: - Function FOR COREDATA
