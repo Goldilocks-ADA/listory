@@ -19,14 +19,14 @@ protocol EditAlbumControllerDelegate {
 class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObserver, UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIPopoverPresentationControllerDelegate, UIScreenshotServiceDelegate {
     
     //MARK:- 1.View Creation Detail Screen
-    let cameraButton: UIButton = {
-        let button = UIButton(type: UIButton.ButtonType.system)
-        button.layer.cornerRadius = 33
-        button.backgroundColor = .red
-        button.setTitle("+", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        return button
-    }()
+//    let cameraButton: UIButton = {
+//        let button = UIButton(type: UIButton.ButtonType.system)
+//        button.layer.cornerRadius = 33
+//        button.backgroundColor = .red
+//        button.setTitle("+", for: .normal)
+//        button.setTitleColor(.white, for: .normal)
+//        return button
+//    }()
     
     let recordButton: UIButton = {
         let button = UIButton(type: UIButton.ButtonType.system)
@@ -57,7 +57,6 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
     
     let statusLabel: UILabel = {
         let label = UILabel()
-        //  label.text = "Selamat Pagi"
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         return label
@@ -100,8 +99,9 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         canvasView.tool = PKInkingTool(.marker, color: .black, width: 10)
         canvasView.delegate = self
         canvasView.drawingPolicy = .anyInput
-        canvasView.backgroundColor = .clear
+        canvasView.backgroundColor = .white
         canvasView.isOpaque = false
+        canvasView.bringSubviewToFront(canvasView)
         return canvasView
     }()
     
@@ -118,17 +118,14 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-        setupData()
-        setupRecorder()
+        self.title = "Listory Image Preview"
         setupPencilKit()
         setupView()
-
-        //MARK:- 2. Add Subview to Main View
-        self.view.addSubview(cameraButton)
-        self.title = "Listory Image Preview"
+        setupData()
+        setupRecorder()
         self.view.addSubview(sampleImageView)
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButton))
-        
+
         stopButton.isEnabled = false
         playButton.isEnabled = false
         
@@ -139,9 +136,9 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
             make.right.equalTo(self.view.safeAreaLayoutGuide)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
-
     }
     
+    //MARK: - Function FOR COREDATA
     func setupData(){
         if let image = story.image{
             sampleImageView.image = UIImage(data: image)
@@ -157,7 +154,7 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
      
     @objc func saveButton() {
         let format = DateFormatter()
-        format.dateFormat="yyyy-MM-dd-HH-mm-ss"
+        format.dateFormat = "yyyy-MM-dd-HH-mm-ss"
         let currentStoryName = "Story-\(format.string(from: Date()))"
         
         if let imageData = sampleImageView.image?.pngData(){
@@ -165,6 +162,13 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
             self.navigationController?.popViewController(animated: true)
         }
     }
+    
+//    func editButton() {
+//        let imageDraw = canvasView.drawing.dataRepresentation(){
+//            delegate?.updateStories(story: imageDataBase.addNewStory(name: currentStoryName, isWithAudio: false, image: , drawing: <#T##Data#>, audioPath: <#T##String#>))
+//        }
+//    }
+       
     
     @objc func updateAudioMeter(_ timer: Timer) {
         
@@ -427,14 +431,15 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
     func setupView() {
         view.addSubview(backgroundView)
         view.addSubview(saveToAirDropButton)
-        view.addSubview(cameraButton)
+        view.addSubview(canvasView)
+//        view.addSubview(cameraButton)
         
         saveToAirDropButton.bottomAnchor.constraint(equalTo: backgroundView.topAnchor, constant: -16).isActive = true
         saveToAirDropButton.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor).isActive = true
         
-        cameraButton.bottomAnchor.constraint(equalTo: backgroundView.topAnchor, constant: -16).isActive = true
-        cameraButton.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor).isActive = true
-        
+//        cameraButton.bottomAnchor.constraint(equalTo: backgroundView.topAnchor, constant: -16).isActive = true
+//        cameraButton.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor).isActive = true
+//
         //layer 1
         backgroundView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
         backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
@@ -463,7 +468,6 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
             canvasView.contentInset = .zero
             navigationItem.leftBarButtonItems = []
         }
-        
         // Otherwise, the bottom of the canvas should be inset to the top of the
         // tool picker, and the tool picker no longer displays its own undo and
         // redo buttons.

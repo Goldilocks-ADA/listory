@@ -19,14 +19,14 @@ protocol AlbumControllerDelegate {
 class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObserver, UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIPopoverPresentationControllerDelegate, UIScreenshotServiceDelegate {
     
     //MARK:- 1.View Creation Detail Screen
-    let cameraButton: UIButton = {
-        let button = UIButton(type: UIButton.ButtonType.system)
-        button.layer.cornerRadius = 33
-        button.backgroundColor = .red
-        button.setTitle("+", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        return button
-    }()
+//    let cameraButton: UIButton = {
+//        let button = UIButton(type: UIButton.ButtonType.system)
+//        button.layer.cornerRadius = 33
+//        button.backgroundColor = .red
+//        button.setTitle("+", for: .normal)
+//        button.setTitleColor(.white, for: .normal)
+//        return button
+//    }()
     
     let recordButton: UIButton = {
         let button = UIButton(type: UIButton.ButtonType.system)
@@ -100,7 +100,7 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         canvasView.tool = PKInkingTool(.marker, color: .black, width: 10)
         canvasView.delegate = self
         canvasView.drawingPolicy = .anyInput
-        canvasView.backgroundColor = .clear
+        canvasView.backgroundColor = .white
         canvasView.isOpaque = false
         return canvasView
     }()
@@ -117,9 +117,9 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        
         setupPencilKit()
         //MARK:- 2. Add Subview to Main View
-        self.view.addSubview(cameraButton)
         self.title = "Listory Image Preview"
         self.view.addSubview(sampleImageView)
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButton))
@@ -171,15 +171,10 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         }
         self.present(actionSheet, animated: true, completion: nil)
     }
-    
-//    var images = [Image]()                    <- Database Entity
-//    var imageDataBase = DataBaseHelper()      <- DataBaseHelper
-
-    
-    
+     
     @objc func saveButton() {
         let format = DateFormatter()
-        format.dateFormat="yyyy-MM-dd-HH-mm-ss"
+        format.dateFormat = "yyyy-MM-dd-HH-mm-ss"
         let currentStoryName = "Story-\(format.string(from: Date()))"
         
         if let imageData = sampleImageView.image?.pngData(){
@@ -449,13 +444,13 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
     func setupView() {
         view.addSubview(backgroundView)
         view.addSubview(saveToAirDropButton)
-        view.addSubview(cameraButton)
+//        view.addSubview(cameraButton)
         
         saveToAirDropButton.bottomAnchor.constraint(equalTo: backgroundView.topAnchor, constant: -16).isActive = true
         saveToAirDropButton.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor).isActive = true
-        
-        cameraButton.bottomAnchor.constraint(equalTo: backgroundView.topAnchor, constant: -16).isActive = true
-        cameraButton.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor).isActive = true
+//
+//        cameraButton.bottomAnchor.constraint(equalTo: backgroundView.topAnchor, constant: -16).isActive = true
+//        cameraButton.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor).isActive = true
         
         //layer 1
         backgroundView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
