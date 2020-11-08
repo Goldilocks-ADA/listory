@@ -39,4 +39,25 @@ class DataBaseHelper {
         }
         return nil
     }
+    
+    func updateStory(name: String, isWithAudio: Bool, image: Data, drawing: Data, audioPath: String) -> Story {
+        let request: NSFetchRequest<Story> = Story.fetchRequest()
+        
+        request.predicate = NSPredicate(format: "name = %@", name)
+        var storyInstance = Story (context: context)
+        do {
+            let fetch = try context.fetch(request)
+            let storyToUpdate = fetch[0] as NSManagedObject
+            storyToUpdate.setValue(name, forKey: "String")
+            storyToUpdate.setValue(isWithAudio, forKey: "isWithAudio")
+            storyToUpdate.setValue(image, forKey: "image")
+            storyToUpdate.setValue(drawing, forKey: "drawing")
+            storyToUpdate.setValue(audioPath, forKey: "audioPath")
+            try context.save()
+            storyInstance = storyToUpdate as! Story
+        } catch  {
+            print("Update fail")
+        }
+        return storyInstance
+    }
 }

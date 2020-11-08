@@ -13,7 +13,7 @@ import PencilKit
 import PhotosUI
 
 protocol EditAlbumControllerDelegate {
-    func updateStories(story: Story)
+    func updateStories(story: Story, storyRow: Int)
 }
 
 class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObserver, UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIPopoverPresentationControllerDelegate, UIScreenshotServiceDelegate {
@@ -101,7 +101,7 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         canvasView.drawingPolicy = .anyInput
         canvasView.backgroundColor = .white
         canvasView.isOpaque = false
-        canvasView.bringSubviewToFront(canvasView)
+//        canvasView.bringSubviewToFront(canvasView)
         return canvasView
     }()
     
@@ -112,17 +112,16 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
     var recordings = [URL]()
     var toolPicker: PKToolPicker!
     var imageDataBase = DataBaseHelper()
-    var delegate: AlbumControllerDelegate?
+    var delegate: EditAlbumControllerDelegate?
     var story: Story!
+    var storyRow: Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-        self.title = "Listory Image Preview"
         setupPencilKit()
-        setupView()
-        setupData()
-        setupRecorder()
+        self.title = "Listory Image Preview"
+
         self.view.addSubview(sampleImageView)
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButton))
 
@@ -136,6 +135,9 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
             make.right.equalTo(self.view.safeAreaLayoutGuide)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
+        setupData()
+        setupView()
+        setupRecorder()
     }
     
     //MARK: - Function FOR COREDATA
@@ -158,7 +160,7 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         let currentStoryName = "Story-\(format.string(from: Date()))"
         
         if let imageData = sampleImageView.image?.pngData(){
-            delegate?.updateStories(story:  imageDataBase.addNewStory(name: currentStoryName, isWithAudio: false, image: imageData, drawing: canvasView.drawing.dataRepresentation(), audioPath: ""))
+            delegate?.updateStories(story:  imageDataBase.updateStory(name: currentStoryName, isWithAudio: false, image: imageData, drawing: canvasView.drawing.dataRepresentation(), audioPath: ""), storyRow: storyRow)
             self.navigationController?.popViewController(animated: true)
         }
     }
@@ -431,7 +433,6 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
     func setupView() {
         view.addSubview(backgroundView)
         view.addSubview(saveToAirDropButton)
-        view.addSubview(canvasView)
 //        view.addSubview(cameraButton)
         
         saveToAirDropButton.bottomAnchor.constraint(equalTo: backgroundView.topAnchor, constant: -16).isActive = true

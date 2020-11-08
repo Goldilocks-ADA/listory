@@ -81,6 +81,7 @@ extension ListoryAlbumController: UICollectionViewDelegateFlowLayout, UICollecti
         self.navigationController?.pushViewController(EditAlbumController(), animated: true)
         let vc = self.navigationController?.topViewController as! EditAlbumController
         vc.story = stories[indexPath.row]
+        vc.storyRow = indexPath.row
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -137,6 +138,13 @@ class CustomCell: UICollectionViewCell {
 extension ListoryAlbumController: AlbumControllerDelegate {
     func updateStories(story: Story) {
         stories.append(story)
+        collectionView.reloadData()
+    }
+}
+
+extension ListoryAlbumController: EditAlbumControllerDelegate {
+    func updateStories(story: Story, storyRow: Int) {
+        stories[storyRow] = story
         collectionView.reloadData()
     }
 }
