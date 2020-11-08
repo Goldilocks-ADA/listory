@@ -42,16 +42,23 @@ class ListoryAlbumController: UIViewController {
         collectionView.register(CustomCell.self, forCellWithReuseIdentifier: "cell")
         return collectionView
     }()
+    
+    let setTittleCollectionView: UILabel = {
+        let titleCollection = UILabel ()
+        titleCollection.text = "Listory Photo Album"
+        titleCollection.font = .systemFont(ofSize: 200)
+        return titleCollection
+    }()
    
     var stories = [Story]()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.barTintColor = .none
 //        self.navigationController?.isNavigationBarHidden = true
+        self.view.addSubview(setTittleCollectionView)
         self.view.addSubview(backgroundAlbumView)
-        self.title = "Listory Gallery"
+//        self.title = "Listory Gallery"
         self.view.addSubview(collectionView)
         loadStories()
         navigationItem.rightBarButtonItem = UIBarButtonItem (barButtonSystemItem: .add, target: self, action: #selector(didTapButton))
@@ -69,10 +76,11 @@ class ListoryAlbumController: UIViewController {
             make.bottom.equalTo(self.view.snp_bottomMargin).offset(-20)
         }
         self.backgroundAlbumView.snp.makeConstraints { (make) in
-            make.left.equalTo(self.view.safeAreaInsets)
-            make.top.equalTo(self.view.safeAreaInsets)
-            make.right.equalTo(self.view.safeAreaInsets)
-            make.bottom.equalTo(self.view.safeAreaInsets)
+            make.top.left.right.bottom.equalTo(self.view)
+        }
+        
+        self.setTittleCollectionView.snp.makeConstraints { (make) in
+            make.top.equalTo(self.backgroundAlbumView.snp.top).offset(20)
             
         }
     }
