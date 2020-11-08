@@ -153,12 +153,8 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
     }
      
     @objc func saveButton() {
-        let format = DateFormatter()
-        format.dateFormat = "yyyy-MM-dd-HH-mm-ss"
-        let currentStoryName = "Story-\(format.string(from: Date()))"
-        
-        if let imageData = sampleImageView.image?.pngData(){
-            delegate?.updateStories(story:  imageDataBase.updateStory(name: currentStoryName, isWithAudio: false, image: imageData, drawing: canvasView.drawing.dataRepresentation(), audioPath: ""), storyRow: storyRow)
+        if let imageData = sampleImageView.image?.jpegData(compressionQuality: 0.75){
+            delegate?.updateStories(story:  imageDataBase.updateStory(name: story.name!, isWithAudio: false, image: imageData, drawing: canvasView.drawing.dataRepresentation(), audioPath: ""), storyRow: storyRow)
             self.navigationController?.popViewController(animated: true)
         }
     }

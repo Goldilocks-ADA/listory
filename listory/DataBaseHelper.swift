@@ -48,7 +48,7 @@ class DataBaseHelper {
         do {
             let fetch = try context.fetch(request)
             let storyToUpdate = fetch[0] as NSManagedObject
-            storyToUpdate.setValue(name, forKey: "String")
+            storyToUpdate.setValue(name, forKey: "name")
             storyToUpdate.setValue(isWithAudio, forKey: "isWithAudio")
             storyToUpdate.setValue(image, forKey: "image")
             storyToUpdate.setValue(drawing, forKey: "drawing")

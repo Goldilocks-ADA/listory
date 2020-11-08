@@ -82,6 +82,7 @@ extension ListoryAlbumController: UICollectionViewDelegateFlowLayout, UICollecti
         let vc = self.navigationController?.topViewController as! EditAlbumController
         vc.story = stories[indexPath.row]
         vc.storyRow = indexPath.row
+        vc.delegate = self
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -94,8 +95,6 @@ extension ListoryAlbumController: UICollectionViewDelegateFlowLayout, UICollecti
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CustomCell
-//        cell.backgroundColor = .white
-//        cell.data = self.data[indexPath.row]
         cell.backGround.image = UIImage(data: stories[indexPath.row].image!)
         return cell
     }
