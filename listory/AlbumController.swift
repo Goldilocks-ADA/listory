@@ -28,6 +28,12 @@ class AlbumController: UIViewController, UIImagePickerControllerDelegate & UINav
         return imageView
     }()
     
+    let testCode: UIImageView = {
+        let image = UIImageView()
+    
+        return image
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
