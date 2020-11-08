@@ -15,17 +15,23 @@ struct CustomData {
 }
 
 class ListoryAlbumController: UIViewController {
-    
-    let data = [
-        CustomData(title: "AddButton", image: #imageLiteral(resourceName: "addButton"), url: "Jogi"),
-        CustomData(title: "Beauty", image: #imageLiteral(resourceName: "beauty1"), url: "Jogi"),
-        CustomData(title: "Beautiful", image: #imageLiteral(resourceName: "beauty2"), url: "Jogi"),
-        CustomData(title: "Beautiful", image: #imageLiteral(resourceName: "beauty3"), url: "Jogi")
-    ]
+//
+//    let data = [
+//        CustomData(title: "AddButton", image: #imageLiteral(resourceName: "addButton"), url: "Jogi"),
+//        CustomData(title: "Beauty", image: #imageLiteral(resourceName: "beauty1"), url: "Jogi"),
+//        CustomData(title: "Beautiful", image: #imageLiteral(resourceName: "beauty2"), url: "Jogi"),
+//        CustomData(title: "Beautiful", image: #imageLiteral(resourceName: "beauty3"), url: "Jogi")
+//    ]
     
     let addButtonSetItemRight: UIBarButtonItem = {
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: Selector(("addTapped:")))
         return addButton
+    }()
+    
+    let backgroundAlbumView: UIImageView = {
+        let bgAlbum = UIImageView ()
+        bgAlbum.image = UIImage(named: "albumBG")
+        return bgAlbum
     }()
     
     fileprivate let collectionView: UICollectionView = {
@@ -42,7 +48,9 @@ class ListoryAlbumController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
+        navigationController?.navigationBar.barTintColor = .none
+//        self.navigationController?.isNavigationBarHidden = true
+        self.view.addSubview(backgroundAlbumView)
         self.title = "Listory Gallery"
         self.view.addSubview(collectionView)
         loadStories()
@@ -51,7 +59,7 @@ class ListoryAlbumController: UIViewController {
         //Calling CollectionView to View Controller
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .clear
         
         //CollectionView Constraint
         self.collectionView.snp.makeConstraints { (make) in
@@ -59,6 +67,13 @@ class ListoryAlbumController: UIViewController {
             make.top.equalTo(self.view.snp_topMargin).offset(20)
             make.right.equalTo(self.view.snp_rightMargin).offset(-20)
             make.bottom.equalTo(self.view.snp_bottomMargin).offset(-20)
+        }
+        self.backgroundAlbumView.snp.makeConstraints { (make) in
+            make.left.equalTo(self.view.safeAreaInsets)
+            make.top.equalTo(self.view.safeAreaInsets)
+            make.right.equalTo(self.view.safeAreaInsets)
+            make.bottom.equalTo(self.view.safeAreaInsets)
+            
         }
     }
     

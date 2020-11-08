@@ -116,8 +116,7 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
-        
+        self.view.backgroundColor = .white       
         setupPencilKit()
         //MARK:- 2. Add Subview to Main View
         self.title = "Listory Image Preview"
@@ -169,6 +168,8 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
             make.right.equalTo(self.view.safeAreaLayoutGuide)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
+        
+
         self.present(actionSheet, animated: true, completion: nil)
     }
      
