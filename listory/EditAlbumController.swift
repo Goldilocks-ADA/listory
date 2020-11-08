@@ -16,17 +16,11 @@ protocol EditAlbumControllerDelegate {
     func updateStories(story: Story, storyRow: Int)
 }
 
+let reuseIdentifier = "recordingCell"
+
 class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObserver, UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIPopoverPresentationControllerDelegate, UIScreenshotServiceDelegate {
     
     //MARK:- 1.View Creation Detail Screen
-//    let cameraButton: UIButton = {
-//        let button = UIButton(type: UIButton.ButtonType.system)
-//        button.layer.cornerRadius = 33
-//        button.backgroundColor = .red
-//        button.setTitle("+", for: .normal)
-//        button.setTitleColor(.white, for: .normal)
-//        return button
-//    }()
     
     let recordButton: UIButton = {
         let button = UIButton(type: UIButton.ButtonType.system)
@@ -120,22 +114,37 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         self.view.backgroundColor = .white
         setupData()
         setupPencilKit()
-        setupRecorder()
+        //setupRecorder()
         setupView()
+        //playEdit(soundFileURL)
+        //listRecordings()
         self.title = "Listory Image Preview"
         self.view.addSubview(sampleImageView)
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButton))
 
-        stopButton.isEnabled = false
-        playButton.isEnabled = false
+       // stopButton.isEnabled = false
+       // playButton.isEnabled = false
         
-        //MARK:- 3. Add Constraint
-//        self.sampleImageView.snp.makeConstraints { (make) in
-//            make.left.equalTo(self.view.safeAreaLayoutGuide)
-//            make.top.equalTo(self.view.safeAreaLayoutGuide)
-//            make.right.equalTo(self.view.safeAreaLayoutGuide)
-//            make.bottom.equalTo(self.view.safeAreaLayoutGuide)
-//        }
+        self.view.addSubview(playButton)
+        self.view.addSubview(statusLabel)
+        //playEdit(_:)
+        
+        self.playButton.snp.makeConstraints { (make) in
+            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-300)
+            make.width.equalTo(66)
+            make.height.equalTo(66)
+        }
+        
+        self.statusLabel.snp.makeConstraints{(make)in
+            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(16)
+            make.left.equalTo(self.view.safeAreaLayoutGuide).offset(150 )
+        }
+        
+     //   self.playButton.addTarget(self, action: #selector(playEdit(_:)), for: .touchUpInside)
+        self.playButton.addTarget(self, action: #selector(playEdit), for: .touchUpInside)
+        
+        
     }
     
     //MARK: - Function FOR COREDATA
@@ -153,18 +162,12 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
     }
      
     @objc func saveButton() {
+        
         if let imageData = sampleImageView.image?.jpegData(compressionQuality: 0.75){
             delegate?.updateStories(story:  imageDataBase.updateStory(name: story.name!, isWithAudio: false, image: imageData, drawing: canvasView.drawing.dataRepresentation(), audioPath: ""), storyRow: storyRow)
             self.navigationController?.popViewController(animated: true)
         }
     }
-    
-//    func editButton() {
-//        let imageDraw = canvasView.drawing.dataRepresentation(){
-//            delegate?.updateStories(story: imageDataBase.addNewStory(name: currentStoryName, isWithAudio: false, image: , drawing: <#T##Data#>, audioPath: <#T##String#>))
-//        }
-//    }
-       
     
     @objc func updateAudioMeter(_ timer: Timer) {
         
@@ -242,28 +245,25 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         //recorder = nil
     }
     
-    @objc private func play(_ sender: UIButton) {
-        print("\(#function)")
+
+    
+    @objc func playEdit() {
         
-        var url: URL?
-        if self.recorder != nil {
-            url = self.recorder.url
-        } else {
-            url = self.soundFileURL!
-        }
-        print("playing \(String(describing: url))")
-        
+        print("audio sekarang \(soundFileURL.absoluteString)  \(soundFileURL.absoluteURL)")
+
         do {
-            self.player = try AVAudioPlayer(contentsOf: url!)
-            stopButton.isEnabled = true
-            player.delegate = self
+            print("audio f1")
+            self.player = try AVAudioPlayer(contentsOf: soundFileURL.absoluteURL)
+            print("audio fo")
             player.prepareToPlay()
             player.volume = 1.0
             player.play()
         } catch {
             self.player = nil
             print(error.localizedDescription)
+            print("AVAudioPlayer init failed")
         }
+        
     }
     
     func setupRecorder() {
@@ -452,6 +452,7 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         canvasView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
         canvasView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -0).isActive = true
         canvasView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -0).isActive = true
+        
     }
     
     func updateLayout(for toolPicker: PKToolPicker) {
@@ -545,7 +546,7 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         
         self.recordButton.addTarget(self, action: #selector(record), for: .touchUpInside)
         self.stopButton.addTarget(self, action: #selector(stop), for: .touchUpInside)
-        self.playButton.addTarget(self, action: #selector(play), for: .touchUpInside)
+   //     self.playButton.addTarget(self, action: #selector(play), for: .touchUpInside)
     }
     
     //MARK: - UIImagePickerController DidCancel
@@ -589,6 +590,26 @@ extension EditAlbumController: AVAudioRecorderDelegate {
         if let e = error {
             print("\(e.localizedDescription)")
         }
+    }
+    
+    func saveFile(url:URL){
+        let docUrl:URL = (FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first as URL?)!
+    let desURL = docUrl.appendingPathComponent("tmpsong.m4a") //Use file name with ext
+    var downloadTask:URLSessionDownloadTask
+    downloadTask = URLSession.shared.downloadTask(with: url, completionHandler: { [weak self](URLData, response, error) -> Void in
+        do{
+            let isFileFound:Bool? = FileManager.default.fileExists(atPath: desURL.path)
+            if isFileFound == true{
+                print(desURL)
+            } else {
+                try FileManager.default.copyItem(at: URLData!, to: desURL)
+            }
+
+        }catch let err {
+            print(err.localizedDescription)
+        }
+    })
+    downloadTask.resume()
     }
     
 }

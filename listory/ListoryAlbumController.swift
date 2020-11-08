@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import AVFoundation
 
 struct CustomData {
     var title = String()
@@ -15,13 +16,9 @@ struct CustomData {
 }
 
 class ListoryAlbumController: UIViewController {
-//
-//    let data = [
-//        CustomData(title: "AddButton", image: #imageLiteral(resourceName: "addButton"), url: "Jogi"),
-//        CustomData(title: "Beauty", image: #imageLiteral(resourceName: "beauty1"), url: "Jogi"),
-//        CustomData(title: "Beautiful", image: #imageLiteral(resourceName: "beauty2"), url: "Jogi"),
-//        CustomData(title: "Beautiful", image: #imageLiteral(resourceName: "beauty3"), url: "Jogi")
-//    ]
+
+    var recordings = [URL]()
+    var player: AVAudioPlayer!
     
     let addButtonSetItemRight: UIBarButtonItem = {
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: Selector(("addTapped:")))
@@ -98,6 +95,8 @@ extension ListoryAlbumController: UICollectionViewDelegateFlowLayout, UICollecti
         vc.story = stories[indexPath.row]
         vc.storyRow = indexPath.row
         vc.delegate = self
+        vc.soundFileURL = URL(string: UserDefaults.standard.string(forKey: "audio")!)
+//        return self.recordings.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

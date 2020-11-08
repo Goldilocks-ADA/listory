@@ -19,14 +19,6 @@ protocol AlbumControllerDelegate {
 class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObserver, UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIPopoverPresentationControllerDelegate, UIScreenshotServiceDelegate {
     
     //MARK:- 1.View Creation Detail Screen
-//    let cameraButton: UIButton = {
-//        let button = UIButton(type: UIButton.ButtonType.system)
-//        button.layer.cornerRadius = 33
-//        button.backgroundColor = .red
-//        button.setTitle("+", for: .normal)
-//        button.setTitleColor(.white, for: .normal)
-//        return button
-//    }()
     
     let recordButton: UIButton = {
         let button = UIButton(type: UIButton.ButtonType.system)
@@ -162,12 +154,12 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         }
         
         //MARK:- 3. Add Constraint
-        self.sampleImageView.snp.makeConstraints { (make) in
-            make.left.equalTo(self.view.safeAreaLayoutGuide)
-            make.top.equalTo(self.view.safeAreaLayoutGuide)
-            make.right.equalTo(self.view.safeAreaLayoutGuide)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide)
-        }
+//        self.sampleImageView.snp.makeConstraints { (make) in
+//            make.left.equalTo(self.view.safeAreaLayoutGuide)
+//            make.top.equalTo(self.view.safeAreaLayoutGuide)
+//            make.right.equalTo(self.view.safeAreaLayoutGuide)
+//            make.bottom.equalTo(self.view.safeAreaLayoutGuide)
+//        }
         
 
         self.present(actionSheet, animated: true, completion: nil)
@@ -270,6 +262,7 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
             url = self.soundFileURL!
         }
         print("playing \(String(describing: url))")
+        UserDefaults.standard.set("\(url!)", forKey: "audio")
         
         do {
             self.player = try AVAudioPlayer(contentsOf: url!)
