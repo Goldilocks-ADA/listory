@@ -104,6 +104,12 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         return canvasView
     }()
     
+    let backgroundAlbumView: UIImageView = {
+        let bgAlbum = UIImageView ()
+        bgAlbum.image = UIImage(named: "albumBG")
+        return bgAlbum
+    }()
+    
     var recorder: AVAudioRecorder!
     var player: AVAudioPlayer!
     var meterTimer: Timer!
@@ -118,6 +124,7 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        self.view.addSubview(backgroundAlbumView)
         setupData()
         setupPencilKit()
         setupRecorder()
@@ -136,6 +143,13 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
 //            make.right.equalTo(self.view.safeAreaLayoutGuide)
 //            make.bottom.equalTo(self.view.safeAreaLayoutGuide)
 //        }
+        self.backgroundAlbumView.snp.makeConstraints { (make) in
+            make.left.equalTo(self.view.safeAreaInsets)
+            make.top.equalTo(self.view.safeAreaInsets)
+            make.right.equalTo(self.view.safeAreaInsets)
+            make.bottom.equalTo(self.view.safeAreaInsets)
+            
+        }
     }
     
     //MARK: - Function FOR COREDATA
