@@ -114,6 +114,8 @@ class HomeController: UIViewController {
         self.view.addSubview(self.onboardingPageControl)
         self.view.addSubview(self.skipButton)
         
+//        navigationItem.backBarButtonItem = UIBarButtonItem (
+        
         self.scrollView.delegate = self
         
         self.backgroundImageView.snp.makeConstraints { (make) in
