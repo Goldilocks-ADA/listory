@@ -57,7 +57,7 @@ class ListoryAlbumController: UIViewController {
         self.view.addSubview(backgroundAlbumView)
         self.view.addSubview(titleBar)
         self.view.addSubview(collectionView)
-        navigationController?.navigationBar.barTintColor = .none
+        navigationController?.navigationBar.transparentNavigationBar()
         loadStories()
         navigationItem.rightBarButtonItem = UIBarButtonItem (barButtonSystemItem: .add, target: self, action: #selector(didTapButton))
         
@@ -172,5 +172,13 @@ extension ListoryAlbumController: EditAlbumControllerDelegate {
     func updateStories(story: Story, storyRow: Int) {
         stories[storyRow] = story
         collectionView.reloadData()
+    }
+}
+
+extension UINavigationBar {
+    func transparentNavigationBar() {
+    self.setBackgroundImage(UIImage(), for: .default)
+    self.shadowImage = UIImage()
+    self.isTranslucent = true
     }
 }

@@ -25,11 +25,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         //go to onboarding
             self.window?.rootViewController = UINavigationController(rootViewController: HomeController())
         }else{
-            self.window?.rootViewController = UINavigationController(rootViewController: HomeController())
+            self.window?.rootViewController = UINavigationController(rootViewController: ListoryAlbumController())
         }
         
        
-        self.window?.rootViewController = UINavigationController(rootViewController: HomeController())
+//        self.window?.rootViewController = UINavigationController(rootViewController: HomeController())
         self.window?.makeKeyAndVisible()
     }
 

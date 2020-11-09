@@ -10,13 +10,8 @@ import SnapKit
 
 class HomeController: UIViewController, UIScrollViewDelegate {
     
-    //    //MARK: 1. View Creation
-    //  var position = 0
-    
-    // let onboardingImageView: UIImageView = {
-    
     private var scrollViewFrame = CGRect(x: 0, y: 0, width: 0, height: 0)
-    
+    var pageNumber: Int = 0
     let backgroundImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "background")
@@ -43,6 +38,29 @@ class HomeController: UIViewController, UIScrollViewDelegate {
         let button = UIButton(type: UIButton.ButtonType.system)
         button.setTitle("skip", for: .normal)
         button.titleLabel?.font = UIFont(name: "PT Sans", size: 42)
+        //        button.backgroundColor = .white
+        //        button.layer.borderColor = UIC //PRMPColor.primeBlue.cgColor
+        //        button.layer.borderWidth = 1
+        //        button.layer.cornerRadius = 22
+        button.tintColor = UIColor(red: 96/255, green: 91/255, blue: 80/255, alpha: 1)
+        //        button.titleLabel?.font = PRMPFont.subHeading
+        return button
+    }()
+    
+    let nextButton: UIButton = {
+        let button = UIButton(type: UIButton.ButtonType.system)
+        button.setImage(UIImage(named: "nextbutton"), for: .normal)
+        button.tintColor = UIColor(red: 96/255, green: 91/255, blue: 80/255, alpha: 1)
+        //        button.titleLabel?.font = PRMPFont.subHeading
+        return button
+    }()
+    
+    let backButton: UIButton = {
+        let button = UIButton(type: UIButton.ButtonType.system)
+        button.setImage(UIImage(named: "backbutton"), for: .normal)
+
+//        button.setTitle("skip", for: .normal)
+//        button.titleLabel?.font = UIFont(name: "PT Sans", size: 42)
         //        button.backgroundColor = .white
         //        button.layer.borderColor = UIC //PRMPColor.primeBlue.cgColor
         //        button.layer.borderWidth = 1
@@ -106,9 +124,55 @@ class HomeController: UIViewController, UIScrollViewDelegate {
     //    }
     
     @objc
-    private func nextButtonPressed(){
+    private func skipButtonPressed(){
         UserDefaults.standard.set(true, forKey: "isFirstLaunch")
-        self.navigationController?.pushViewController(ListoryAlbumController(), animated: true)
+        self.navigationController?.replaceTopViewController(with: ListoryAlbumController(), animated: true)
+    }
+    
+    @objc
+    private func nextButtonPressed(){
+      
+        self.pageNumber += 1
+        self.onboardingPageControl.currentPage = pageNumber
+        self.scrollView.contentOffset.x = self.scrollView.frame.size.width * CGFloat(pageNumber)
+        if(pageNumber == 2){
+            skipButton.setTitle("Get Started", for: .normal)
+        }else{
+            skipButton.setTitle("Skip", for: .normal)
+        }
+        if(pageNumber == 0){
+            backButton.isHidden = true
+            nextButton.isHidden = false
+        }else if(pageNumber == 1){
+            backButton.isHidden = false
+            nextButton.isHidden = false
+        }else if(pageNumber == 2){
+            backButton.isHidden = false
+            nextButton.isHidden = true
+        }
+    }
+    
+    @objc
+    private func backButtonPressed(){
+        self.pageNumber -= 1
+        self.onboardingPageControl.currentPage = pageNumber
+        self.scrollView.contentOffset.x = self.scrollView.frame.size.width * CGFloat(pageNumber)
+        if(pageNumber == 2){
+            skipButton.setTitle("Get Started", for: .normal)
+        }else{
+            skipButton.setTitle("Skip", for: .normal)
+        }
+        
+        if(pageNumber == 0){
+            backButton.isHidden = true
+            nextButton.isHidden = false
+        }else if(pageNumber == 1){
+            backButton.isHidden = false
+            nextButton.isHidden = false
+        }else if(pageNumber == 2){
+            backButton.isHidden = false
+            nextButton.isHidden = true
+        }
     }
     
     override func viewDidLoad() {
@@ -118,9 +182,21 @@ class HomeController: UIViewController, UIScrollViewDelegate {
         self.view.addSubview(self.scrollView)
         self.view.addSubview(self.onboardingPageControl)
         self.view.addSubview(self.skipButton)
+        self.view.addSubview(self.nextButton)
+        self.view.addSubview(self.backButton)
         
         //        navigationItem.backBarButtonItem = UIBarButtonItem (
         
+        if(pageNumber == 0){
+            backButton.isHidden = true
+            nextButton.isHidden = false
+        }else if(pageNumber == 1){
+            backButton.isHidden = false
+            nextButton.isHidden = false
+        }else if(pageNumber == 2){
+            backButton.isHidden = false
+            nextButton.isHidden = true
+        }
         self.scrollView.delegate = self
         
         self.backgroundImageView.snp.makeConstraints { (make) in
@@ -144,15 +220,34 @@ class HomeController: UIViewController, UIScrollViewDelegate {
             make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
             make.centerX.equalTo(self.view.safeAreaLayoutGuide)
             make.height.equalTo(45)
-            make.width.equalTo(175)
+            make.width.equalTo(300)
         }
+        
+        self.nextButton.snp.makeConstraints { (make) in
+            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(20)
+            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+//            make.centerX.equalTo(self.view.safeAreaLayoutGuide)
+            make.height.equalTo(45)
+            make.width.equalTo(300)
+        }
+        
+        self.backButton.snp.makeConstraints{(make) in
+            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(20)
+            make.left.equalTo(self.view.safeAreaLayoutGuide).offset(20)
+//            make.centerX.equalTo(self.view.safeAreaLayoutGuide)
+            make.height.equalTo(45)
+            make.width.equalTo(300)
+        }
+        
+    
         
         //        self.view.backgroundColor = .white
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         
-        self.skipButton.addTarget(self, action: #selector(self.nextButtonPressed), for: .touchUpInside)
-        
+        self.skipButton.addTarget(self, action: #selector(self.skipButtonPressed), for: .touchUpInside)
+        self.backButton.addTarget(self, action: #selector(self.backButtonPressed), for: .touchUpInside)
+        self.nextButton.addTarget(self, action: #selector(self.nextButtonPressed), for: .touchUpInside)
         //        let singleTap = UITapGestureRecognizer(target: self, action: #selector(tapDetected))
         //        onboardingImageView.isUserInteractionEnabled = true
         //        onboardingImageView.addGestureRecognizer(singleTap)
@@ -208,6 +303,40 @@ class HomeController: UIViewController, UIScrollViewDelegate {
         self.setupImageScrollView()
     }
     
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if scrollView == self.scrollView {
+            pageNumber = Int(scrollView.contentOffset.x) / Int(scrollView.frame.size.width)
+            self.onboardingPageControl.currentPage = Int(pageNumber)
+            if(pageNumber == 2){
+                skipButton.setTitle("Get Started", for: .normal)
+            }else{
+                skipButton.setTitle("Skip", for: .normal)
+            }
+            
+            if(pageNumber == 0){
+                backButton.isHidden = true
+                nextButton.isHidden = false
+            }else if(pageNumber == 1){
+                backButton.isHidden = false
+                nextButton.isHidden = false
+            }else if(pageNumber == 2){
+                backButton.isHidden = false
+                nextButton.isHidden = true
+            }
+            //            if self.settingController == nil {
+            //                if pageNumber == 4 {
+            //                    UIView.animate(withDuration: 0.2) {
+            //                        self.onboardingView.nextButton.alpha = 1
+            //                    }
+            //                } else {
+            //                    UIView.animate(withDuration: 0.2) {
+            //                        self.onboardingView.nextButton.alpha = 0
+            //                    }
+            //                }
+            //            }
+        }
+    }
+    
     func setupImageScrollView(){
         //        let onboardingAttributedText = Utils.setAttributedString()
         for index in 0..<self.onboardingImages.count {
@@ -249,6 +378,8 @@ class HomeController: UIViewController, UIScrollViewDelegate {
             label.font = UIFont(name: "PT Sans Bold", size: 60)
             label.textAlignment = .center
             
+           
+            
             self.scrollView.addSubview(imageView)
             self.scrollView.addSubview(label)
         }
@@ -260,22 +391,34 @@ class HomeController: UIViewController, UIScrollViewDelegate {
 
 extension HomeController {
     
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if scrollView == self.scrollView {
-            let pageNumber = scrollView.contentOffset.x / scrollView.frame.size.width
-            self.onboardingPageControl.currentPage = Int(pageNumber)
-            
-            //            if self.settingController == nil {
-            //                if pageNumber == 4 {
-            //                    UIView.animate(withDuration: 0.2) {
-            //                        self.onboardingView.nextButton.alpha = 1
-            //                    }
-            //                } else {
-            //                    UIView.animate(withDuration: 0.2) {
-            //                        self.onboardingView.nextButton.alpha = 0
-            //                    }
-            //                }
-            //            }
-        }
-    }
+//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//        if scrollView == self.scrollView {
+//            let pageNumber = scrollView.contentOffset.x / scrollView.frame.size.width
+//            self.onboardingPageControl.currentPage = Int(pageNumber)
+//            if(pageNumber == 2){
+//                skipButton.setTitle("Get Started", for: .normal)
+//            }else{
+//                skipButton.setTitle("Skip", for: .normal)
+//            }
+//            //            if self.settingController == nil {
+//            //                if pageNumber == 4 {
+//            //                    UIView.animate(withDuration: 0.2) {
+//            //                        self.onboardingView.nextButton.alpha = 1
+//            //                    }
+//            //                } else {
+//            //                    UIView.animate(withDuration: 0.2) {
+//            //                        self.onboardingView.nextButton.alpha = 0
+//            //                    }
+//            //                }
+//            //            }
+//        }
+//    }
+}
+
+extension UINavigationController {
+  func replaceTopViewController(with viewController: UIViewController, animated: Bool) {
+    var vcs = viewControllers
+    vcs[vcs.count - 1] = viewController
+    setViewControllers(vcs, animated: animated)
+  }
 }
