@@ -45,7 +45,7 @@ class ListoryAlbumController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.barTintColor = .none
+  //      navigationController?.navigationBar.barTintColor = .none
 //        self.navigationController?.isNavigationBarHidden = true
         self.view.addSubview(backgroundAlbumView)
         self.title = "Listory Gallery"

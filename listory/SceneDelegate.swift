@@ -29,7 +29,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
        
-        self.window?.rootViewController = UINavigationController(rootViewController: ListoryAlbumController())
+        self.window?.rootViewController = UINavigationController(rootViewController: HomeController())
         self.window?.makeKeyAndVisible()
     }
 
