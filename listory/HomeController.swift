@@ -41,8 +41,8 @@ class HomeController: UIViewController, UIScrollViewDelegate {
     
     let skipButton: UIButton = {
         let button = UIButton(type: UIButton.ButtonType.system)
-        button.setTitle("SKIP", for: .normal)
-        button.titleLabel?.font = .preferredFont(forTextStyle: .largeTitle)
+        button.setTitle("skip", for: .normal)
+        button.titleLabel?.font = UIFont(name: "PT Sans", size: 42)
         //        button.backgroundColor = .white
         //        button.layer.borderColor = UIC //PRMPColor.primeBlue.cgColor
         //        button.layer.borderWidth = 1
@@ -244,7 +244,9 @@ class HomeController: UIViewController, UIScrollViewDelegate {
             let label = UILabel(frame: labelFrame)
             label.text = self.onboardingTexts[index]
             label.numberOfLines = 0
-            label.font = UIFont(name: "PT Sans", size: 60)
+            label.adjustsFontForContentSizeCategory = true
+            label.textColor = UIColor(red: 96/255, green: 91/255, blue: 80/255, alpha: 1)
+            label.font = UIFont(name: "PT Sans Bold", size: 60)
             label.textAlignment = .center
             
             self.scrollView.addSubview(imageView)
