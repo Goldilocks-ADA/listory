@@ -31,6 +31,15 @@ class ListoryAlbumController: UIViewController {
         return bgAlbum
     }()
     
+    let titleBar: UILabel = {
+        let titleLabel = UILabel()
+        titleLabel.font = UIFont(name: "PT Sans Bold", size: 50)
+        titleLabel.text = "Listory Album Photo"
+        titleLabel.textColor = .darkGray
+        titleLabel.textAlignment = .center
+        return titleLabel
+    }()
+    
     fileprivate let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -45,11 +54,10 @@ class ListoryAlbumController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-  //      navigationController?.navigationBar.barTintColor = .none
-//        self.navigationController?.isNavigationBarHidden = true
         self.view.addSubview(backgroundAlbumView)
-        self.title = "Listory Gallery"
+        self.view.addSubview(titleBar)
         self.view.addSubview(collectionView)
+        navigationController?.navigationBar.barTintColor = .none
         loadStories()
         navigationItem.rightBarButtonItem = UIBarButtonItem (barButtonSystemItem: .add, target: self, action: #selector(didTapButton))
         
@@ -70,7 +78,12 @@ class ListoryAlbumController: UIViewController {
             make.top.equalTo(self.view.safeAreaInsets)
             make.right.equalTo(self.view.safeAreaInsets)
             make.bottom.equalTo(self.view.safeAreaInsets)
-            
+        }
+        
+        self.titleBar.snp.makeConstraints { (make) in
+            make.top.equalTo(self.view).offset(30)
+            make.left.equalTo(self.view)
+            make.right.equalTo(self.view)
         }
     }
     
