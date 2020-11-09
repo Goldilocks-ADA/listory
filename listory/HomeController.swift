@@ -214,14 +214,8 @@ class HomeController: UIViewController, UIScrollViewDelegate {
             self.scrollViewFrame.origin.x = self.scrollView.frame.size.width * CGFloat(index)
             self.scrollViewFrame.size.width =  self.scrollView.frame.size.width
             self.scrollViewFrame.size.height = self.scrollView.frame.size.height - 300
-            
             self.scrollViewFrame.origin.y = 80
             self.scrollViewFrame.size.height -= 80
-            
-            //            if UIDevice.current.hasNotch {
-            //                self.scrollViewFrame.origin.y = 80
-            //                self.scrollViewFrame.size.height -= 80
-            //            }
             
             let imageView = UIImageView(frame: self.scrollViewFrame)
             imageView.contentMode = .scaleAspectFit
@@ -232,14 +226,8 @@ class HomeController: UIViewController, UIScrollViewDelegate {
             labelFrame.origin.y = self.scrollViewFrame.size.height
             labelFrame.size.width =  self.scrollView.frame.size.width
             labelFrame.size.height = self.scrollView.frame.size.height - self.scrollViewFrame.size.height
-            
             labelFrame.origin.y += 80
             labelFrame.size.height -= 80
-            
-            //            if UIDevice.current.hasNotch {
-            //                labelFrame.origin.y += 80
-            //                labelFrame.size.height -= 80
-            //            }
             
             let label = UILabel(frame: labelFrame)
             label.text = self.onboardingTexts[index]
@@ -262,18 +250,6 @@ extension HomeController {
         if scrollView == self.scrollView {
             let pageNumber = scrollView.contentOffset.x / scrollView.frame.size.width
             self.onboardingPageControl.currentPage = Int(pageNumber)
-            
-            //            if self.settingController == nil {
-            //                if pageNumber == 4 {
-            //                    UIView.animate(withDuration: 0.2) {
-            //                        self.onboardingView.nextButton.alpha = 1
-            //                    }
-            //                } else {
-            //                    UIView.animate(withDuration: 0.2) {
-            //                        self.onboardingView.nextButton.alpha = 0
-            //                    }
-            //                }
-            //            }
         }
     }
 }

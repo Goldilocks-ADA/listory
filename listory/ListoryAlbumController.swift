@@ -40,6 +40,14 @@ class ListoryAlbumController: UIViewController {
         return titleLabel
     }()
     
+    @objc let addButtonText: UIButton = {
+        let addButton = UIButton(type: UIButton.ButtonType.custom)
+        addButton.setTitle("+", for: .normal)
+        addButton.titleLabel?.font = .preferredFont(forTextStyle: .largeTitle)
+        addButton.setTitleColor(.darkGray, for: .normal)
+        return addButton
+    }()
+    
     fileprivate let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -56,10 +64,13 @@ class ListoryAlbumController: UIViewController {
         super.viewDidLoad()
         self.view.addSubview(backgroundAlbumView)
         self.view.addSubview(titleBar)
+        self.view.addSubview(addButtonText)
         self.view.addSubview(collectionView)
         navigationController?.navigationBar.barTintColor = .none
         loadStories()
-        navigationItem.rightBarButtonItem = UIBarButtonItem (barButtonSystemItem: .add, target: self, action: #selector(didTapButton))
+    
+//        navigationItem.rightBarButtonItem = UIBarButtonItem (barButtonSystemItem: .add, target: self, action: #selector(didTapButton))
+        navigationItem.rightBarButtonItem = UIBarButtonItem (title: "", style: .plain, target: self, action: #selector(didTapButton))
         
         //Calling CollectionView to View Controller
         collectionView.delegate = self
@@ -82,9 +93,16 @@ class ListoryAlbumController: UIViewController {
         
         self.titleBar.snp.makeConstraints { (make) in
             make.top.equalTo(self.view).offset(30)
-            make.left.equalTo(self.view)
             make.right.equalTo(self.view)
+            make.left.equalTo(self.view)
         }
+        
+        self.addButtonText.snp.makeConstraints { (make) in
+            make.top.equalTo(self.view).offset(30)
+            make.right.equalTo(self.view).offset(-20)
+        }
+        
+        self.addButtonText.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
     }
     
     func loadStories() {
