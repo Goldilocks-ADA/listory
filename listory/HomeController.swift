@@ -244,7 +244,7 @@ class HomeController: UIViewController, UIScrollViewDelegate {
             let label = UILabel(frame: labelFrame)
             label.text = self.onboardingTexts[index]
             label.numberOfLines = 0
-            label.font = UIFont(name: "Helvetica", size: 60)
+            label.font = UIFont(name: "PT Sans", size: 60)
             label.textAlignment = .center
             
             self.scrollView.addSubview(imageView)

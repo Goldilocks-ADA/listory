@@ -30,8 +30,6 @@
 	<string>Allowed</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Because We Can!</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>For using microphone</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -68,6 +66,10 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>PTSans.ttc</string>
 	</array>
 </dict>
 </plist>
