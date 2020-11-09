@@ -55,7 +55,7 @@ class ListoryAlbumController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.isNavigationBarHidden = true
+//        self.navigationController?.isNavigationBarHidden = true
         self.view.addSubview(setTittleCollectionView)
         self.view.addSubview(backgroundAlbumView)
 //        self.title = "Listory Gallery"
