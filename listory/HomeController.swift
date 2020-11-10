@@ -96,9 +96,9 @@ class HomeController: UIViewController, UIScrollViewDelegate {
         self.onboardingPageControl.currentPage = pageNumber
         self.scrollView.contentOffset.x = self.scrollView.frame.size.width * CGFloat(pageNumber)
         if(pageNumber == 2){
-            skipButton.setTitle("Get Started", for: .normal)
+            skipButton.setTitle("get started", for: .normal)
         }else{
-            skipButton.setTitle("Skip", for: .normal)
+            skipButton.setTitle("skip", for: .normal)
         }
         
         if(pageNumber == 0){
@@ -268,31 +268,6 @@ class HomeController: UIViewController, UIScrollViewDelegate {
     }
 }
 
-//extension HomeController {
-//
-//    //    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-//    //        if scrollView == self.scrollView {
-//    //            let pageNumber = scrollView.contentOffset.x / scrollView.frame.size.width
-//    //            self.onboardingPageControl.currentPage = Int(pageNumber)
-//    //            if(pageNumber == 2){
-//    //                skipButton.setTitle("Get Started", for: .normal)
-//    //            }else{
-//    //                skipButton.setTitle("Skip", for: .normal)
-//    //            }
-//    //            //            if self.settingController == nil {
-//    //            //                if pageNumber == 4 {
-//    //            //                    UIView.animate(withDuration: 0.2) {
-//    //            //                        self.onboardingView.nextButton.alpha = 1
-//    //            //                    }
-//    //            //                } else {
-//    //            //                    UIView.animate(withDuration: 0.2) {
-//    //            //                        self.onboardingView.nextButton.alpha = 0
-//    //            //                    }
-//    //            //                }
-//    //            //            }
-//    //        }
-//    //    }
-//}
 
 extension UINavigationController {
     func replaceTopViewController(with viewController: UIViewController, animated: Bool) {
