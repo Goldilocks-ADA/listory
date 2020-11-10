@@ -15,7 +15,7 @@ struct CustomData {
     var url = String()
 }
 
-class ListoryAlbumController: UIViewController {
+class ListoryAlbumController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
     var recordings = [URL]()
     var player: AVAudioPlayer!
@@ -48,7 +48,7 @@ class ListoryAlbumController: UIViewController {
         collectionView.register(CustomCell.self, forCellWithReuseIdentifier: "cell")
         return collectionView
     }()
-   
+    
     var stories = [Story]()
     
     
@@ -65,6 +65,42 @@ class ListoryAlbumController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = .clear
+        
+        //PoopOverController
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        
+        //Alert Notification
+        let actionSheet = UIAlertController(title: "Listory would like to Access the Camera", message: "So you can take a picture from family albums", preferredStyle: .actionSheet)
+        
+        //Photo From Camera
+        actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: {(action: UIAlertAction) in
+            if UIImagePickerController.isSourceTypeAvailable(.camera){
+                imagePickerController.sourceType = .camera
+                self.present(imagePickerController, animated: true, completion: nil)
+            }
+            else {
+                print("Camera not available")
+            }
+        }))
+        
+        //Photo from Photo Library
+        actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (action: UIAlertAction) in
+            imagePickerController.sourceType = .photoLibrary
+            self.present(imagePickerController, animated: true, completion: nil)
+        }))
+        
+        
+        //Cancel Button
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+//        self.present(actionSheet, animated: true, completion: nil)
+        
+        //Popover Position
+        if let popoverController = actionSheet.popoverPresentationController {
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+            popoverController.permittedArrowDirections = []
+        }
         
         //CollectionView Constraint
         self.collectionView.snp.makeConstraints { (make) in
@@ -85,6 +121,8 @@ class ListoryAlbumController: UIViewController {
             make.left.equalTo(self.view)
             make.right.equalTo(self.view)
         }
+        self.present(actionSheet, animated: true, completion: nil)
+ 
     }
     
     func loadStories() {
@@ -180,5 +218,14 @@ extension UINavigationBar {
     self.setBackgroundImage(UIImage(), for: .default)
     self.shadowImage = UIImage()
     self.isTranslucent = true
+    }
+}
+
+class TabBarController: UIViewController {
+    override func viewDidLoad() {
+        super .viewDidLoad()
+        
+        self.view.backgroundColor = .white
+        self.title = "Tab 1"
     }
 }
