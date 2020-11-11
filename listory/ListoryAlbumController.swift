@@ -68,27 +68,19 @@ class ListoryAlbumController: UIViewController, UIImagePickerControllerDelegate 
 //        let tb2 = UINavigationController(rootViewController: SecondListoryAlbumController())
 //        let tb3 = UINavigationController(rootViewController: ThirdListoryAlbumController())
         
-        let tb1 = FirstListoryAlbumController()
-        let tb2 = SecondListoryAlbumController()
-        let tb3 = ThirdListoryAlbumController()
-        
-        tb1.title = "Photo"
-        tb2.title = "Audio"
-        tb3.title = "For You"
+        let tb1 = FirstViewController()
+        let tb2 = SecondViewController()
+        let tb3 = ThirdViewController()
+
+        tb1.tabBarItem.image = UIImage(named: "btnPhoto")
+        tb2.tabBarItem.image = UIImage(named: "btnAudio")
+        tb3.tabBarItem.image = UIImage(named: "btnForYou")
         
         tabBarVC.setViewControllers([tb1,tb2, tb3], animated: false)
-        guard let items = tabBarVC.tabBar.items else {
-            return
-        }
         
-        let images = ["btnPhoto", "btnAudio", "btnForYou"]
-        
-        for x in 0..<items.count {
-            items[x].image = UIImage(systemName: images[x])
-        }
         
         tabBarVC.modalPresentationStyle = .fullScreen
-        present(tabBarVC, animated: true)
+        present(tabBarVC, animated: false, completion: nil)
         
         //Calling CollectionView to View Controller
         collectionView.delegate = self
@@ -150,7 +142,7 @@ class ListoryAlbumController: UIViewController, UIImagePickerControllerDelegate 
             make.left.equalTo(self.view)
             make.right.equalTo(self.view)
         }
-        self.present(actionSheet, animated: true, completion: nil)
+        self.present(actionSheet, animated: false, completion: didTapButton)
  
     }
     
@@ -257,20 +249,20 @@ class TabBarController: UIViewController {
     }
 }
 
-class FirstListoryAlbumController: UIViewController {
+class FirstViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .clear
     }
 }
 
-class SecondListoryAlbumController: UIViewController {
+class SecondViewController: UIViewController {
     override func viewDidLoad() {
         view.backgroundColor = .clear
     }
 }
 
-class ThirdListoryAlbumController: UIViewController {
+class ThirdViewController: UIViewController {
     override func viewDidLoad() {
         view.backgroundColor = .clear
     }
