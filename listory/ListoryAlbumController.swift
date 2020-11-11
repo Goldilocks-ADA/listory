@@ -15,7 +15,7 @@ struct CustomData {
     var url = String()
 }
 
-class ListoryAlbumController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+class ListoryAlbumController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate{
 
     var recordings = [URL]()
     var player: AVAudioPlayer!
@@ -60,6 +60,35 @@ class ListoryAlbumController: UIViewController, UIImagePickerControllerDelegate 
         navigationController?.navigationBar.transparentNavigationBar()
         loadStories()
         navigationItem.rightBarButtonItem = UIBarButtonItem (barButtonSystemItem: .add, target: self, action: #selector(didTapButton))
+        
+        //TabBarController
+        let tabBarVC = UITabBarController()
+
+//        let tb1 = UINavigationController(rootViewController: FirstListoryAlbumController())
+//        let tb2 = UINavigationController(rootViewController: SecondListoryAlbumController())
+//        let tb3 = UINavigationController(rootViewController: ThirdListoryAlbumController())
+        
+        let tb1 = FirstListoryAlbumController()
+        let tb2 = SecondListoryAlbumController()
+        let tb3 = ThirdListoryAlbumController()
+        
+        tb1.title = "Photo"
+        tb2.title = "Audio"
+        tb3.title = "For You"
+        
+        tabBarVC.setViewControllers([tb1,tb2, tb3], animated: false)
+        guard let items = tabBarVC.tabBar.items else {
+            return
+        }
+        
+        let images = ["btnPhoto", "btnAudio", "btnForYou"]
+        
+        for x in 0..<items.count {
+            items[x].image = UIImage(systemName: images[x])
+        }
+        
+        tabBarVC.modalPresentationStyle = .fullScreen
+        present(tabBarVC, animated: true)
         
         //Calling CollectionView to View Controller
         collectionView.delegate = self
@@ -224,8 +253,25 @@ extension UINavigationBar {
 class TabBarController: UIViewController {
     override func viewDidLoad() {
         super .viewDidLoad()
-        
-        self.view.backgroundColor = .white
-        self.title = "Tab 1"
+        self.view.backgroundColor = .none
+    }
+}
+
+class FirstListoryAlbumController: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .clear
+    }
+}
+
+class SecondListoryAlbumController: UIViewController {
+    override func viewDidLoad() {
+        view.backgroundColor = .clear
+    }
+}
+
+class ThirdListoryAlbumController: UIViewController {
+    override func viewDidLoad() {
+        view.backgroundColor = .clear
     }
 }
