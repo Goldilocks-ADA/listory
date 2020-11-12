@@ -15,7 +15,7 @@ struct CustomData {
     var url = String()
 }
 
-class ListoryAlbumController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+class ListoryAlbumController: UIViewController {
 
     var recordings = [URL]()
     var player: AVAudioPlayer!
@@ -29,6 +29,18 @@ class ListoryAlbumController: UIViewController, UIImagePickerControllerDelegate 
         let bgAlbum = UIImageView ()
         bgAlbum.image = UIImage(named: "albumBG")
         return bgAlbum
+    }()
+    
+    let imageLine1: UIImageView = {
+       let line1 = UIImageView()
+        line1.image = UIImage (named: "line1")
+        return line1
+    }()
+    
+    let imageLine2: UIImageView = {
+       let line2 = UIImageView()
+        line2.image = UIImage (named: "line2")
+        return line2
     }()
     
     let titleBar: UILabel = {
@@ -48,59 +60,26 @@ class ListoryAlbumController: UIViewController, UIImagePickerControllerDelegate 
         collectionView.register(CustomCell.self, forCellWithReuseIdentifier: "cell")
         return collectionView
     }()
-    
+   
     var stories = [Story]()
-    
+    let viewControllers = UITabBarController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(backgroundAlbumView)
         self.view.addSubview(titleBar)
         self.view.addSubview(collectionView)
+        self.view.addSubview(imageLine1)
         navigationController?.navigationBar.transparentNavigationBar()
+        setupTabBar()
         loadStories()
         navigationItem.rightBarButtonItem = UIBarButtonItem (barButtonSystemItem: .add, target: self, action: #selector(didTapButton))
+        
         
         //Calling CollectionView to View Controller
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = .clear
-        
-        //PoopOverController
-        let imagePickerController = UIImagePickerController()
-        imagePickerController.delegate = self
-        
-        //Alert Notification
-        let actionSheet = UIAlertController(title: "Add Image", message: "Would you like to take a picture from:", preferredStyle: .actionSheet)
-        
-        //Photo From Camera
-        actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: {(action: UIAlertAction) in
-            if UIImagePickerController.isSourceTypeAvailable(.camera){
-                imagePickerController.sourceType = .camera
-                self.present(imagePickerController, animated: true, completion: nil)
-            }
-            else {
-                print("Camera not available")
-            }
-        }))
-        
-        //Photo from Photo Library
-        actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (action: UIAlertAction) in
-            imagePickerController.sourceType = .photoLibrary
-            self.present(imagePickerController, animated: true, completion: nil)
-        }))
-        
-        
-        //Cancel Button
-        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-//        self.present(actionSheet, animated: true, completion: nil)
-            
-        //Popover Position
-        if let popoverController = actionSheet.popoverPresentationController {
-            popoverController.sourceView = self.view
-            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-            popoverController.permittedArrowDirections = []
-        }
         
         //CollectionView Constraint
         self.collectionView.snp.makeConstraints { (make) in
@@ -121,8 +100,12 @@ class ListoryAlbumController: UIViewController, UIImagePickerControllerDelegate 
             make.left.equalTo(self.view)
             make.right.equalTo(self.view)
         }
-        self.present(actionSheet, animated: false, completion: didTapButton)
- 
+        
+        self.imageLine1.snp.makeConstraints { (make) in
+            make.top.equalTo(self.titleBar.snp.bottom).offset(10)
+            make.centerX.equalTo(self.view.safeAreaLayoutGuide).offset(10)
+            make.centerY.equalTo(self.view.safeAreaLayoutGuide).offset(-10)
+        }
     }
     
     func loadStories() {
@@ -136,7 +119,27 @@ class ListoryAlbumController: UIViewController, UIImagePickerControllerDelegate 
         let vc = self.navigationController?.topViewController as! AlbumController
         vc.delegate = self
     }
+    
+    
+    func setupTabBar(){
+        
+        viewControllers.tabBar.barTintColor = .white
+        UITabBar.setTransparentTabBar()
+        let photoTabBar = PhotoViewController()
+        photoTabBar.tabBarItem.image = UIImage (named: "btnPhoto")
+        let audioTabBar = AudioViewController()
+        audioTabBar.tabBarItem.image = UIImage (named: "btnAudio")
+        let forYouTabBar = ForYouViewController()
+        forYouTabBar.tabBarItem.image = UIImage (named: "btnForYou")
+        
+        viewControllers.setViewControllers([photoTabBar, audioTabBar, forYouTabBar], animated: false)
+        viewControllers.modalPresentationStyle = .fullScreen
+        self.view.addSubview(viewControllers.view)
+    }
+    
 }
+
+//^Batas akhir kelas
 
 extension ListoryAlbumController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
@@ -147,6 +150,7 @@ extension ListoryAlbumController: UICollectionViewDelegateFlowLayout, UICollecti
         vc.storyRow = indexPath.row
         vc.delegate = self
         vc.soundFileURL = URL(string: UserDefaults.standard.string(forKey: "audio")!)
+//        return self.recordings.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -217,5 +221,13 @@ extension UINavigationBar {
     self.setBackgroundImage(UIImage(), for: .default)
     self.shadowImage = UIImage()
     self.isTranslucent = true
+    }
+}
+
+extension UITabBar {
+    static func setTransparentTabBar(){
+        UITabBar.appearance().backgroundImage = UIImage()
+        UITabBar.appearance().shadowImage = UIImage()
+        UITabBar.appearance().clipsToBounds = true
     }
 }

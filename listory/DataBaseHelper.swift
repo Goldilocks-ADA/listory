@@ -23,7 +23,7 @@ class DataBaseHelper {
             storyInstance.drawing = drawing
             storyInstance.audioPath = audioPath
             try context.save()
-            print("Image is saved")
+            print("Image is saved", image)
         } catch {
             print("Error saving data \(error)", error.localizedDescription)
         }
