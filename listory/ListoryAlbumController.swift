@@ -15,7 +15,7 @@ struct CustomData {
     var url = String()
 }
 
-class ListoryAlbumController: UIViewController {
+class ListoryAlbumController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
     var recordings = [URL]()
     var player: AVAudioPlayer!
@@ -77,7 +77,7 @@ class ListoryAlbumController: UIViewController {
         self.view.addSubview(collectionView)
         self.view.addSubview(imageLine1)
         self.view.addSubview(imageLine2)
-        self.view.addSubview(buttonAdd)
+        self.view.addSubview(self.buttonAdd)
         navigationController?.navigationBar.transparentNavigationBar()
         setupTabBar()
         loadStories()
@@ -125,6 +125,8 @@ class ListoryAlbumController: UIViewController {
             make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-100)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-80)
         }
+        self.buttonAdd.addTarget(self, action: #selector(self.didTapButton), for: .touchUpInside)
+//        self.present(a, animated: <#T##Bool#>, completion: <#T##(() -> Void)?##(() -> Void)?##() -> Void#>)
     }
     
     func loadStories() {
@@ -134,9 +136,45 @@ class ListoryAlbumController: UIViewController {
     }
     
     @objc private func didTapButton(){
-        self.navigationController?.pushViewController(AlbumController(), animated: true)
-        let vc = self.navigationController?.topViewController as! AlbumController
-        vc.delegate = self
+//        self.navigationController?.pushViewController(AlbumController(), animated: true)
+//        let vc = self.navigationController?.topViewController as! AlbumController
+//        vc.delegate = self
+        
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        
+        //Alert Notification
+        let actionSheet = UIAlertController(title: "Listory would like to Access the Camera", message: "So you can take a picture from family albums", preferredStyle: .actionSheet)
+        
+        //Photo From Camera
+        actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: {(action: UIAlertAction) in
+            if UIImagePickerController.isSourceTypeAvailable(.camera){
+                imagePickerController.sourceType = .camera
+                self.present(imagePickerController, animated: true, completion: nil)
+            }
+            else {
+                print("Camera not available")
+            }
+        }))
+        
+        //Photo from Photo Library
+        actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (action: UIAlertAction) in
+            imagePickerController.sourceType = .photoLibrary
+            self.present(imagePickerController, animated: true, completion: nil)
+        }))
+        
+        
+        //Cancel Button
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(actionSheet, animated: true, completion: nil)
+        
+        //Popover Position
+        if let popoverController = actionSheet.popoverPresentationController {
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+            popoverController.permittedArrowDirections = []
+        }
+        self.present(actionSheet, animated: true, completion: nil)
     }
     
     
