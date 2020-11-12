@@ -70,6 +70,7 @@ class ListoryAlbumController: UIViewController {
         self.view.addSubview(titleBar)
         self.view.addSubview(collectionView)
         self.view.addSubview(imageLine1)
+        self.view.addSubview(imageLine2)
         navigationController?.navigationBar.transparentNavigationBar()
         setupTabBar()
         loadStories()
@@ -86,7 +87,7 @@ class ListoryAlbumController: UIViewController {
             make.left.equalTo(self.view.snp_leftMargin).offset(20)
             make.top.equalTo(self.view.snp_topMargin).offset(20)
             make.right.equalTo(self.view.snp_rightMargin).offset(-20)
-            make.bottom.equalTo(self.view.snp_bottomMargin).offset(-20)
+            make.bottom.equalTo(self.view.snp_bottomMargin).offset(-90)
         }
         self.backgroundAlbumView.snp.makeConstraints { (make) in
             make.left.equalTo(self.view.safeAreaInsets)
@@ -103,8 +104,14 @@ class ListoryAlbumController: UIViewController {
         
         self.imageLine1.snp.makeConstraints { (make) in
             make.top.equalTo(self.titleBar.snp.bottom).offset(10)
-            make.centerX.equalTo(self.view.safeAreaLayoutGuide).offset(10)
-            make.centerY.equalTo(self.view.safeAreaLayoutGuide).offset(-10)
+            make.left.equalTo(self.view.safeAreaLayoutGuide).offset(100)
+            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-100)
+        }
+        
+        self.imageLine2.snp.makeConstraints { (make) in
+            make.left.equalTo(self.view.safeAreaLayoutGuide).offset(100)
+            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-100)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-80)
         }
     }
     
@@ -179,6 +186,7 @@ class CustomCell: UICollectionViewCell {
     fileprivate let backGround: UIImageView = {
         let imageView = UIImageView()
         imageView.image = #imageLiteral(resourceName: "beauty1")
+        imageView.backgroundColor = .white
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -190,10 +198,12 @@ class CustomCell: UICollectionViewCell {
         super.init(frame: frame)
         contentView.addSubview(backGround)
         self.backGround.snp.makeConstraints { (make) in
-            make.top.equalTo(self.contentView.safeAreaLayoutGuide)
+            make.top.equalTo(self.contentView.safeAreaLayoutGuide).offset(13)
             make.left.equalTo(self.contentView.safeAreaLayoutGuide)
             make.right.equalTo(self.contentView.safeAreaLayoutGuide)
             make.bottom.equalTo(self.contentView.safeAreaLayoutGuide)
+//            make.height.equalTo(500)
+//            make.width.equalTo(250)
         }
     }
     
