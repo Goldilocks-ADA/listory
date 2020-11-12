@@ -73,11 +73,20 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
     lazy var backgroundView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .systemRed
+       // view.backgroundColor = .systemRed
         return view
     }()
     
     lazy var backgroundImageView: UIImageView = {
+        let pencilbackgroundView = UIImageView()
+        pencilbackgroundView.image = UIImage(named: "albumBG")
+        pencilbackgroundView.contentMode = .scaleAspectFill
+        pencilbackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        pencilbackgroundView.clipsToBounds = true
+        return pencilbackgroundView
+    }()
+    
+    lazy var backgroundImageView2: UIImageView = {
         let pencilbackgroundView = UIImageView()
         pencilbackgroundView.image = sampleImageView.image
         pencilbackgroundView.contentMode = .scaleAspectFit
@@ -458,6 +467,12 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         backgroundImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
         backgroundImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
         
+        backgroundImageView.addSubview(backgroundImageView2)
+        backgroundImageView2.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
+        backgroundImageView2.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+        backgroundImageView2.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+        backgroundImageView2.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
+        
         backgroundView.addSubview(canvasView)
         canvasView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
         canvasView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
@@ -580,19 +595,19 @@ extension AlbumController: AVAudioRecorderDelegate {
         recordButton.setTitle("Record", for: UIControl.State())
         
         // iOS8 and later
-        let alert = UIAlertController(title: "Recorder",
-                                      message: "Finished Recording",
-                                      preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Keep", style: .default) {[unowned self] _ in
-            print("keep was tapped")
-            self.recorder = nil
-        })
-        alert.addAction(UIAlertAction(title: "Delete", style: .default) {[unowned self] _ in
-            print("delete was tapped")
-            self.recorder.deleteRecording()
-        })
-        
-        self.present(alert, animated: true, completion: nil)
+//        let alert = UIAlertController(title: "Recorder",
+//                                      message: "Finished Recording",
+//                                      preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "Keep", style: .default) {[unowned self] _ in
+//            print("keep was tapped")
+//            self.recorder = nil
+//        })
+//        alert.addAction(UIAlertAction(title: "Delete", style: .default) {[unowned self] _ in
+//            print("delete was tapped")
+//            self.recorder.deleteRecording()
+//        })
+//
+//        self.present(alert, animated: true, completion: nil)
     }
     
     func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {

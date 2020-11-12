@@ -112,6 +112,23 @@ extension ListoryAlbumController: UICollectionViewDelegateFlowLayout, UICollecti
 //        return self.recordings.count
     }
     
+//    func setupPlayer() {
+//        let musicID: String = self.musicID!
+//        let searchPaths: [String] = NSSearchPathForDirectoriesInDomains(.documentDirectory, .allDomainsMask, true)
+//        let documentPath_ = searchPaths.first!
+//        let selectedSound = "\(documentPath_)/\(musicID)"
+//        let url: URL = URL(fileURLWithPath: selectedSound)
+//
+//        do {
+//            soundPlayer = try AVAudioPlayer(contentsOf: url)
+//            soundPlayer.delegate = self
+//            soundPlayer.prepareToPlay()
+//            soundPlayer.volume = 1.0
+//        } catch {
+//            print(error)
+//        }
+//    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width/4.5, height: collectionView.frame.height/2)
     }
