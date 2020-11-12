@@ -20,10 +20,10 @@ class ListoryAlbumController: UIViewController {
     var recordings = [URL]()
     var player: AVAudioPlayer!
     
-    let addButtonSetItemRight: UIBarButtonItem = {
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: Selector(("addTapped:")))
-        return addButton
-    }()
+//    let addButtonSetItemRight: UIBarButtonItem = {
+//        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: Selector(("addTapped:")))
+//        return addButton
+//    }()
     
     let backgroundAlbumView: UIImageView = {
         let bgAlbum = UIImageView ()
@@ -41,6 +41,12 @@ class ListoryAlbumController: UIViewController {
        let line2 = UIImageView()
         line2.image = UIImage (named: "line2")
         return line2
+    }()
+    
+    let buttonAdd: UIButton = {
+       let btnAdd = UIButton()
+        btnAdd.setImage(UIImage(named: "btnAdd"), for: .normal)
+        return btnAdd
     }()
     
     let titleBar: UILabel = {
@@ -71,11 +77,12 @@ class ListoryAlbumController: UIViewController {
         self.view.addSubview(collectionView)
         self.view.addSubview(imageLine1)
         self.view.addSubview(imageLine2)
+        self.view.addSubview(buttonAdd)
         navigationController?.navigationBar.transparentNavigationBar()
         setupTabBar()
         loadStories()
-        navigationItem.rightBarButtonItem = UIBarButtonItem (barButtonSystemItem: .add, target: self, action: #selector(didTapButton))
-        
+//        navigationItem.rightBarButtonItem = UIBarButtonItem (barButtonSystemItem: .add, target: self, action: #selector(didTapButton))
+//        
         
         //Calling CollectionView to View Controller
         collectionView.delegate = self
@@ -87,13 +94,18 @@ class ListoryAlbumController: UIViewController {
             make.left.equalTo(self.view.snp_leftMargin).offset(20)
             make.top.equalTo(self.view.snp_topMargin).offset(20)
             make.right.equalTo(self.view.snp_rightMargin).offset(-20)
-            make.bottom.equalTo(self.view.snp_bottomMargin).offset(-90)
+            make.bottom.equalTo(self.view.snp_bottomMargin).offset(-85)
         }
         self.backgroundAlbumView.snp.makeConstraints { (make) in
             make.left.equalTo(self.view.safeAreaInsets)
             make.top.equalTo(self.view.safeAreaInsets)
             make.right.equalTo(self.view.safeAreaInsets)
             make.bottom.equalTo(self.view.safeAreaInsets)
+        }
+        
+        self.buttonAdd.snp.makeConstraints { (make) in
+            make.top.equalTo(self.titleBar.snp.top).offset(10)
+            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-130)
         }
         
         self.titleBar.snp.makeConstraints { (make) in
@@ -186,7 +198,6 @@ class CustomCell: UICollectionViewCell {
     fileprivate let backGround: UIImageView = {
         let imageView = UIImageView()
         imageView.image = #imageLiteral(resourceName: "beauty1")
-        imageView.backgroundColor = .white
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
