@@ -118,7 +118,7 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white       
-        setupPencilKit()
+       // setupPencilKit()
         //MARK:- 2. Add Subview to Main View
         self.title = "Listory Image Preview"
         self.view.addSubview(sampleImageView)
@@ -205,6 +205,13 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
     }
     
     @objc private func record(_ sender: UIButton) {
+        setupPencilKit()
+        
+        backgroundView.addSubview(canvasView)
+        canvasView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
+        canvasView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+        canvasView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -0).isActive = true
+        canvasView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -0).isActive = true
         
         print("\(#function)")
         
@@ -473,11 +480,7 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         backgroundImageView2.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
         backgroundImageView2.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
         
-        backgroundView.addSubview(canvasView)
-        canvasView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
-        canvasView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
-        canvasView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -0).isActive = true
-        canvasView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -0).isActive = true
+        
     }
     
     func updateLayout(for toolPicker: PKToolPicker) {
@@ -538,7 +541,9 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         sampleImageView.image = image
         self.title = ""
         picker.dismiss(animated: true, completion: nil)
+        
         setupView()
+        
         self.view.addSubview(recordButton)
         self.view.addSubview(stopButton)
         self.view.addSubview(playButton)
