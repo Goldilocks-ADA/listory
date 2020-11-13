@@ -16,9 +16,6 @@ class DashBoardViewController: UIViewController {
         return imageView
     }()
     
-    
-    
-    
     let startButtonRecord: UIButton = {
         let button = UIButton(type: UIButton.ButtonType.custom)
         button.setImage(UIImage(named: "tombolRecord"), for: .normal)
@@ -75,7 +72,6 @@ class DashBoardViewController: UIViewController {
             make.width.equalTo(350)
         }
         self.startButtonRecord.addTarget(self, action: #selector(moveToAlbumController), for: .touchUpInside)
-        
     }
     
     @objc func moveToAlbumController(){
