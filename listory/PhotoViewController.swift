@@ -83,7 +83,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
         
         self.buttonAdd.snp.makeConstraints { (make) in
             make.top.equalTo(self.view).offset(30)
-            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-130)
+            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-140)
         }
         
         self.buttonBack.snp.makeConstraints { (make) in
