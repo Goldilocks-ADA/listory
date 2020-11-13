@@ -68,13 +68,12 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .clear
+//        view.backgroundColor = .clear
         self.view.addSubview(backgroundAlbumView)
         self.view.addSubview(titleBar)
         self.view.addSubview(collectionView)
         self.view.addSubview(imageLine1)
         self.view.addSubview(imageLine2)
-        
         self.view.addSubview(buttonAdd)
         navigationController?.navigationBar.transparentNavigationBar()
 //        setupTabBar()
@@ -86,8 +85,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
         collectionView.dataSource = self
         collectionView.backgroundColor = .clear
         
-        //CollectionView Constraint
-        
+        // Constraint
         self.buttonAdd.snp.makeConstraints { (make) in
             make.top.equalTo(self.view).offset(30)
             make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-140)
@@ -128,49 +126,11 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
 //            make.top.equalTo(self.view).offset(40)
 //            make.left.equalTo(self.view).offset(150)
 //        }
- 
-        //CollectionView Constraint
-        self.collectionView.snp.makeConstraints { (make) in
-            make.left.equalTo(self.view.snp_leftMargin).offset(20)
-            make.top.equalTo(self.view.snp_topMargin).offset(20)
-            make.right.equalTo(self.view.snp_rightMargin).offset(-20)
-            make.bottom.equalTo(self.view.snp_bottomMargin).offset(-85)
-        }
-        self.backgroundAlbumView.snp.makeConstraints { (make) in
-            make.left.equalTo(self.view.safeAreaInsets)
-            make.top.equalTo(self.view.safeAreaInsets)
-            make.right.equalTo(self.view.safeAreaInsets)
-            make.bottom.equalTo(self.view.safeAreaInsets)
-        }
-        
         
         self.buttonAdd.snp.makeConstraints { (make) in
             make.top.equalTo(self.view)
             make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-130)
         }
-        
-//        self.buttonAdd.snp.makeConstraints { (make) in
-//            make.top.equalTo(self.titleBar.snp.top).offset(10)
-//            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-130)
-//        }
-//
-//        self.titleBar.snp.makeConstraints { (make) in
-//            make.top.equalTo(self.view).offset(30)
-//            make.left.equalTo(self.view)
-//            make.right.equalTo(self.view)
-//        }
-//
-//        self.imageLine1.snp.makeConstraints { (make) in
-//            make.top.equalTo(self.titleBar.snp.bottom).offset(10)
-//            make.left.equalTo(self.view.safeAreaLayoutGuide).offset(100)
-//            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-100)
-//        }
-//
-//        self.imageLine2.snp.makeConstraints { (make) in
-//            make.left.equalTo(self.view.safeAreaLayoutGuide).offset(100)
-//            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-100)
-//            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-80)
-//        }
         
 //        self.buttonBack.addTarget(self, action: #selector(backButton), for: .touchUpInside)
         

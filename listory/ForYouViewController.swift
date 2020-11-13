@@ -11,7 +11,7 @@ class ForYouViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .clear
+        view.backgroundColor = .lightGray
     }
 
 }
