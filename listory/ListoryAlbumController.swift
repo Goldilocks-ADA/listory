@@ -78,7 +78,7 @@ class ListoryAlbumController: UIViewController, UIImagePickerControllerDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(backgroundAlbumView)
-        self.view.addSubview(titleBar)
+//        self.view.addSubview(titleBar)
         self.view.addSubview(collectionView)
         //        self.view.addSubview(imageLine1)
         //        self.view.addSubview(imageLine2)
