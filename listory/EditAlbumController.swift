@@ -8,7 +8,6 @@
 import UIKit
 import AVFoundation
 import SnapKit
-import UIKit
 import PencilKit
 import PhotosUI
 

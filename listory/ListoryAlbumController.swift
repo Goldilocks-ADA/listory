@@ -30,6 +30,11 @@ class ListoryAlbumController: UIViewController, UIImagePickerControllerDelegate 
         bgAlbum.image = UIImage(named: "albumBG")
         return bgAlbum
     }()
+    let albumControll: UIImageView = {
+        let bgAlbum1 = UIImageView ()
+        bgAlbum1.image = UIImage(named: "albumBG")
+        return bgAlbum1
+    }()
     
     let imageLine1: UIImageView = {
        let line1 = UIImageView()
