@@ -11,7 +11,7 @@ class PhotoViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .clear
+        view.backgroundColor = .white
         
     }
 
