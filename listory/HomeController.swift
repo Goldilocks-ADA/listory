@@ -18,13 +18,6 @@ class HomeController: UIViewController, UIScrollViewDelegate {
         return imageView
     }()
     
-    let sesuatu: UIButton = {
-       let btn = UIButton()
-        
-        return btn
-    }()
-    
-    
     lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.isPagingEnabled = true
