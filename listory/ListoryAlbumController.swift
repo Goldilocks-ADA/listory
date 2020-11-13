@@ -110,6 +110,7 @@ extension ListoryAlbumController: UICollectionViewDelegateFlowLayout, UICollecti
         vc.delegate = self
         vc.soundFileURL = URL(string: UserDefaults.standard.string(forKey: "audio")!)
 //        return self.recordings.count
+       // vc.soundFileURL = (recordings[indexPath.row])
     }
     
 //    func setupPlayer() {
@@ -142,6 +143,7 @@ extension ListoryAlbumController: UICollectionViewDelegateFlowLayout, UICollecti
         cell.backGround.image = UIImage(data: stories[indexPath.row].image!)
         return cell
     }
+    
 }
 
 class CustomCell: UICollectionViewCell {

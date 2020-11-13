@@ -20,12 +20,19 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
     
     //MARK:- 1.View Creation Detail Screen
     
+//    let recordButton: UIButton = {
+//        let button = UIButton(type: UIButton.ButtonType.system)
+//        button.layer.cornerRadius = 33
+//        button.backgroundColor = .red
+//        button.setTitle("Record", for: .normal)
+//        button.setTitleColor(.white, for: .normal)
+//        return button
+//    }()
+    
     let recordButton: UIButton = {
         let button = UIButton(type: UIButton.ButtonType.system)
-        button.layer.cornerRadius = 33
-        button.backgroundColor = .red
-        button.setTitle("Record", for: .normal)
-        button.setTitleColor(.white, for: .normal)
+        button.setImage(UIImage(named: "recordButton"), for: .normal)
+        button.tintColor = UIColor(red: 225/255, green: 0/255, blue: 0/255, alpha: 1)
         return button
     }()
     
@@ -548,10 +555,11 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         self.view.addSubview(statusLabel)
         
         self.recordButton.snp.makeConstraints { (make) in
-            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-100)
-            make.width.equalTo(66)
-            make.height.equalTo(66)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(20)
+            make.centerX.equalTo(self.view.safeAreaLayoutGuide)
+         //   make.height.equalTo(45)
+          //  make.width.equalTo(300)
         }
         
         self.stopButton.snp.makeConstraints { (make) in
