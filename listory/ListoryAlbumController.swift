@@ -15,6 +15,10 @@ struct CustomData {
     var url = String()
 }
 
+protocol ListoryAlbumControllerDelegate {
+    func setupTabBar()
+}
+
 class ListoryAlbumController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     //    let addButtonSetItemRight: UIBarButtonItem = {
@@ -83,9 +87,9 @@ class ListoryAlbumController: UIViewController, UIImagePickerControllerDelegate,
         //        self.view.addSubview(imageLine1)
         //        self.view.addSubview(imageLine2)
         //        self.view.addSubview(buttonAdd)
-        //        navigationController?.navigationBar.transparentNavigationBar()
-        //        setupTabBar()
-        //        loadStories()
+                navigationController?.navigationBar.transparentNavigationBar()
+                setupTabBar()
+                loadStories()
         ////        navigationItem.rightBarButtonItem = UIBarButtonItem (barButtonSystemItem: .add, target: self, action: #selector(didTapButton))
         ////
         //
@@ -133,11 +137,7 @@ class ListoryAlbumController: UIViewController, UIImagePickerControllerDelegate,
         //        self.buttonAdd.addTarget(self, action: #selector(self.didTapButton), for: .touchUpInside)
         //    }
         //
-        //    func loadStories() {
-        //        if let loadedStories =  DataBaseHelper.shareInstance.retrieveAllStories(){
-        //            stories = loadedStories
-        //        }
-        //    }
+     
         //
         //    @objc private func didTapButton(){
         ////        self.navigationController?.pushViewController(AlbumController(), animated: true)
@@ -181,8 +181,14 @@ class ListoryAlbumController: UIViewController, UIImagePickerControllerDelegate,
         //        self.present(actionSheet, animated: true, completion: nil)
         //    }
     }
+    
+    func loadStories() {
+        if let loadedStories =  DataBaseHelper.shareInstance.retrieveAllStories(){
+            stories = loadedStories
+        }
+    }
+    
     func setupTabBar(){
-        
         viewControllers.tabBar.barTintColor = .white
         UITabBar.setTransparentTabBar()
         let photoTabBar = PhotoViewController()

@@ -10,13 +10,14 @@ import SnapKit
 import AVFoundation
 import CoreData
 
-class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & UICollectionViewDelegate, UINavigationControllerDelegate {
+class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & UICollectionViewDelegate, UINavigationControllerDelegate, UIPopoverPresentationControllerDelegate {
     
     let backgroundAlbumView: UIImageView = {
         let bgAlbum = UIImageView ()
         bgAlbum.image = UIImage(named: "albumBG")
         return bgAlbum
     }()
+    
     let albumControll: UIImageView = {
         let bgAlbum1 = UIImageView ()
         bgAlbum1.image = UIImage(named: "albumBG")
@@ -67,12 +68,13 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .clear
         self.view.addSubview(backgroundAlbumView)
         self.view.addSubview(titleBar)
         self.view.addSubview(collectionView)
         self.view.addSubview(imageLine1)
         self.view.addSubview(imageLine2)
+        
         self.view.addSubview(buttonAdd)
         navigationController?.navigationBar.transparentNavigationBar()
 //        setupTabBar()
@@ -85,6 +87,12 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
         collectionView.backgroundColor = .clear
         
         //CollectionView Constraint
+        
+        self.buttonAdd.snp.makeConstraints { (make) in
+            make.top.equalTo(self.view).offset(30)
+            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-140)
+        }
+        
         self.collectionView.snp.makeConstraints { (make) in
             make.left.equalTo(self.view.snp_leftMargin).offset(20)
             make.top.equalTo(self.view.snp_topMargin).offset(20)
@@ -96,11 +104,6 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
             make.top.equalTo(self.view.safeAreaInsets)
             make.right.equalTo(self.view.safeAreaInsets)
             make.bottom.equalTo(self.view.safeAreaInsets)
-        }
-        
-        self.buttonAdd.snp.makeConstraints { (make) in
-            make.top.equalTo(self.titleBar.snp.top).offset(10)
-            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-130)
         }
         
         self.titleBar.snp.makeConstraints { (make) in
@@ -121,11 +124,6 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
             make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-80)
         }
         
-        self.buttonAdd.snp.makeConstraints { (make) in
-            make.top.equalTo(self.view).offset(30)
-            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-140)
-        }
-        
 //        self.buttonBack.snp.makeConstraints { (make) in
 //            make.top.equalTo(self.view).offset(40)
 //            make.left.equalTo(self.view).offset(150)
@@ -143,6 +141,12 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
             make.top.equalTo(self.view.safeAreaInsets)
             make.right.equalTo(self.view.safeAreaInsets)
             make.bottom.equalTo(self.view.safeAreaInsets)
+        }
+        
+        
+        self.buttonAdd.snp.makeConstraints { (make) in
+            make.top.equalTo(self.view)
+            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-130)
         }
         
 //        self.buttonAdd.snp.makeConstraints { (make) in
@@ -184,11 +188,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
     }
     
     @objc private func didTapButton(){
-//        self.navigationController?.pushViewController(AlbumController(), animated: true)
-//        let vc = self.navigationController?.topViewController as! AlbumController
-//        vc.delegate = self
         print("test")
-        
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         
@@ -209,7 +209,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
         //Photo from Photo Library
         actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (action: UIAlertAction) in
             imagePickerController.sourceType = .photoLibrary
-            self.present(imagePickerController, animated: true, completion: nil)
+            self.present(imagePickerController, animated: true)
         }))
         
         
@@ -280,8 +280,6 @@ class CustomCell: UICollectionViewCell {
             make.left.equalTo(self.contentView.safeAreaLayoutGuide)
             make.right.equalTo(self.contentView.safeAreaLayoutGuide)
             make.bottom.equalTo(self.contentView.safeAreaLayoutGuide)
-            //            make.height.equalTo(500)
-            //            make.width.equalTo(250)
         }
     }
     
@@ -309,5 +307,11 @@ extension UINavigationBar {
         self.setBackgroundImage(UIImage(), for: .default)
         self.shadowImage = UIImage()
         self.isTranslucent = true
+    }
+}
+
+extension PhotoViewController: ListoryAlbumControllerDelegate {
+    func setupTabBar(){
+        
     }
 }
