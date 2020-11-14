@@ -147,7 +147,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
         }
     }
     
-    @objc private func didTapButton(){
+    @objc private func didTapButton(_ sender: Any){
         print("test")
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
@@ -169,7 +169,9 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
         //Photo from Photo Library
         actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (action: UIAlertAction) in
             imagePickerController.sourceType = .photoLibrary
-            self.present(imagePickerController, animated: true)
+            self.present(imagePickerController, animated: true) {
+                print("Photo selected")
+            }
         }))
         
         
@@ -183,7 +185,15 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
             popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
             popoverController.permittedArrowDirections = []
         }
-        self.present(actionSheet, animated: true, completion: nil)
+//        self.present(actionSheet, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            var imageDataBase = DataBaseHelper()
+            imageDataBase.addNewStory(name: "", isWithAudio: false, image: pickedImage.pngData()!, drawing: Data(), audioPath: "")
+        }
+//        dismissViewControllerAnimated(true, completion: nil)
     }
 } //Batas Kelas
 
