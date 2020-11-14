@@ -150,6 +150,7 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
     func setupData(){
         if let image = story.image{
             sampleImageView.image = UIImage(data: image)
+            print("image can not be loaded \(image)")
         }
         if let savedDrawing = story.drawing {
             do {
@@ -161,8 +162,8 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
     }
      
     @objc func saveButton() {
-        
-        if let imageData = sampleImageView.image?.jpegData(compressionQuality: 0.75){
+        if let imageData = sampleImageView.image?.pngData(){
+            print("Trying to save image")
             delegate?.updateStories(story:  imageDataBase.updateStory(name: story.name!, isWithAudio: false, image: imageData, drawing: canvasView.drawing.dataRepresentation(), audioPath: ""), storyRow: storyRow)
             self.navigationController?.popViewController(animated: true)
         }

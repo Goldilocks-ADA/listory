@@ -92,10 +92,10 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
         }
         
         self.collectionView.snp.makeConstraints { (make) in
-            make.left.equalTo(self.view.snp_leftMargin).offset(20)
-            make.top.equalTo(self.view.snp_topMargin).offset(20)
-            make.right.equalTo(self.view.snp_rightMargin).offset(-20)
-            make.bottom.equalTo(self.view.snp_bottomMargin).offset(-85)
+            make.left.equalTo(self.view.snp_leftMargin).offset(40)
+            make.top.equalTo(self.view.snp_topMargin).offset(85)
+            make.right.equalTo(self.view.snp_rightMargin).offset(-40)
+            make.bottom.equalTo(self.view.snp_bottomMargin).offset(-30)
         }
         self.backgroundAlbumView.snp.makeConstraints { (make) in
             make.left.equalTo(self.view.safeAreaInsets)
@@ -119,7 +119,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
         self.imageLine2.snp.makeConstraints { (make) in
             make.left.equalTo(self.view.safeAreaLayoutGuide).offset(100)
             make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-100)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-80)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
         }
         
 //        self.buttonBack.snp.makeConstraints { (make) in
@@ -164,14 +164,14 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
         actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (action: UIAlertAction) in
             imagePickerController.sourceType = .photoLibrary
             self.present(imagePickerController, animated: true) {
-                print("Photo selected")
+                print("Select Photo")
             }
         }))
         
         
         //Cancel Button
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        self.present(actionSheet, animated: true, completion: nil)
+//        self.present(actionSheet, animated: true, completion: nil)
         
         //Popover Position
         if let popoverController = actionSheet.popoverPresentationController {
@@ -179,14 +179,13 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
             popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
             popoverController.permittedArrowDirections = []
         }
-//        self.present(actionSheet, animated: true, completion: nil)
+        self.present(actionSheet, animated: true, completion: nil)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             let imageDataBase = DataBaseHelper()
             imageDataBase.addNewStory(name: "", isWithAudio: false, image: pickedImage.pngData()!, drawing: Data(), audioPath: "")
-            collectionView.reloadData()
         }
 //        dismissViewControllerAnimated(true, completion: nil)
     }
@@ -201,6 +200,7 @@ extension PhotoViewController: UICollectionViewDelegateFlowLayout, UICollectionV
         vc.storyRow = indexPath.row
         vc.delegate = self
         vc.soundFileURL = URL(string: UserDefaults.standard.string(forKey: "audio")!)
+        collectionView.reloadData()
         //        return self.recordings.count
     }
     
