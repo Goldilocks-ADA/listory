@@ -128,6 +128,9 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
     var toolPicker: PKToolPicker!
     var imageDataBase = DataBaseHelper()
     var delegate: AlbumControllerDelegate?
+    var musicIdentifier: String?
+    var recordingSession: AVAudioSession!
+    var isWithAudio : Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -194,7 +197,7 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         let currentStoryName = "Story-\(format.string(from: Date()))"
         
         if let imageData = sampleImageView.image?.pngData(){
-            delegate?.updateStories(story:  imageDataBase.addNewStory(name: currentStoryName, isWithAudio: false, image: imageData, drawing: canvasView.drawing.dataRepresentation(), audioPath: ""))
+            delegate?.updateStories(story:  imageDataBase.addNewStory(name: currentStoryName, isWithAudio: self.isWithAudio, image: imageData, drawing: canvasView.drawing.dataRepresentation(), audioPath: self.isWithAudio ? musicIdentifier! : ""))
             self.navigationController?.popViewController(animated: true)
         }
     }
@@ -284,6 +287,7 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
             playButton.isEnabled = true
             stopButton.isEnabled = false
             recordButton.isEnabled = true
+            self.isWithAudio = true
         } catch {
             print("could not make session inactive")
             print(error.localizedDescription)
@@ -301,8 +305,8 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         } else {
             url = self.soundFileURL!
         }
-        print("playing \(String(describing: url))")
-        UserDefaults.standard.set("\(url!)", forKey: "audio")
+//        print("playing \(String(describing: url))")
+//        UserDefaults.standard.set("\(url!)", forKey: "audio")
         
         do {
             self.player = try AVAudioPlayer(contentsOf: url!)
@@ -318,22 +322,29 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
     }
     
     func setupRecorder() {
-        print("\(#function)")
+        let searchPaths: [String] = NSSearchPathForDirectoriesInDomains(.documentDirectory, .allDomainsMask, true)
+        let documentPath_: String = searchPaths.first!
+        let pathToSave = "\(documentPath_)/\(dateString())"
+        let url: URL = URL(fileURLWithPath: pathToSave)
+        self.musicIdentifier = dateString()
+        self.soundFileURL = url
         
-        let format = DateFormatter()
-        format.dateFormat="yyyy-MM-dd-HH-mm-ss"
-        let currentFileName = "recording-\(format.string(from: Date())).m4a"
-        print(currentFileName)
-        
-        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        self.soundFileURL = documentsDirectory.appendingPathComponent(currentFileName)
-        print("writing to soundfile url: '\(soundFileURL!)'")
-        
-        if FileManager.default.fileExists(atPath: soundFileURL.absoluteString) {
-            // probably won't happen. want to do something about it?
-            print("soundfile \(soundFileURL.absoluteString) exists")
-        }
-        
+//        print("\(#function)")
+//
+//        let format = DateFormatter()
+//        format.dateFormat="yyyy-MM-dd-HH-mm-ss"
+//        let currentFileName = "recording-\(format.string(from: Date())).m4a"
+//        print(currentFileName)
+//
+//        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+//        self.soundFileURL = documentsDirectory.appendingPathComponent(currentFileName)
+//        print("writing to soundfile url: '\(soundFileURL!)'")
+//
+//        if FileManager.default.fileExists(atPath: soundFileURL.absoluteString) {
+//            // probably won't happen. want to do something about it?
+//            print("soundfile \(soundFileURL.absoluteString) exists")
+//        }
+
         let recordSettings: [String: Any] = [
             AVFormatIDKey: kAudioFormatAppleLossless,
             AVEncoderAudioQualityKey: AVAudioQuality.max.rawValue,
@@ -341,10 +352,10 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
             AVNumberOfChannelsKey: 2,
             AVSampleRateKey: 44100.0
         ]
-        
-        
+
+
         do {
-            recorder = try AVAudioRecorder(url: soundFileURL, settings: recordSettings)
+            recorder = try AVAudioRecorder(url: url, settings: recordSettings)
             recorder.delegate = self
             recorder.isMeteringEnabled = true
             recorder.prepareToRecord() // creates/overwrites the file at soundFileURL
@@ -352,8 +363,16 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
             recorder = nil
             print(error.localizedDescription)
         }
-        
+
     }
+    
+    
+    func dateString() -> String {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "ddMMMYY_hhmmssa"
+            let fileName = formatter.string(from: Date())
+            return "\(fileName).m4a"
+        }
     
     func recordWithPermission(_ setup: Bool) {
         print("\(#function)")
