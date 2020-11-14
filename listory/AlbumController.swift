@@ -461,8 +461,8 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         backgroundView.addSubview(canvasView)
         canvasView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
         canvasView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
-        canvasView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -0).isActive = true
-        canvasView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -0).isActive = true
+        canvasView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+        canvasView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
     }
     
     func updateLayout(for toolPicker: PKToolPicker) {

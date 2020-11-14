@@ -127,13 +127,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
 //            make.left.equalTo(self.view).offset(150)
 //        }
         
-        self.buttonAdd.snp.makeConstraints { (make) in
-            make.top.equalTo(self.view)
-            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-130)
-        }
-        
 //        self.buttonBack.addTarget(self, action: #selector(backButton), for: .touchUpInside)
-        
         self.buttonAdd.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
     }
     
@@ -190,8 +184,9 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            var imageDataBase = DataBaseHelper()
+            let imageDataBase = DataBaseHelper()
             imageDataBase.addNewStory(name: "", isWithAudio: false, image: pickedImage.pngData()!, drawing: Data(), audioPath: "")
+            collectionView.reloadData()
         }
 //        dismissViewControllerAnimated(true, completion: nil)
     }
