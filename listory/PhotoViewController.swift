@@ -186,10 +186,9 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             let imageDataBase = DataBaseHelper()
             addStory(story: imageDataBase.addNewStory(name: "", isWithAudio: false, image: pickedImage.pngData()!, drawing: Data(), audioPath: ""))
-            
+            print("Photo Selected")
         }
         picker.dismiss(animated: true, completion: nil)
-//        dismissViewControllerAnimated(true, completion: nil)
     }
     
     func addStory(story: Story) {
