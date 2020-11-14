@@ -19,7 +19,7 @@ protocol ListoryAlbumControllerDelegate {
     func setupTabBar()
 }
 
-class ListoryAlbumController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ListoryTabbarController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     let backgroundAlbumView: UIImageView = {
         let bgAlbum = UIImageView ()

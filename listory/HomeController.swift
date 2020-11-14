@@ -64,7 +64,7 @@ class HomeController: UIViewController, UIScrollViewDelegate {
     @objc
     private func skipButtonPressed(){
         UserDefaults.standard.set(true, forKey: "isFirstLaunch")
-        self.navigationController?.replaceTopViewController(with: ListoryAlbumController(), animated: true)
+        self.navigationController?.replaceTopViewController(with: ListoryTabbarController(), animated: true)
     }
     
     @objc
