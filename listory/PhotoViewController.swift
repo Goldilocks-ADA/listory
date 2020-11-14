@@ -61,7 +61,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
     }()
    
     var stories = [Story]()
-    let viewControllers = UITabBarController()
+//    let viewControllers = UITabBarController()
     var recordings = [URL]()
     var player: AVAudioPlayer!
     

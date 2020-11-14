@@ -54,11 +54,9 @@ class ListoryAlbumController: UIViewController, UIImagePickerControllerDelegate,
         super.viewDidLoad()
         self.view.addSubview(backgroundAlbumView)
         self.view.addSubview(collectionView)
-        navigationController?.navigationBar.transparentNavigationBar()
+        navigationController?.navigationBar.isHidden = true
         setupTabBar()
         loadStories()
-        //        navigationItem.rightBarButtoxnItem = UIBarButtonItem (barButtonSystemItem: .add, target: self, action: #selector(didTapButton))
-        //
     }
     
     func loadStories() {
