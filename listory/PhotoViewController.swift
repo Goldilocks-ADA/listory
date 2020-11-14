@@ -185,9 +185,16 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             let imageDataBase = DataBaseHelper()
-            imageDataBase.addNewStory(name: "", isWithAudio: false, image: pickedImage.pngData()!, drawing: Data(), audioPath: "")
+            addStory(story: imageDataBase.addNewStory(name: "", isWithAudio: false, image: pickedImage.pngData()!, drawing: Data(), audioPath: ""))
+            
         }
+        picker.dismiss(animated: true, completion: nil)
 //        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func addStory(story: Story) {
+        stories.append(story)
+        collectionView.reloadData()
     }
 } //Batas Kelas
 
