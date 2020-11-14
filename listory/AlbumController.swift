@@ -36,14 +36,21 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         return button
     }()
     
-    let stopButton: UIButton = {
+    lazy var stopButton: UIButton = {
         let button = UIButton(type: UIButton.ButtonType.system)
-        button.layer.cornerRadius = 33
-        button.backgroundColor = .red
-        button.setTitle("Stop", for: .normal)
-        button.setTitleColor(.white, for: .normal)
+        button.setImage(UIImage(named: "stopButton"), for: .normal)
+        button.tintColor = UIColor(red: 225/255, green: 0/255, blue: 0/255, alpha: 1)
         return button
     }()
+    
+//    let stopButton: UIButton = {
+//        let button = UIButton(type: UIButton.ButtonType.system)
+//        button.layer.cornerRadius = 33
+//        button.backgroundColor = .red
+//        button.setTitle("Stop", for: .normal)
+//        button.setTitleColor(.white, for: .normal)
+//        return button
+//    }()
     
     let playButton: UIButton = {
         let button = UIButton(type: UIButton.ButtonType.system)
@@ -219,11 +226,14 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         if player != nil && player.isPlaying {
             print("stopping")
             player.stop()
+            
+            playButton.isEnabled = false
         }
         
         if recorder == nil {
             print("recording. recorder nil")
-            recordButton.setTitle("Pause", for: .normal)
+          //  recordButton.setTitle("Pause", for: .normal)
+            print("merekam")
             playButton.isEnabled = false
             stopButton.isEnabled = true
             recordWithPermission(true)
@@ -231,18 +241,31 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         }
         
         if recorder != nil && recorder.isRecording {
-            print("pausing")
-            recorder.pause()
-            recordButton.setTitle("Continue", for: .normal)
-            
-        } else {
-            print("recording")
-            recordButton.setTitle("Pause", for: .normal)
+                    print("ini stop")
+                    recorder.stop()
             playButton.isEnabled = false
-            stopButton.isEnabled = true
-            //            recorder.record()
-            recordWithPermission(false)
-        }
+            stopButton.isEnabled = false
+//            let button = UIButton(type: UIButton.ButtonType.system)
+//            button.setImage(UIImage(named: "stopButton"), for: .normal)
+//            button.tintColor = UIColor(red: 225/255, green: 0/255, blue: 0/255, alpha: 1)
+          //  return button
+                   // recordButton.setTitle("Continue", for: .normal)
+        
+                }
+        
+//        if recorder != nil && recorder.isRecording {
+//            print("pausing")
+//            recorder.pause()
+//            recordButton.setTitle("Continue", for: .normal)
+//
+//        } else {
+//            print("recording")
+//            recordButton.setTitle("Pause", for: .normal)
+//            playButton.isEnabled = false
+//            stopButton.isEnabled = true
+//            //            recorder.record()
+//            recordWithPermission(false)
+//        }
     }
     
     @objc private func stop(_ sender: UIButton) {
@@ -254,7 +277,7 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         
         meterTimer.invalidate()
         
-        recordButton.setTitle("Record", for: .normal)
+       // recordButton.setTitle("Record", for: .normal)
         let session = AVAudioSession.sharedInstance()
         do {
             try session.setActive(false)
@@ -558,16 +581,20 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
             make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
             make.right.equalTo(self.view.safeAreaLayoutGuide).offset(20)
             make.centerX.equalTo(self.view.safeAreaLayoutGuide)
-         //   make.height.equalTo(45)
-          //  make.width.equalTo(300)
         }
         
         self.stopButton.snp.makeConstraints { (make) in
-            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-200)
-            make.width.equalTo(66)
-            make.height.equalTo(66)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(20)
+            make.centerX.equalTo(self.view.safeAreaLayoutGuide)
         }
+        
+//        self.stopButton.snp.makeConstraints { (make) in
+//            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+//            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-200)
+//            make.width.equalTo(66)
+//            make.height.equalTo(66)
+//        }
         
         self.playButton.snp.makeConstraints { (make) in
             make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
@@ -603,7 +630,7 @@ extension AlbumController: AVAudioRecorderDelegate {
         print("finished recording \(flag)")
         stopButton.isEnabled = false
         playButton.isEnabled = true
-        recordButton.setTitle("Record", for: UIControl.State())
+        //recordButton.setTitle("Record", for: UIControl.State())
         
         // iOS8 and later
 //        let alert = UIAlertController(title: "Recorder",
