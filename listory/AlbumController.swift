@@ -30,16 +30,16 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
 //    }()
     
     let recordButton: UIButton = {
-        let button = UIButton(type: UIButton.ButtonType.system)
+        let button = UIButton()
         button.setImage(UIImage(named: "recordButton"), for: .normal)
-        button.tintColor = UIColor(red: 225/255, green: 0/255, blue: 0/255, alpha: 1)
+       // button.tintColor = UIColor(red: 225/255, green: 0/255, blue: 0/255, alpha: 1)
         return button
     }()
     
     lazy var stopButton: UIButton = {
-        let button = UIButton(type: UIButton.ButtonType.system)
+        let button = UIButton()
         button.setImage(UIImage(named: "stopButton"), for: .normal)
-        button.tintColor = UIColor(red: 225/255, green: 0/255, blue: 0/255, alpha: 1)
+       // button.tintColor = UIColor(red: 225/255, green: 0/255, blue: 0/255, alpha: 1)
         return button
     }()
     
