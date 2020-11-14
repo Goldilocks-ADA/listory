@@ -105,6 +105,9 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
     var toolPicker: PKToolPicker!
     var imageDataBase = DataBaseHelper()
     var delegate: AlbumControllerDelegate?
+    var musicIdentifier: String?
+    var recordingSession: AVAudioSession!
+    var isWithAudio : Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -171,7 +174,7 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         let currentStoryName = "Story-\(format.string(from: Date()))"
         
         if let imageData = sampleImageView.image?.pngData(){
-            delegate?.updateStories(story:  imageDataBase.addNewStory(name: currentStoryName, isWithAudio: false, image: imageData, drawing: canvasView.drawing.dataRepresentation(), audioPath: ""))
+            delegate?.updateStories(story:  imageDataBase.addNewStory(name: currentStoryName, isWithAudio: self.isWithAudio, image: imageData, drawing: canvasView.drawing.dataRepresentation(), audioPath: self.isWithAudio ? musicIdentifier! : ""))
             self.navigationController?.popViewController(animated: true)
         }
     }

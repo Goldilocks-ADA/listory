@@ -68,11 +68,11 @@ class ListoryTabbarController: UIViewController, UIImagePickerControllerDelegate
     func setupTabBar(){
         viewControllers.tabBar.barTintColor = .white
         UITabBar.setTransparentTabBar()
-        let photoTabBar = PhotoViewController()
+        let photoTabBar = UINavigationController(rootViewController: PhotoViewController())
         photoTabBar.tabBarItem.image = UIImage (named: "btnPhoto")
-        let audioTabBar = AudioViewController()
+        let audioTabBar = UINavigationController(rootViewController: AudioViewController())
         audioTabBar.tabBarItem.image = UIImage (named: "btnAudio")
-        let forYouTabBar = ForYouViewController()
+        let forYouTabBar = UINavigationController(rootViewController: ForYouViewController())
         forYouTabBar.tabBarItem.image = UIImage (named: "btnForYou")
         
         viewControllers.setViewControllers([photoTabBar, audioTabBar, forYouTabBar], animated: false)

@@ -200,14 +200,23 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
 extension PhotoViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.navigationController?.pushViewController(EditAlbumController(), animated: true)
-        let vc = self.navigationController?.topViewController as! EditAlbumController
+        
+        let vc = EditAlbumController()
+        
+        let searchPaths: [String] = NSSearchPathForDirectoriesInDomains(.documentDirectory, .allDomainsMask, true)
+        let documentPath_ = searchPaths.first!
+        let audioPath = String(stories[indexPath.row].audioPath!)
+        let selectedSound = "\(documentPath_)/\(audioPath)"
+        let url: URL = URL(fileURLWithPath: selectedSound)
+        
+        vc.hidesBottomBarWhenPushed = true
         vc.story = stories[indexPath.row]
         vc.storyRow = indexPath.row
         vc.delegate = self
-        vc.soundFileURL = URL(string: UserDefaults.standard.string(forKey: "audio")!)
-        collectionView.reloadData()
-        //        return self.recordings.count
+        
+        vc.soundFileURL = url
+        
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
