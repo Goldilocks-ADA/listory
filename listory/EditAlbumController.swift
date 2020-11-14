@@ -22,20 +22,16 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
     //MARK:- 1.View Creation Detail Screen
     
     let recordButton: UIButton = {
-        let button = UIButton(type: UIButton.ButtonType.system)
-        button.layer.cornerRadius = 33
-        button.backgroundColor = .red
-        button.setTitle("Record", for: .normal)
-        button.setTitleColor(.white, for: .normal)
+        let button = UIButton()
+        button.setImage(UIImage(named: "recordButton"), for: .normal)
+       // button.tintColor = UIColor(red: 225/255, green: 0/255, blue: 0/255, alpha: 1)
         return button
     }()
     
-    let stopButton: UIButton = {
-        let button = UIButton(type: UIButton.ButtonType.system)
-        button.layer.cornerRadius = 33
-        button.backgroundColor = .red
-        button.setTitle("Stop", for: .normal)
-        button.setTitleColor(.white, for: .normal)
+    lazy var stopButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "stopButton"), for: .normal)
+       // button.tintColor = UIColor(red: 225/255, green: 0/255, blue: 0/255, alpha: 1)
         return button
     }()
     
@@ -107,13 +103,17 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
     var delegate: EditAlbumControllerDelegate?
     var story: Story!
     var storyRow: Int!
+    var musicIdentifier: String?
+    var recordingSession: AVAudioSession!
+    var isWithAudio : Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        canvasView.drawingGestureRecognizer.isEnabled = false
         setupData()
         setupPencilKit()
-        //setupRecorder()
+        setupRecorder()
         setupView()
         //playEdit(soundFileURL)
         //listRecordings()
@@ -121,19 +121,14 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         self.view.addSubview(sampleImageView)
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButton))
 
-       // stopButton.isEnabled = false
-       // playButton.isEnabled = false
+        stopButton.isEnabled = false
+        //playButton.isEnabled = false
+        recordButton.isEnabled = true
         
-        self.view.addSubview(playButton)
         self.view.addSubview(statusLabel)
         //playEdit(_:)
         
-        self.playButton.snp.makeConstraints { (make) in
-            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-300)
-            make.width.equalTo(66)
-            make.height.equalTo(66)
-        }
+    
         
         self.statusLabel.snp.makeConstraints{(make)in
             make.top.equalTo(self.view.safeAreaLayoutGuide).offset(16)
@@ -141,7 +136,7 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         }
         
      //   self.playButton.addTarget(self, action: #selector(playEdit(_:)), for: .touchUpInside)
-        self.playButton.addTarget(self, action: #selector(playEdit), for: .touchUpInside)
+        self.recordButton.addTarget(self, action: #selector(record), for: .touchUpInside)
         
         
     }
@@ -189,17 +184,17 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
     }
     
     @objc private func record(_ sender: UIButton) {
-        
+        setupPencilKit()
         print("\(#function)")
         
         if player != nil && player.isPlaying {
-            print("stopping")
+           // print("stopping")
             player.stop()
+            
+           // playButton.isEnabled = false
         }
         
         if recorder == nil {
-            print("recording. recorder nil")
-            recordButton.setTitle("Pause", for: .normal)
             playButton.isEnabled = false
             stopButton.isEnabled = true
             recordWithPermission(true)
@@ -207,18 +202,12 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         }
         
         if recorder != nil && recorder.isRecording {
-            print("pausing")
             recorder.pause()
-            recordButton.setTitle("Continue", for: .normal)
+            recordButton.setImage(UIImage(named: "recordButton"), for: .normal)
+            //stopButton.isEnabled = false
             
-        } else {
-            print("recording")
-            recordButton.setTitle("Pause", for: .normal)
-            playButton.isEnabled = false
-            stopButton.isEnabled = true
-            //            recorder.record()
-            recordWithPermission(false)
         }
+        
     }
     
     @objc private func stop(_ sender: UIButton) {
@@ -427,10 +416,11 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
     func setupView() {
         view.addSubview(backgroundView)
         view.addSubview(saveToAirDropButton)
+        view.addSubview(recordButton)
 //        view.addSubview(cameraButton)
         
-        saveToAirDropButton.bottomAnchor.constraint(equalTo: backgroundView.topAnchor, constant: -16).isActive = true
-        saveToAirDropButton.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor).isActive = true
+//        saveToAirDropButton.bottomAnchor.constraint(equalTo: backgroundView.topAnchor, constant: -16).isActive = true
+//        saveToAirDropButton.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor).isActive = true
         
 //        cameraButton.bottomAnchor.constraint(equalTo: backgroundView.topAnchor, constant: -16).isActive = true
 //        cameraButton.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor).isActive = true
@@ -453,6 +443,11 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         canvasView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -0).isActive = true
         canvasView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -0).isActive = true
         
+        self.recordButton.snp.makeConstraints { (make) in
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(20)
+            make.centerX.equalTo(self.view.safeAreaLayoutGuide)
+        }
     }
     
     func updateLayout(for toolPicker: PKToolPicker) {
@@ -503,56 +498,7 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
             })
         }
     }
-    
-    
-    
-    //MARK: - UIImagePickerControlle DidFinishMediaInfo
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        let image = info [UIImagePickerController.InfoKey.originalImage] as! UIImage
-        sampleImageView.image = image
-        self.title = ""
-        picker.dismiss(animated: true, completion: nil)
-        setupView()
-        self.view.addSubview(recordButton)
-        self.view.addSubview(stopButton)
-        self.view.addSubview(playButton)
-        self.view.addSubview(statusLabel)
-        
-        self.recordButton.snp.makeConstraints { (make) in
-            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-100)
-            make.width.equalTo(66)
-            make.height.equalTo(66)
-        }
-        
-        self.stopButton.snp.makeConstraints { (make) in
-            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-200)
-            make.width.equalTo(66)
-            make.height.equalTo(66)
-        }
-        
-        self.playButton.snp.makeConstraints { (make) in
-            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-300)
-            make.width.equalTo(66)
-            make.height.equalTo(66)
-        }
-        
-        self.statusLabel.snp.makeConstraints{(make)in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(16)
-            make.left.equalTo(self.view.safeAreaLayoutGuide).offset(150 )
-        }
-        
-        self.recordButton.addTarget(self, action: #selector(record), for: .touchUpInside)
-        self.stopButton.addTarget(self, action: #selector(stop), for: .touchUpInside)
-   //     self.playButton.addTarget(self, action: #selector(play), for: .touchUpInside)
-    }
-    
-    //MARK: - UIImagePickerController DidCancel
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
-    }
+
 }
 
 // MARK: AVAudioRecorderDelegate

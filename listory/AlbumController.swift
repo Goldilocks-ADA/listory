@@ -21,29 +21,9 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
     //MARK:- 1.View Creation Detail Screen
     
     let recordButton: UIButton = {
-        let button = UIButton(type: UIButton.ButtonType.system)
-        button.layer.cornerRadius = 33
-        button.backgroundColor = .red
-        button.setTitle("Record", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        return button
-    }()
-    
-    let stopButton: UIButton = {
-        let button = UIButton(type: UIButton.ButtonType.system)
-        button.layer.cornerRadius = 33
-        button.backgroundColor = .red
-        button.setTitle("Stop", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        return button
-    }()
-    
-    let playButton: UIButton = {
-        let button = UIButton(type: UIButton.ButtonType.system)
-        button.layer.cornerRadius = 33
-        button.backgroundColor = .red
-        button.setTitle("Play", for: .normal)
-        button.setTitleColor(.white, for: .normal)
+        let button = UIButton()
+        button.setImage(UIImage(named: "recordButton"), for: .normal)
+       // button.tintColor = UIColor(red: 225/255, green: 0/255, blue: 0/255, alpha: 1)
         return button
     }()
     
@@ -111,15 +91,12 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white       
-        setupPencilKit()
+        self.view.backgroundColor = .white
+        canvasView.drawingGestureRecognizer.isEnabled = false
         //MARK:- 2. Add Subview to Main View
         self.title = "Listory Image Preview"
         self.view.addSubview(sampleImageView)
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButton))
-        
-        stopButton.isEnabled = false
-        playButton.isEnabled = false
         
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
@@ -210,8 +187,6 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         if recorder == nil {
             print("recording. recorder nil")
             recordButton.setTitle("Pause", for: .normal)
-            playButton.isEnabled = false
-            stopButton.isEnabled = true
             recordWithPermission(true)
             return
         }
@@ -224,8 +199,6 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         } else {
             print("recording")
             recordButton.setTitle("Pause", for: .normal)
-            playButton.isEnabled = false
-            stopButton.isEnabled = true
             //            recorder.record()
             recordWithPermission(false)
         }
@@ -244,8 +217,6 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         let session = AVAudioSession.sharedInstance()
         do {
             try session.setActive(false)
-            playButton.isEnabled = true
-            stopButton.isEnabled = false
             recordButton.isEnabled = true
         } catch {
             print("could not make session inactive")
@@ -269,7 +240,6 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         
         do {
             self.player = try AVAudioPlayer(contentsOf: url!)
-            stopButton.isEnabled = true
             player.delegate = self
             player.prepareToPlay()
             player.volume = 1.0
@@ -518,55 +488,6 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         }
     }
     
-    
-    
-    //MARK: - UIImagePickerControlle DidFinishMediaInfo
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        let image = info [UIImagePickerController.InfoKey.originalImage] as! UIImage
-        sampleImageView.image = image
-        self.title = ""
-        picker.dismiss(animated: true, completion: nil)
-        setupView()
-        self.view.addSubview(recordButton)
-        self.view.addSubview(stopButton)
-        self.view.addSubview(playButton)
-        self.view.addSubview(statusLabel)
-        
-        self.recordButton.snp.makeConstraints { (make) in
-            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-100)
-            make.width.equalTo(66)
-            make.height.equalTo(66)
-        }
-        
-        self.stopButton.snp.makeConstraints { (make) in
-            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-200)
-            make.width.equalTo(66)
-            make.height.equalTo(66)
-        }
-        
-        self.playButton.snp.makeConstraints { (make) in
-            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-300)
-            make.width.equalTo(66)
-            make.height.equalTo(66)
-        }
-        
-        self.statusLabel.snp.makeConstraints{(make)in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(16)
-            make.left.equalTo(self.view.safeAreaLayoutGuide).offset(150 )
-        }
-        
-        self.recordButton.addTarget(self, action: #selector(record), for: .touchUpInside)
-        self.stopButton.addTarget(self, action: #selector(stop), for: .touchUpInside)
-        self.playButton.addTarget(self, action: #selector(play), for: .touchUpInside)
-    }
-    
-    //MARK: - UIImagePickerController DidCancel
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
-    }
 }
 
 // MARK: AVAudioRecorderDelegate
@@ -578,8 +499,7 @@ extension AlbumController: AVAudioRecorderDelegate {
         print("\(#function)")
         
         print("finished recording \(flag)")
-        stopButton.isEnabled = false
-        playButton.isEnabled = true
+       
         recordButton.setTitle("Record", for: UIControl.State())
         
         // iOS8 and later
@@ -614,7 +534,6 @@ extension AlbumController: AVAudioPlayerDelegate {
         print("\(#function)")
         print("finished playing \(flag)")
         recordButton.isEnabled = true
-        stopButton.isEnabled = false
     }
     
     func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
