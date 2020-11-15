@@ -127,6 +127,22 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
             make.left.equalTo(self.view.safeAreaLayoutGuide).offset(150 )
         }
         
+        self.sampleImageView.snp.makeConstraints { (make) in
+            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(100)
+            make.left.equalTo(self.view.safeAreaLayoutGuide).offset(100)
+            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-100)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-100)
+        }
+        
+        self.backgroundImageView2.snp.makeConstraints { (make) in
+            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(100)
+            make.left.equalTo(self.view.safeAreaLayoutGuide).offset(100)
+            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-100)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-100)
+        }
+        
+        
+        
         self.recordButton.addTarget(self, action: #selector(record), for: .touchUpInside)
         
         
@@ -427,10 +443,10 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         backgroundImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
         
         backgroundImageView.addSubview(backgroundImageView2)
-        backgroundImageView2.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
-        backgroundImageView2.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
-        backgroundImageView2.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
-        backgroundImageView2.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
+        backgroundImageView2.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
+        backgroundImageView2.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 100).isActive = true
+        backgroundImageView2.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -100).isActive = true
+        backgroundImageView2.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100).isActive = true
         
         backgroundView.addSubview(canvasView)
         canvasView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true

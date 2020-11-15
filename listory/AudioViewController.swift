@@ -102,6 +102,7 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
             make.top.equalTo(self.view).offset(40)
         }
         
+        //Collection view cell
         self.collectionView.snp.makeConstraints { (make) in
             make.left.equalTo(self.view.snp_leftMargin).offset(40)
             make.top.equalTo(self.view.snp_topMargin).offset(85)

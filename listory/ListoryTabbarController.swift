@@ -60,10 +60,11 @@ class ListoryTabbarController: UIViewController, UIImagePickerControllerDelegate
         UITabBar.setTransparentTabBar()
         let photoTabBar = UINavigationController(rootViewController: PhotoViewController())
         photoTabBar.tabBarItem.image = UIImage (named: "btnPhoto")
-//        photoTabBar.tabBarItem.selectedImage = UIImage(named: "photoSelected")
+        photoTabBar.tabBarItem.selectedImage = UIImage(named: "photoSelected")
+//        photoTabBar.tabBarItem.selectedImage?.withTintColor()
         let audioTabBar = UINavigationController(rootViewController: AudioViewController())
         audioTabBar.tabBarItem.image = UIImage (named: "btnAudio")
-//        audioTabBar.tabBarItem.selectedImage = UIImage(named: "audioSelected")
+        audioTabBar.tabBarItem.selectedImage = UIImage(named: "audioSelected")
         
         viewControllers.setViewControllers([photoTabBar, audioTabBar], animated: false)
         viewControllers.modalPresentationStyle = .fullScreen

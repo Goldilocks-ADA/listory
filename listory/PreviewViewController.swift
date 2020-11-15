@@ -194,10 +194,10 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
         backgroundImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
         
         backgroundImageView.addSubview(backgroundImageView2)
-        backgroundImageView2.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
-        backgroundImageView2.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
-        backgroundImageView2.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
-        backgroundImageView2.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
+        backgroundImageView2.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
+        backgroundImageView2.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 100).isActive = true
+        backgroundImageView2.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -100).isActive = true
+        backgroundImageView2.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100).isActive = true
         
         backgroundView.addSubview(canvasView)
         canvasView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
