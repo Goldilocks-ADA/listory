@@ -66,6 +66,15 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
         return slider
     }()
     
+    let playRecordSlider: UISlider = {
+        let recordSlider = UISlider(frame:CGRect(x: 10, y: 100, width: 300, height: 20))
+        recordSlider.minimumValue = 0
+        recordSlider.maximumValue = 1.0
+        recordSlider.isContinuous = true
+        recordSlider.tintColor = UIColor.black
+        return recordSlider
+    }()
+    
     lazy var backgroundView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -115,6 +124,7 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
     var recordingSession: AVAudioSession!
     var isWithAudio : Bool = false
     var currentVolume: Float = 1.0
+    var currentTime: TimeInterval = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -127,6 +137,7 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
         self.view.addSubview(playBtn)
         self.view.addSubview(forwardBtn)
         self.view.addSubview(backwardBtn)
+        self.view.addSubview(playRecordSlider)
         self.view.addSubview(volumeSlider)
         self.view.addSubview(statusLabel)
         
@@ -165,9 +176,17 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
             make.left.equalTo(self.forwardBtn.snp.right).offset(100)
             make.size.equalTo(CGSize(width: 300, height: 20))
         }
+        
+        self.playRecordSlider.snp.makeConstraints { (make) in
+            make.bottom.equalTo(self.view).offset(-30)
+            make.right.equalTo(self.backwardBtn.snp.right).offset(-100)
+            make.size.equalTo(CGSize(width: 300, height: 20))
+        }
+        
         self.backBtn.addTarget(self, action: #selector(backButton), for: .touchUpInside)
         self.playBtn.addTarget(self, action: #selector(play), for: .touchUpInside)
         self.volumeSlider.addTarget(self, action: #selector(sliderValueDidChange(_:)), for: .touchUpInside)
+        self.playRecordSlider.addTarget(self, action: #selector(sliderPlayRecordDidChange(_:)), for: .touchUpInside)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -246,6 +265,10 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
                 player.delegate = self
                 player.volume = currentVolume
                 volumeSlider.setValue(currentVolume, animated: true)
+                playRecordSlider.maximumValue = Float(round(player.duration))
+                playRecordSlider.setValue(Float(currentTime), animated: true)
+                player.currentTime = currentTime
+                Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateTime), userInfo: nil, repeats: true)
                 player.play()
                 playBtn.setImage(UIImage(named: "pauseBtn"), for: .normal)
 
@@ -257,13 +280,27 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
         }
     }
     
+    @objc func updateTime(_ timer: Timer) {
+        playRecordSlider.value = Float(player.currentTime)
+        // Update label
+        
+        //Update label 
+    }
+    
     @objc func sliderValueDidChange(_ sender:UISlider!){
-           print("Slider value changed")
+        print("Slider value changed")
         player?.volume = sender.value
         currentVolume = sender.value
 //           // Use this code below only if you want UISlider to snap to values step by step
         print("Slider step value \((sender.value))")
        }
+    
+    @objc func sliderPlayRecordDidChange(_ sender: UISlider!){
+        player?.play(atTime: TimeInterval(sender.value))
+        print("Time Interval \((sender.value))")
+        currentTime = TimeInterval(sender.value)
+        player?.currentTime = TimeInterval(sender.value)
+    }
        
        override func didReceiveMemoryWarning() {
            super.didReceiveMemoryWarning()
