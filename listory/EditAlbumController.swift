@@ -24,14 +24,12 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
     let recordButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "recordButton"), for: .normal)
-       // button.tintColor = UIColor(red: 225/255, green: 0/255, blue: 0/255, alpha: 1)
         return button
     }()
     
     lazy var stopButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "stopButton"), for: .normal)
-       // button.tintColor = UIColor(red: 225/255, green: 0/255, blue: 0/255, alpha: 1)
         return button
     }()
     
@@ -58,22 +56,22 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         return imageView
     }()
     
-    let saveToAirDropButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("SAVE", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        return button
-    }()
-    
     lazy var backgroundView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .systemRed
         return view
     }()
     
     lazy var backgroundImageView: UIImageView = {
+        let pencilbackgroundView = UIImageView()
+        pencilbackgroundView.image = UIImage(named: "albumBG")
+        pencilbackgroundView.contentMode = .scaleAspectFill
+        pencilbackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        pencilbackgroundView.clipsToBounds = true
+        return pencilbackgroundView
+    }()
+    
+    lazy var backgroundImageView2: UIImageView = {
         let pencilbackgroundView = UIImageView()
         pencilbackgroundView.image = sampleImageView.image
         pencilbackgroundView.contentMode = .scaleAspectFit
@@ -112,30 +110,23 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         self.view.backgroundColor = .white
         canvasView.drawingGestureRecognizer.isEnabled = false
         setupData()
-        setupPencilKit()
-        setupRecorder()
         setupView()
-        //playEdit(soundFileURL)
-        //listRecordings()
         self.title = "Listory Image Preview"
         self.view.addSubview(sampleImageView)
+        self.tabBarController?.tabBar.isHidden = true
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButton))
 
         stopButton.isEnabled = false
-        //playButton.isEnabled = false
         recordButton.isEnabled = true
+        stopButton.isHidden = true
         
         self.view.addSubview(statusLabel)
-        //playEdit(_:)
-        
-    
-        
+
         self.statusLabel.snp.makeConstraints{(make)in
             make.top.equalTo(self.view.safeAreaLayoutGuide).offset(16)
             make.left.equalTo(self.view.safeAreaLayoutGuide).offset(150 )
         }
         
-     //   self.playButton.addTarget(self, action: #selector(playEdit(_:)), for: .touchUpInside)
         self.recordButton.addTarget(self, action: #selector(record), for: .touchUpInside)
         
         
@@ -187,25 +178,32 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         setupPencilKit()
         print("\(#function)")
         
+        
         if player != nil && player.isPlaying {
-           // print("stopping")
+            print("stopping")
             player.stop()
             
-           // playButton.isEnabled = false
+            recordButton.isHidden = true
+            
+            stopButton.isEnabled = true
         }
         
         if recorder == nil {
-            playButton.isEnabled = false
-            stopButton.isEnabled = true
+            recordButton.setImage(UIImage(named: "stopButton"), for: .normal)
+            print("recording. recorder nil")
+            print("merekam")
+            stopButton.isHidden = false
+            
+            //stopButton.isEnabled = true
             recordWithPermission(true)
+            
             return
         }
         
         if recorder != nil && recorder.isRecording {
-            recorder.pause()
-            recordButton.setImage(UIImage(named: "recordButton"), for: .normal)
-            //stopButton.isEnabled = false
+            recorder.stop()
             
+
         }
         
     }
@@ -219,7 +217,7 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         
         meterTimer.invalidate()
         
-        recordButton.setTitle("Record", for: .normal)
+       // recordButton.setTitle("Record", for: .normal)
         let session = AVAudioSession.sharedInstance()
         do {
             try session.setActive(false)
@@ -236,41 +234,39 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
     
 
     
-    @objc func playEdit() {
+    @objc private func play(_ sender: UIButton) {
+        print("\(#function)")
         
-        print("audio sekarang \(soundFileURL.absoluteString)  \(soundFileURL.absoluteURL)")
-
+        stopButton.setImage(UIImage(named: "stopButton"), for: .normal)
+        var url: URL?
+        if self.recorder != nil {
+            url = self.recorder.url
+        } else {
+            url = self.soundFileURL!
+        }
+//        print("playing \(String(describing: url))")
+//        UserDefaults.standard.set("\(url!)", forKey: "audio")
+        
         do {
-            print("audio f1")
-            self.player = try AVAudioPlayer(contentsOf: soundFileURL.absoluteURL)
-            print("audio fo")
+            self.player = try AVAudioPlayer(contentsOf: url!)
+            stopButton.isEnabled = true
+            player.delegate = self
             player.prepareToPlay()
             player.volume = 1.0
             player.play()
         } catch {
             self.player = nil
             print(error.localizedDescription)
-            print("AVAudioPlayer init failed")
         }
-        
     }
     
     func setupRecorder() {
-        print("\(#function)")
-        
-        let format = DateFormatter()
-        format.dateFormat="yyyy-MM-dd-HH-mm-ss"
-        let currentFileName = "recording-\(format.string(from: Date())).m4a"
-        print(currentFileName)
-        
-        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        self.soundFileURL = documentsDirectory.appendingPathComponent(currentFileName)
-        print("writing to soundfile url: '\(soundFileURL!)'")
-        
-        if FileManager.default.fileExists(atPath: soundFileURL.absoluteString) {
-            // probably won't happen. want to do something about it?
-            print("soundfile \(soundFileURL.absoluteString) exists")
-        }
+        let searchPaths: [String] = NSSearchPathForDirectoriesInDomains(.documentDirectory, .allDomainsMask, true)
+        let documentPath_: String = searchPaths.first!
+        let pathToSave = "\(documentPath_)/\(dateString())"
+        let url: URL = URL(fileURLWithPath: pathToSave)
+        self.musicIdentifier = dateString()
+        self.soundFileURL = url
         
         let recordSettings: [String: Any] = [
             AVFormatIDKey: kAudioFormatAppleLossless,
@@ -292,6 +288,13 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         }
         
     }
+    
+    func dateString() -> String {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "ddMMMYY_hhmmssa"
+            let fileName = formatter.string(from: Date())
+            return "\(fileName).m4a"
+        }
     
     func recordWithPermission(_ setup: Bool) {
         print("\(#function)")
@@ -415,16 +418,9 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
     
     func setupView() {
         view.addSubview(backgroundView)
-        view.addSubview(saveToAirDropButton)
         view.addSubview(recordButton)
-//        view.addSubview(cameraButton)
-        
-//        saveToAirDropButton.bottomAnchor.constraint(equalTo: backgroundView.topAnchor, constant: -16).isActive = true
-//        saveToAirDropButton.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor).isActive = true
-        
-//        cameraButton.bottomAnchor.constraint(equalTo: backgroundView.topAnchor, constant: -16).isActive = true
-//        cameraButton.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor).isActive = true
-//
+        view.addSubview(stopButton)
+
         //layer 1
         backgroundView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
         backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
@@ -437,6 +433,12 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         backgroundImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
         backgroundImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
         
+        backgroundImageView.addSubview(backgroundImageView2)
+        backgroundImageView2.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
+        backgroundImageView2.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+        backgroundImageView2.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+        backgroundImageView2.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
+        
         backgroundView.addSubview(canvasView)
         canvasView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
         canvasView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
@@ -444,6 +446,12 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         canvasView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -0).isActive = true
         
         self.recordButton.snp.makeConstraints { (make) in
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(20)
+            make.centerX.equalTo(self.view.safeAreaLayoutGuide)
+        }
+        
+        self.stopButton.snp.makeConstraints { (make) in
             make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
             make.right.equalTo(self.view.safeAreaLayoutGuide).offset(20)
             make.centerX.equalTo(self.view.safeAreaLayoutGuide)
@@ -511,23 +519,23 @@ extension EditAlbumController: AVAudioRecorderDelegate {
         
         print("finished recording \(flag)")
         stopButton.isEnabled = false
-        playButton.isEnabled = true
-        recordButton.setTitle("Record", for: UIControl.State())
+     //   playButton.isEnabled = true
+       // recordButton.setTitle("Record", for: UIControl.State())
         
         // iOS8 and later
-        let alert = UIAlertController(title: "Recorder",
-                                      message: "Finished Recording",
-                                      preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Keep", style: .default) {[unowned self] _ in
-            print("keep was tapped")
-            self.recorder = nil
-        })
-        alert.addAction(UIAlertAction(title: "Delete", style: .default) {[unowned self] _ in
-            print("delete was tapped")
-            self.recorder.deleteRecording()
-        })
-        
-        self.present(alert, animated: true, completion: nil)
+//        let alert = UIAlertController(title: "Recorder",
+//                                      message: "Finished Recording",
+//                                      preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "Keep", style: .default) {[unowned self] _ in
+//            print("keep was tapped")
+//            self.recorder = nil
+//        })
+//        alert.addAction(UIAlertAction(title: "Delete", style: .default) {[unowned self] _ in
+//            print("delete was tapped")
+//            self.recorder.deleteRecording()
+//        })
+//
+//        self.present(alert, animated: true, completion: nil)
     }
     
     func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {

@@ -76,6 +76,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
         self.view.addSubview(imageLine2)
         self.view.addSubview(buttonAdd)
         navigationController?.navigationBar.transparentNavigationBar()
+        navigationController?.navigationBar.isHidden = true
 //        setupTabBar()
         loadStories()
 //        self.view.addSubview(buttonBack)
@@ -122,12 +123,6 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
             make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
         }
         
-//        self.buttonBack.snp.makeConstraints { (make) in
-//            make.top.equalTo(self.view).offset(40)
-//            make.left.equalTo(self.view).offset(150)
-//        }
-        
-//        self.buttonBack.addTarget(self, action: #selector(backButton), for: .touchUpInside)
         self.buttonAdd.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
     }
     

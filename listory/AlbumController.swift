@@ -27,6 +27,13 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         return button
     }()
     
+    lazy var stopButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "stopButton"), for: .normal)
+       // button.tintColor = UIColor(red: 225/255, green: 0/255, blue: 0/255, alpha: 1)
+        return button
+    }()
+    
     let statusLabel: UILabel = {
         let label = UILabel()
         //  label.text = "Selamat Pagi"
@@ -132,15 +139,6 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
             popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
             popoverController.permittedArrowDirections = []
         }
-        
-        //MARK:- 3. Add Constraint
-//        self.sampleImageView.snp.makeConstraints { (make) in
-//            make.left.equalTo(self.view.safeAreaLayoutGuide)
-//            make.top.equalTo(self.view.safeAreaLayoutGuide)
-//            make.right.equalTo(self.view.safeAreaLayoutGuide)
-//            make.bottom.equalTo(self.view.safeAreaLayoutGuide)
-//        }
-        
 
         self.present(actionSheet, animated: true, completion: nil)
     }
@@ -177,30 +175,29 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
     
     @objc private func record(_ sender: UIButton) {
         
+        setupPencilKit()
+        
         print("\(#function)")
         
         if player != nil && player.isPlaying {
             print("stopping")
             player.stop()
+            
         }
         
         if recorder == nil {
             print("recording. recorder nil")
-            recordButton.setTitle("Pause", for: .normal)
+          //  recordButton.setTitle("Pause", for: .normal)
+            print("merekam")
+            stopButton.isEnabled = true
             recordWithPermission(true)
             return
         }
         
         if recorder != nil && recorder.isRecording {
-            print("pausing")
-            recorder.pause()
-            recordButton.setTitle("Continue", for: .normal)
-            
-        } else {
-            print("recording")
-            recordButton.setTitle("Pause", for: .normal)
-            //            recorder.record()
-            recordWithPermission(false)
+                    print("ini stop")
+                    recorder.stop()
+            stopButton.isEnabled = false
         }
     }
     
