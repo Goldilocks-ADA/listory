@@ -196,7 +196,7 @@ extension AudioViewController: UICollectionViewDelegateFlowLayout, UICollectionV
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-//        let vc = EditAlbumController()
+        let vc = PreviewViewController()
 //
 //        let searchPaths: [String] = NSSearchPathForDirectoriesInDomains(.documentDirectory, .allDomainsMask, true)
 //        let documentPath_ = searchPaths.first!
@@ -211,7 +211,7 @@ extension AudioViewController: UICollectionViewDelegateFlowLayout, UICollectionV
 //
 //        vc.soundFileURL = url
         
-//        self.navigationController?.pushViewController(vc, animated: true)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

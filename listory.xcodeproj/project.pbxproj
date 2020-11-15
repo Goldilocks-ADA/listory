@@ -16,6 +16,7 @@
 		0284F30625343A010046AB98 /* listoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0284F30525343A010046AB98 /* listoryTests.swift */; };
 		0284F31125343A010046AB98 /* listoryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0284F31025343A010046AB98 /* listoryUITests.swift */; };
 		0284F32825343B7E0046AB98 /* AlbumController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0284F32725343B7E0046AB98 /* AlbumController.swift */; };
+		02CFA7C22560D1BF00D56EB3 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CFA7C12560D1BF00D56EB3 /* PreviewViewController.swift */; };
 		1318252525540C3100E2A82F /* DataBaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1318252425540C3100E2A82F /* DataBaseHelper.swift */; };
 		13261D642556362C00143EAF /* EditAlbumController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13261D632556362C00143EAF /* EditAlbumController.swift */; };
 		13BCBDF125428E500078E820 /* ListoryTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BCBDF025428E500078E820 /* ListoryTabbarController.swift */; };
@@ -62,6 +63,7 @@
 		0284F31025343A010046AB98 /* listoryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = listoryUITests.swift; sourceTree = "<group>"; };
 		0284F31225343A010046AB98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0284F32725343B7E0046AB98 /* AlbumController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumController.swift; sourceTree = "<group>"; };
+		02CFA7C12560D1BF00D56EB3 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 		1318252425540C3100E2A82F /* DataBaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBaseHelper.swift; sourceTree = "<group>"; };
 		13261D632556362C00143EAF /* EditAlbumController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAlbumController.swift; sourceTree = "<group>"; };
 		13BCBDF025428E500078E820 /* ListoryTabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListoryTabbarController.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				13CF0B78255CEBC3000D153F /* PhotoViewController.swift */,
 				13CF0B7D255CEBD0000D153F /* AudioViewController.swift */,
 				13CF0B82255CEBE4000D153F /* ForYouViewController.swift */,
+				02CFA7C12560D1BF00D56EB3 /* PreviewViewController.swift */,
 			);
 			path = listory;
 			sourceTree = "<group>";
@@ -452,6 +455,7 @@
 				13CF0B83255CEBE4000D153F /* ForYouViewController.swift in Sources */,
 				13CF0B7E255CEBD0000D153F /* AudioViewController.swift in Sources */,
 				0284F2EE25343A000046AB98 /* SceneDelegate.swift in Sources */,
+				02CFA7C22560D1BF00D56EB3 /* PreviewViewController.swift in Sources */,
 				13CF0B79255CEBC3000D153F /* PhotoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
