@@ -284,7 +284,7 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
         playRecordSlider.value = Float(player.currentTime)
         // Update label
         
-        //Update label 
+        // Update label 
     }
     
     @objc func sliderValueDidChange(_ sender:UISlider!){
