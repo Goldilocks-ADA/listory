@@ -229,7 +229,7 @@ extension PhotoViewController: UICollectionViewDelegateFlowLayout, UICollectionV
     }
 }
 
-class CustomCell: UICollectionViewCell {
+private class CustomCell: UICollectionViewCell {
     var data: CustomData? {
         didSet {
             guard let data = data else { return }

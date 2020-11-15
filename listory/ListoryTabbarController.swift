@@ -35,15 +35,6 @@ class ListoryTabbarController: UIViewController, UIImagePickerControllerDelegate
         titleLabel.textAlignment = .center
         return titleLabel
     }()
-    //
-    fileprivate let collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.register(CustomCell.self, forCellWithReuseIdentifier: "cell")
-        return collectionView
-    }()
     
     var stories = [Story]()
     let viewControllers = UITabBarController()
@@ -53,7 +44,6 @@ class ListoryTabbarController: UIViewController, UIImagePickerControllerDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(backgroundAlbumView)
-        self.view.addSubview(collectionView)
         navigationController?.navigationBar.isHidden = true
         setupTabBar()
         loadStories()
@@ -72,10 +62,8 @@ class ListoryTabbarController: UIViewController, UIImagePickerControllerDelegate
         photoTabBar.tabBarItem.image = UIImage (named: "btnPhoto")
         let audioTabBar = UINavigationController(rootViewController: AudioViewController())
         audioTabBar.tabBarItem.image = UIImage (named: "btnAudio")
-        let forYouTabBar = UINavigationController(rootViewController: ForYouViewController())
-        forYouTabBar.tabBarItem.image = UIImage (named: "btnForYou")
         
-        viewControllers.setViewControllers([photoTabBar, audioTabBar, forYouTabBar], animated: false)
+        viewControllers.setViewControllers([photoTabBar, audioTabBar], animated: false)
         viewControllers.modalPresentationStyle = .fullScreen
         self.view.addSubview(viewControllers.view)
     }
