@@ -60,7 +60,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
         return collectionView
     }()
    
-    var stories = [Story]()
+    var photos = [Photo]()
 //    let viewControllers = UITabBarController()
     var recordings = [URL]()
     var player: AVAudioPlayer!
@@ -78,7 +78,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
         navigationController?.navigationBar.transparentNavigationBar()
         navigationController?.navigationBar.isHidden = true
 //        setupTabBar()
-        loadStories()
+        loadPhotos()
 //        self.view.addSubview(buttonBack)
         
         
@@ -130,9 +130,9 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
 //        self.navigationController?.pushViewController(HomeController(), animated: true)
     }
     
-    func loadStories() {
-        if let loadedStories =  DataBaseHelper.shareInstance.retrieveAllStories(){
-            stories = loadedStories
+    func loadPhotos() {
+        if let loadedPhotos =  DataBaseHelper.shareInstance.retrieveAllPhoto(){
+            photos = loadedPhotos
         }
     }
     
@@ -179,15 +179,21 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            let format = DateFormatter()
+            format.dateFormat = "yyyy-MM-dd-HH-mm-ss"
+            let currentPhotoName = "Photo-\(format.string(from: Date()))"
+            
             let imageDataBase = DataBaseHelper()
-            addStory(story: imageDataBase.addNewStory(name: "", isWithAudio: false, image: pickedImage.pngData()!, drawing: Data(), audioPath: ""))
+            addPhoto(photo: imageDataBase.addNewPhoto(name: currentPhotoName, id: currentPhotoName, image: pickedImage.pngData()!))
             print("Photo Selected")
+            
         }
+        
         picker.dismiss(animated: true, completion: nil)
     }
     
-    func addStory(story: Story) {
-        stories.append(story)
+    func addPhoto(photo: Photo) {
+        photos.append(photo)
         collectionView.reloadData()
     }
 } //Batas Kelas
@@ -198,18 +204,10 @@ extension PhotoViewController: UICollectionViewDelegateFlowLayout, UICollectionV
         
         let vc = EditAlbumController()
         
-        let searchPaths: [String] = NSSearchPathForDirectoriesInDomains(.documentDirectory, .allDomainsMask, true)
-        let documentPath_ = searchPaths.first!
-        let audioPath = String(stories[indexPath.row].audioPath!)
-        let selectedSound = "\(documentPath_)/\(audioPath)"
-        let url: URL = URL(fileURLWithPath: selectedSound)
-        
         vc.hidesBottomBarWhenPushed = true
-        vc.story = stories[indexPath.row]
+        vc.photo = photos[indexPath.row]
         vc.storyRow = indexPath.row
         vc.delegate = self
-        
-        vc.soundFileURL = url
         
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -219,12 +217,12 @@ extension PhotoViewController: UICollectionViewDelegateFlowLayout, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return stories.count
+        return photos.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CustomCell
-        cell.backGround.image = UIImage(data: stories[indexPath.row].image!) // Need to repair
+        cell.backGround.image = UIImage(data: photos[indexPath.row].image!) // Need to repair
         return cell
     }
 }
@@ -263,17 +261,10 @@ private class CustomCell: UICollectionViewCell {
     }
 }
 
-extension PhotoViewController: AlbumControllerDelegate {
-    func updateStories(story: Story) {
-        stories.append(story)
-        collectionView.reloadData()
-    }
-}
-
 extension PhotoViewController: EditAlbumControllerDelegate {
     func updateStories(story: Story, storyRow: Int) {
-        stories[storyRow] = story
-        collectionView.reloadData()
+//        stories[storyRow] = story
+//        collectionView.reloadData()
     }
 }
 

@@ -99,7 +99,7 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
     var toolPicker: PKToolPicker!
     var imageDataBase = DataBaseHelper()
     var delegate: EditAlbumControllerDelegate?
-    var story: Story!
+    var photo: Photo!
     var storyRow: Int!
     var musicIdentifier: String?
     var recordingSession: AVAudioSession!
@@ -134,23 +134,16 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
     
     //MARK: - Function FOR COREDATA
     func setupData(){
-        if let image = story.image{
+        if let image = photo.image{
             sampleImageView.image = UIImage(data: image)
             print("image can not be loaded \(image)")
-        }
-        if let savedDrawing = story.drawing {
-            do {
-                try canvasView.drawing = PKDrawing(data: savedDrawing)
-            } catch  {
-                print("Can not load drawing")
-            }
         }
     }
      
     @objc func saveButton() {
         if let imageData = sampleImageView.image?.pngData(){
             print("Trying to save image")
-            delegate?.updateStories(story:  imageDataBase.updateStory(name: story.name!, isWithAudio: false, image: imageData, drawing: canvasView.drawing.dataRepresentation(), audioPath: ""), storyRow: storyRow)
+            delegate?.updateStories(story: imageDataBase.addNewStory(name: photo.name!, isWithAudio: true, image: imageData, drawing: canvasView.drawing.dataRepresentation(), audioPath: ""), storyRow: storyRow)
             self.navigationController?.popViewController(animated: true)
         }
     }
@@ -517,16 +510,37 @@ extension EditAlbumController: AVAudioRecorderDelegate {
         print("\(#function)")
         print("finished recording \(flag)")
         stopButton.isEnabled = false
+        showSaveAlert()
         
+     
+    }
+    
+    func showSaveAlert(){
+        let alert = UIAlertController(title: "Would You Like to Save this File", message: "(Write down the name file", preferredStyle: .alert)
+        alert.addTextField()
+        
+        alert.addAction(UIAlertAction(title: "Sumbit", style: .default) {[unowned alert] _ in
+            print("keep was tapped")
+            self.saveStory(name: alert.textFields![0].text ?? self.photo.name!)
+            
+            
+        })
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default) {[unowned self] _ in
+            print("delete was tapped")
+        })
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func saveStory(name: String){
         let format = DateFormatter()
         format.dateFormat = "yyyy-MM-dd-HH-mm-ss"
         let currentStoryName = "Story-\(format.string(from: Date()))"
         
         if let imageData = sampleImageView.image?.pngData(){
-            delegate?.updateStories(story:  imageDataBase.addNewStory(name: currentStoryName, isWithAudio: self.isWithAudio, image: imageData, drawing: canvasView.drawing.dataRepresentation(), audioPath: self.isWithAudio ? musicIdentifier! : ""), storyRow: 0)
+            delegate?.updateStories(story:  imageDataBase.addNewStory(name: currentStoryName, isWithAudio: self.isWithAudio, image: imageData, drawing: canvasView.drawing.dataRepresentation(), audioPath: self.isWithAudio ? musicIdentifier! : ""), storyRow: storyRow)
             self.navigationController?.popViewController(animated: true)
         }
-     
     }
     
     func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {

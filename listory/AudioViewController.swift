@@ -196,22 +196,22 @@ extension AudioViewController: UICollectionViewDelegateFlowLayout, UICollectionV
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let vc = EditAlbumController()
+//        let vc = EditAlbumController()
+//
+//        let searchPaths: [String] = NSSearchPathForDirectoriesInDomains(.documentDirectory, .allDomainsMask, true)
+//        let documentPath_ = searchPaths.first!
+//        let audioPath = String(stories[indexPath.row].audioPath!)
+//        let selectedSound = "\(documentPath_)/\(audioPath)"
+//        let url: URL = URL(fileURLWithPath: selectedSound)
+//
+//        vc.hidesBottomBarWhenPushed = true
+//        vc.story = stories[indexPath.row]
+//        vc.storyRow = indexPath.row
+//        vc.delegate = self
+//
+//        vc.soundFileURL = url
         
-        let searchPaths: [String] = NSSearchPathForDirectoriesInDomains(.documentDirectory, .allDomainsMask, true)
-        let documentPath_ = searchPaths.first!
-        let audioPath = String(stories[indexPath.row].audioPath!)
-        let selectedSound = "\(documentPath_)/\(audioPath)"
-        let url: URL = URL(fileURLWithPath: selectedSound)
-        
-        vc.hidesBottomBarWhenPushed = true
-        vc.story = stories[indexPath.row]
-        vc.storyRow = indexPath.row
-        vc.delegate = self
-        
-        vc.soundFileURL = url
-        
-        self.navigationController?.pushViewController(vc, animated: true)
+//        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
