@@ -118,8 +118,6 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         playBtn.isEnabled = true
-
-        tabBarController?.tabBar.isHidden = true
         navigationController?.navigationBar.isHidden = true
 
         setupData()
@@ -129,7 +127,7 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
         self.view.addSubview(forwardBtn)
         self.view.addSubview(backwardBtn)
         self.view.addSubview(volumeSlider)
-       // self.view.addSubview(statusLabel)
+        self.view.addSubview(statusLabel)
         
         self.backBtn.snp.makeConstraints { (make) in
             make.left.equalTo(self.view).offset(30)
@@ -139,6 +137,11 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
         self.backwardBtn.snp.makeConstraints { (make) in
             make.bottom.equalTo(self.view).offset(-30)
             make.right.equalTo(self.playBtn.snp.right).offset(-50)
+        }
+        
+        self.statusLabel.snp.makeConstraints{(make)in
+            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(100)
+            make.left.equalTo(self.view.safeAreaLayoutGuide).offset(150 )
         }
         
         self.playBtn.snp.makeConstraints { (make) in
@@ -161,13 +164,18 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
             make.left.equalTo(self.backwardBtn.snp.right).offset(30)
         }
         
-//        self.statusLabel.snp.makeConstraints{(make)in
-//            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(16)
-//            make.left.equalTo(self.view.safeAreaLayoutGuide).offset(150 )
-//        }
         self.backBtn.addTarget(self, action: #selector(backButton), for: .touchUpInside)
         self.playBtn.addTarget(self, action: #selector(play), for: .touchUpInside)
         self.volumeSlider.addTarget(self, action: #selector(sliderValueDidChange(_:)), for: .touchUpInside)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tabBarController?.tabBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        
+        tabBarController?.tabBar.isHidden = false
     }
     
     func setupView(){

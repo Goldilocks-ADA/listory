@@ -151,8 +151,8 @@
 				13BCBDF025428E500078E820 /* ListoryTabbarController.swift */,
 				13CF0B78255CEBC3000D153F /* PhotoViewController.swift */,
 				13CF0B7D255CEBD0000D153F /* AudioViewController.swift */,
-				13CF0B82255CEBE4000D153F /* ForYouViewController.swift */,
 				02CFA7C12560D1BF00D56EB3 /* PreviewViewController.swift */,
+				13CF0B82255CEBE4000D153F /* ForYouViewController.swift */,
 			);
 			path = listory;
 			sourceTree = "<group>";

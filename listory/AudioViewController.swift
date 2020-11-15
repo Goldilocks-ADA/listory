@@ -42,6 +42,12 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
         return btnAdd
     }()
     
+    let buttonBack: UIButton = {
+       let back = UIButton()
+        back.setImage(UIImage(named: "backbutton"), for: .normal)
+        return back
+    }()
+    
     let titleBar: UILabel = {
         let titleLabel = UILabel()
         titleLabel.font = UIFont(name: "PT Sans Bold", size: 50)
@@ -68,18 +74,17 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
         self.view.addSubview(backgroundAlbumView)
         self.view.addSubview(titleBar)
         self.view.addSubview(collectionView)
         self.view.addSubview(imageLine1)
         self.view.addSubview(imageLine2)
         self.view.addSubview(buttonAdd)
+        self.view.addSubview(buttonBack)
         navigationController?.navigationBar.transparentNavigationBar()
         navigationController?.navigationBar.isHidden = true
 //        setupTabBar()
         loadStories()
-//        self.view.addSubview(buttonBack)
         
         
         collectionView.delegate = self
@@ -90,6 +95,11 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
         self.buttonAdd.snp.makeConstraints { (make) in
             make.top.equalTo(self.view).offset(30)
             make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-140)
+        }
+        
+        self.buttonBack.snp.makeConstraints { (make) in
+            make.left.equalTo(self.view).offset(30)
+            make.top.equalTo(self.view).offset(40)
         }
         
         self.collectionView.snp.makeConstraints { (make) in
@@ -122,12 +132,12 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
             make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-100)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
         }
-        
+        self.buttonBack.addTarget(self, action: #selector(backButton), for: .touchUpInside)
         self.buttonAdd.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
     }
     
     @objc private func backButton(){
-//        self.navigationController?.pushViewController(HomeController(), animated: true)
+        self.navigationController?.pushViewController(PhotoViewController(), animated: true)
     }
     
     func loadStories() {
