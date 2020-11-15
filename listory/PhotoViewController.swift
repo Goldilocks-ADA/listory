@@ -263,8 +263,13 @@ private class CustomCell: UICollectionViewCell {
 
 extension PhotoViewController: EditAlbumControllerDelegate {
     func updateStories(story: Story, storyRow: Int) {
-//        stories[storyRow] = story
-//        collectionView.reloadData()
+        let navVC = tabBarController?.viewControllers![1] as! UINavigationController
+                let vc = navVC.topViewController as! AudioViewController
+        
+        vc.addStory(story: story)
+               
+                tabBarController?.selectedIndex = 1
+        
     }
 }
 
