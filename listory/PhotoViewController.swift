@@ -68,7 +68,6 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        view.backgroundColor = .clear
         self.view.addSubview(backgroundAlbumView)
         self.view.addSubview(titleBar)
         self.view.addSubview(collectionView)
@@ -77,11 +76,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
         self.view.addSubview(buttonAdd)
         navigationController?.navigationBar.transparentNavigationBar()
         navigationController?.navigationBar.isHidden = true
-//        setupTabBar()
         loadPhotos()
-//        self.view.addSubview(buttonBack)
-        
-        
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = .clear

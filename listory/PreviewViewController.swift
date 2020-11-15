@@ -51,6 +51,21 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
         return forward
     }()
     
+    let backBtn: UIButton = {
+        let back = UIButton()
+        back.setImage(UIImage(named: "backbutton"), for: .normal)
+        return back
+    }()
+    
+    let volumeSlider: UISlider = {
+        let slider = UISlider(frame:CGRect(x: 10, y: 100, width: 300, height: 20))
+        slider.minimumValue = 0
+        slider.maximumValue = 100
+        slider.isContinuous = true
+        slider.tintColor = UIColor.black
+        return slider
+    }()
+    
     lazy var backgroundView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -109,10 +124,17 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
 
         setupData()
         setupView()
+        self.view.addSubview(backBtn)
         self.view.addSubview(playBtn)
         self.view.addSubview(forwardBtn)
         self.view.addSubview(backwardBtn)
+        self.view.addSubview(volumeSlider)
        // self.view.addSubview(statusLabel)
+        
+        self.backBtn.snp.makeConstraints { (make) in
+            make.left.equalTo(self.view).offset(30)
+            make.top.equalTo(self.view).offset(40)
+        }
         
         self.backwardBtn.snp.makeConstraints { (make) in
             make.bottom.equalTo(self.view).offset(-30)
@@ -134,12 +156,18 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
             make.left.equalTo(self.playBtn.snp.left).offset(50)
         }
         
+        self.volumeSlider.snp.makeConstraints { (make) in
+            make.bottom.equalTo(self.view).offset(-30)
+            make.left.equalTo(self.backwardBtn.snp.right).offset(30)
+        }
+        
 //        self.statusLabel.snp.makeConstraints{(make)in
 //            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(16)
 //            make.left.equalTo(self.view.safeAreaLayoutGuide).offset(150 )
 //        }
-        
+        self.backBtn.addTarget(self, action: #selector(backButton), for: .touchUpInside)
         self.playBtn.addTarget(self, action: #selector(play), for: .touchUpInside)
+        self.volumeSlider.addTarget(self, action: #selector(sliderValueDidChange(_:)), for: .touchUpInside)
     }
     
     func setupView(){
@@ -168,6 +196,10 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
         canvasView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
         canvasView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -0).isActive = true
         canvasView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -0).isActive = true
+    }
+    
+    @objc func backButton(){
+        navigationController?.pushViewController(AudioViewController(), animated: false)
     }
     
     func setupData(){
@@ -202,6 +234,7 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
                 self.player = try AVAudioPlayer(contentsOf: soundFileURL.absoluteURL)
                 print("audio fo")
                 player.prepareToPlay()
+                player.delegate = self
                 player.volume = 1.0
                 player.play()
                 playBtn.setImage(UIImage(named: "pauseBtn"), for: .normal)
@@ -213,6 +246,25 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
             }
         }
     }
+    
+    @objc func sliderValueDidChange(_ sender:UISlider!){
+        let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        let stringNumbers = numbers.map { String($0) }
+        let intNumbers = stringNumbers.compactMap { Int($0) }
+        let sum = intNumbers.reduce(0, +)
+//
+//           print("Slider value changed")
+////
+////           // Use this code below only if you want UISlider to snap to values step by step
+//           let roundedStepValue = round(sender.value / step) * step
+//           sender.value = roundedStepValue
+//           print("Slider step value \(Int(roundedStepValue))")
+       }
+       
+       override func didReceiveMemoryWarning() {
+           super.didReceiveMemoryWarning()
+           // Dispose of any resources that can be recreated.
+       }
     
     
 //    @objc func updateAudioMeter(_ timer: Timer) {

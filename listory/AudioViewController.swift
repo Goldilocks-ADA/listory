@@ -68,7 +68,7 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        view.backgroundColor = .clear
+        view.backgroundColor = .white
         self.view.addSubview(backgroundAlbumView)
         self.view.addSubview(titleBar)
         self.view.addSubview(collectionView)
