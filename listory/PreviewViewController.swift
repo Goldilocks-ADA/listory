@@ -27,17 +27,17 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
         return imageView
     }()
     
-//    let backgroundAlbumView: UIImageView = {
-//        let bgAlbum = UIImageView ()
-//        bgAlbum.image = UIImage(named: "albumBG")
-//        return bgAlbum
-//    }()
-    
     let playBtn: UIButton = {
         let play = UIButton()
         play.setImage(UIImage(named: "playBtn"), for: .normal)
         return play
     }()
+    
+//    let pauseBtn: UIButton = {
+//        let pause = UIButton()
+//        pause.setImage(UIImage(named: "pauseBtn"), for: .normal)
+//        return pause
+//    }()
     
     let backwardBtn: UIButton = {
         let backward = UIButton()
@@ -102,8 +102,7 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.view.addSubview(sampleImageView)
-//        self.view.addSubview(backgroundAlbumView)
+        playBtn.isEnabled = true
 
         tabBarController?.tabBar.isHidden = true
         navigationController?.navigationBar.isHidden = true
@@ -113,21 +112,7 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
         self.view.addSubview(playBtn)
         self.view.addSubview(forwardBtn)
         self.view.addSubview(backwardBtn)
-//        self.backgroundAlbumView.snp.makeConstraints { (make) in
-//            make.left.equalTo(self.view.safeAreaInsets)
-//            make.top.equalTo(self.view.safeAreaInsets)
-//            make.right.equalTo(self.view.safeAreaInsets)
-//            make.bottom.equalTo(self.view.safeAreaInsets)
-//        }
-        
-//        self.sampleImageView.snp.makeConstraints { (make) in
-//            make.left.equalTo(self.view.safeAreaLayoutGuide)
-//            make.right.equalTo(self.view.safeAreaLayoutGuide)
-//            make.top.equalTo(self.view.safeAreaLayoutGuide)
-//            make.bottom.equalTo(self.view.safeAreaLayoutGuide)
-//        }
-        
-        
+       // self.view.addSubview(statusLabel)
         
         self.backwardBtn.snp.makeConstraints { (make) in
             make.bottom.equalTo(self.view).offset(-30)
@@ -139,10 +124,20 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
             make.left.equalTo(self.view.center)
         }
         
+//        self.pauseBtn.snp.makeConstraints { (make) in
+//            make.bottom.equalTo(self.view).offset(-25)
+//            make.left.equalTo(self.view.center)
+//        }
+        
         self.forwardBtn.snp.makeConstraints { (make) in
             make.bottom.equalTo(self.view).offset(-30)
             make.left.equalTo(self.playBtn.snp.left).offset(50)
         }
+        
+//        self.statusLabel.snp.makeConstraints{(make)in
+//            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(16)
+//            make.left.equalTo(self.view.safeAreaLayoutGuide).offset(150 )
+//        }
         
         self.playBtn.addTarget(self, action: #selector(play), for: .touchUpInside)
     }
@@ -155,7 +150,7 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
         backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
         backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
         backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
-//        
+        
         backgroundView.addSubview(backgroundImageView)
         backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
         backgroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
@@ -192,54 +187,57 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
     @objc func play() {
 
         print("audio sekarang \(soundFileURL.absoluteString)  \(soundFileURL.absoluteURL)")
+        
+        if (player != nil) {
+            if player.isPlaying {
+                playBtn.setImage(UIImage(named: "playBtn"), for: .normal)
+                player.pause()
+            } else {
+                playBtn.setImage(UIImage(named: "pauseBtn"), for: .normal)
+                player.play()
+            } 
+        } else {
+            do {
+                print("audio f1")
+                self.player = try AVAudioPlayer(contentsOf: soundFileURL.absoluteURL)
+                print("audio fo")
+                player.prepareToPlay()
+                player.volume = 1.0
+                player.play()
+                playBtn.setImage(UIImage(named: "pauseBtn"), for: .normal)
 
-        do {
-            print("audio f1")
-            self.player = try AVAudioPlayer(contentsOf: soundFileURL.absoluteURL)
-            print("audio fo")
-            player.prepareToPlay()
-            player.volume = 1.0
-            player.play()
-        } catch {
-            self.player = nil
-            print(error.localizedDescription)
-            print("AVAudioPlayer init failed")
+            } catch {
+                self.player = nil
+                print(error.localizedDescription)
+                print("AVAudioPlayer init failed")
+            }
         }
-
     }
     
-//    @objc private func play(_ sender: UIButton) {
-//        print("\(#function)")
+    
+//    @objc func updateAudioMeter(_ timer: Timer) {
 //
-//        var url: URL?
-//        if self.recorder != nil {
-//            url = self.recorder.url
-//        } else {
-//            url = self.soundFileURL!
-//        }
-////        print("playing \(String(describing: url))")
-////        UserDefaults.standard.set("\(url!)", forKey: "audio")
-//
-//        do {
-//            self.player = try AVAudioPlayer(contentsOf: url!)
-//           // stopButton.isEnabled = true
-//            player.delegate = self
-//            player.prepareToPlay()
-//            player.volume = 1.0
-//            player.play()
-//        } catch {
-//            self.player = nil
-//            print(error.localizedDescription)
+//        if let player = self.player {
+//            if player.play() {
+//                let min = Int(player.currentTime / 60)
+//                let sec = Int(player.currentTime.truncatingRemainder(dividingBy: 60))
+//                let s = String(format: "%02d:%02d", min, sec)
+//                statusLabel.text = s
+//                recorder.updateMeters()
+//            }
 //        }
 //    }
+    
+    }
 
-}
 
 // MARK: AVAudioPlayerDelegate
 extension PreviewViewController: AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         print("\(#function)")
         print("finished playing \(flag)")
+        playBtn.setImage(UIImage(named: "playBtn"), for: .normal)
+        self.player = nil
     }
     
     func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
