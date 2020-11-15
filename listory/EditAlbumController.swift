@@ -514,28 +514,19 @@ extension EditAlbumController: AVAudioRecorderDelegate {
     
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder,
                                          successfully flag: Bool) {
-        
         print("\(#function)")
-        
         print("finished recording \(flag)")
         stopButton.isEnabled = false
-     //   playButton.isEnabled = true
-       // recordButton.setTitle("Record", for: UIControl.State())
         
-        // iOS8 and later
-//        let alert = UIAlertController(title: "Recorder",
-//                                      message: "Finished Recording",
-//                                      preferredStyle: .alert)
-//        alert.addAction(UIAlertAction(title: "Keep", style: .default) {[unowned self] _ in
-//            print("keep was tapped")
-//            self.recorder = nil
-//        })
-//        alert.addAction(UIAlertAction(title: "Delete", style: .default) {[unowned self] _ in
-//            print("delete was tapped")
-//            self.recorder.deleteRecording()
-//        })
-//
-//        self.present(alert, animated: true, completion: nil)
+        let format = DateFormatter()
+        format.dateFormat = "yyyy-MM-dd-HH-mm-ss"
+        let currentStoryName = "Story-\(format.string(from: Date()))"
+        
+        if let imageData = sampleImageView.image?.pngData(){
+            delegate?.updateStories(story:  imageDataBase.addNewStory(name: currentStoryName, isWithAudio: self.isWithAudio, image: imageData, drawing: canvasView.drawing.dataRepresentation(), audioPath: self.isWithAudio ? musicIdentifier! : ""), storyRow: 0)
+            self.navigationController?.popViewController(animated: true)
+        }
+     
     }
     
     func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
