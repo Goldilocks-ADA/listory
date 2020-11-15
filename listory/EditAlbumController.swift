@@ -42,6 +42,12 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         return button
     }()
     
+    let backBtn: UIButton = {
+       let backButton = UIButton()
+        backButton.setImage(UIImage(named: "backbutton"), for: .normal)
+        return backButton
+    }()
+    
     let statusLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -111,6 +117,7 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         canvasView.drawingGestureRecognizer.isEnabled = false
         setupData()
         setupView()
+        self.view.addSubview(backBtn)
         self.title = "Listory Image Preview"
         self.view.addSubview(sampleImageView)
         self.tabBarController?.tabBar.isHidden = true
@@ -121,31 +128,23 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         stopButton.isHidden = true
         
         self.view.addSubview(statusLabel)
+        
+        self.backBtn.snp.makeConstraints { (make) in
+            make.left.equalTo(self.view).offset(30)
+            make.top.equalTo(self.view).offset(40)
+        }
 
         self.statusLabel.snp.makeConstraints{(make)in
             make.top.equalTo(self.view.safeAreaLayoutGuide).offset(16)
             make.left.equalTo(self.view.safeAreaLayoutGuide).offset(150 )
         }
         
-        self.sampleImageView.snp.makeConstraints { (make) in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(100)
-            make.left.equalTo(self.view.safeAreaLayoutGuide).offset(100)
-            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-100)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-100)
-        }
-        
-        self.backgroundImageView2.snp.makeConstraints { (make) in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(100)
-            make.left.equalTo(self.view.safeAreaLayoutGuide).offset(100)
-            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-100)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-100)
-        }
-        
-        
-        
+        self.backBtn.addTarget(self, action: #selector(backButton), for: .touchUpInside)
         self.recordButton.addTarget(self, action: #selector(record), for: .touchUpInside)
-        
-        
+    }
+    
+    @objc func backButton(){
+        navigationController?.pushViewController(AudioViewController(), animated: true)
     }
     
     //MARK: - Function FOR COREDATA
@@ -451,18 +450,16 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         backgroundView.addSubview(canvasView)
         canvasView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
         canvasView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
-        canvasView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -0).isActive = true
-        canvasView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -0).isActive = true
+        canvasView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+        canvasView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
         
         self.recordButton.snp.makeConstraints { (make) in
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
-            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(20)
+            make.bottom.equalTo(self.view).offset(-22)
             make.centerX.equalTo(self.view.safeAreaLayoutGuide)
         }
         
         self.stopButton.snp.makeConstraints { (make) in
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
-            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(20)
+            make.bottom.equalTo(self.view).offset(-22)
             make.centerX.equalTo(self.view.safeAreaLayoutGuide)
         }
     }

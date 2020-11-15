@@ -174,8 +174,8 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        
         tabBarController?.tabBar.isHidden = false
+        player?.stop()
     }
     
     func setupView(){
@@ -256,10 +256,10 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
     }
     
     @objc func sliderValueDidChange(_ sender:UISlider!){
-        let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-        let stringNumbers = numbers.map { String($0) }
-        let intNumbers = stringNumbers.compactMap { Int($0) }
-        let sum = intNumbers.reduce(0, +)
+//        let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+//        let stringNumbers = numbers.map { String($0) }
+//        let intNumbers = stringNumbers.compactMap { Int($0) }
+//        let sum = intNumbers.reduce(0, +)
 //
 //           print("Slider value changed")
 ////
