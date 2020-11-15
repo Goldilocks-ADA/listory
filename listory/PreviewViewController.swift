@@ -60,7 +60,7 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
     let volumeSlider: UISlider = {
         let slider = UISlider(frame:CGRect(x: 10, y: 100, width: 300, height: 20))
         slider.minimumValue = 0
-        slider.maximumValue = 100
+        slider.maximumValue = 1.0
         slider.isContinuous = true
         slider.tintColor = UIColor.black
         return slider
@@ -114,6 +114,7 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
     var musicIdentifier: String?
     var recordingSession: AVAudioSession!
     var isWithAudio : Bool = false
+    var currentVolume: Float = 1.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -161,9 +162,9 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
         
         self.volumeSlider.snp.makeConstraints { (make) in
             make.bottom.equalTo(self.view).offset(-30)
-            make.left.equalTo(self.backwardBtn.snp.right).offset(30)
+            make.left.equalTo(self.forwardBtn.snp.right).offset(100)
+            make.size.equalTo(CGSize(width: 300, height: 20))
         }
-        
         self.backBtn.addTarget(self, action: #selector(backButton), for: .touchUpInside)
         self.playBtn.addTarget(self, action: #selector(play), for: .touchUpInside)
         self.volumeSlider.addTarget(self, action: #selector(sliderValueDidChange(_:)), for: .touchUpInside)
@@ -243,7 +244,8 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
                 print("audio fo")
                 player.prepareToPlay()
                 player.delegate = self
-                player.volume = 1.0
+                player.volume = currentVolume
+                volumeSlider.setValue(currentVolume, animated: true)
                 player.play()
                 playBtn.setImage(UIImage(named: "pauseBtn"), for: .normal)
 
@@ -256,17 +258,11 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
     }
     
     @objc func sliderValueDidChange(_ sender:UISlider!){
-//        let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-//        let stringNumbers = numbers.map { String($0) }
-//        let intNumbers = stringNumbers.compactMap { Int($0) }
-//        let sum = intNumbers.reduce(0, +)
-//
-//           print("Slider value changed")
-////
-////           // Use this code below only if you want UISlider to snap to values step by step
-//           let roundedStepValue = round(sender.value / step) * step
-//           sender.value = roundedStepValue
-//           print("Slider step value \(Int(roundedStepValue))")
+           print("Slider value changed")
+        player?.volume = sender.value
+        currentVolume = sender.value
+//           // Use this code below only if you want UISlider to snap to values step by step
+        print("Slider step value \((sender.value))")
        }
        
        override func didReceiveMemoryWarning() {
