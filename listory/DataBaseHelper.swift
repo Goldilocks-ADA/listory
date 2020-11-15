@@ -60,4 +60,28 @@ class DataBaseHelper {
         }
         return storyInstance
     }
+    
+    func addNewPhoto(name: String, id: String, image: Data) -> Photo {
+        let storyInstance = Photo (context: context)
+        do {
+            storyInstance.id = id
+            storyInstance.name = name
+            storyInstance.image = image
+            try context.save()
+            print("Image is saved", image)
+        } catch {
+            print("Error saving data \(error)", error.localizedDescription)
+        }
+        return storyInstance
+    }
+    
+    func retrieveAllPhoto() -> [Photo]? {
+        let request: NSFetchRequest<Photo> = Photo.fetchRequest()
+        do {
+            return try context.fetch(request)
+        } catch {
+            print("Error retrieving data \(error)")
+        }
+        return nil
+    }
 }
