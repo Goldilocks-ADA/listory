@@ -143,6 +143,8 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
             make.bottom.equalTo(self.view).offset(-30)
             make.left.equalTo(self.playBtn.snp.left).offset(50)
         }
+        
+        self.playBtn.addTarget(self, action: #selector(play), for: .touchUpInside)
     }
     
     func setupView(){
@@ -186,5 +188,64 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
             }
         }
     }
+    
+    @objc func play() {
 
+        print("audio sekarang \(soundFileURL.absoluteString)  \(soundFileURL.absoluteURL)")
+
+        do {
+            print("audio f1")
+            self.player = try AVAudioPlayer(contentsOf: soundFileURL.absoluteURL)
+            print("audio fo")
+            player.prepareToPlay()
+            player.volume = 1.0
+            player.play()
+        } catch {
+            self.player = nil
+            print(error.localizedDescription)
+            print("AVAudioPlayer init failed")
+        }
+
+    }
+    
+//    @objc private func play(_ sender: UIButton) {
+//        print("\(#function)")
+//
+//        var url: URL?
+//        if self.recorder != nil {
+//            url = self.recorder.url
+//        } else {
+//            url = self.soundFileURL!
+//        }
+////        print("playing \(String(describing: url))")
+////        UserDefaults.standard.set("\(url!)", forKey: "audio")
+//
+//        do {
+//            self.player = try AVAudioPlayer(contentsOf: url!)
+//           // stopButton.isEnabled = true
+//            player.delegate = self
+//            player.prepareToPlay()
+//            player.volume = 1.0
+//            player.play()
+//        } catch {
+//            self.player = nil
+//            print(error.localizedDescription)
+//        }
+//    }
+
+}
+
+// MARK: AVAudioPlayerDelegate
+extension PreviewViewController: AVAudioPlayerDelegate {
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        print("\(#function)")
+        print("finished playing \(flag)")
+    }
+    
+    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+        print("\(#function)")
+        if let e = error {
+            print("\(e.localizedDescription)")
+        }
+    }
 }

@@ -198,18 +198,18 @@ extension AudioViewController: UICollectionViewDelegateFlowLayout, UICollectionV
         
         let vc = PreviewViewController()
 //
-//        let searchPaths: [String] = NSSearchPathForDirectoriesInDomains(.documentDirectory, .allDomainsMask, true)
-//        let documentPath_ = searchPaths.first!
-//        let audioPath = String(stories[indexPath.row].audioPath!)
-//        let selectedSound = "\(documentPath_)/\(audioPath)"
-//        let url: URL = URL(fileURLWithPath: selectedSound)
+        let searchPaths: [String] = NSSearchPathForDirectoriesInDomains(.documentDirectory, .allDomainsMask, true)
+        let documentPath_ = searchPaths.first!
+        let audioPath = String(stories[indexPath.row].audioPath!)
+        let selectedSound = "\(documentPath_)/\(audioPath)"
+        let url: URL = URL(fileURLWithPath: selectedSound)
 //
 //        vc.hidesBottomBarWhenPushed = true
         vc.story = stories[indexPath.row]
         vc.storyRow = indexPath.row
 //        vc.delegate = self
 //
-//        vc.soundFileURL = url
+        vc.soundFileURL = url
         
         self.navigationController?.pushViewController(vc, animated: true)
     }

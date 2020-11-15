@@ -538,7 +538,7 @@ extension EditAlbumController: AVAudioRecorderDelegate {
         let currentStoryName = "Story-\(format.string(from: Date()))"
         
         if let imageData = sampleImageView.image?.pngData(){
-            delegate?.updateStories(story:  imageDataBase.addNewStory(name: currentStoryName, isWithAudio: self.isWithAudio, image: imageData, drawing: canvasView.drawing.dataRepresentation(), audioPath: self.isWithAudio ? musicIdentifier! : ""), storyRow: storyRow)
+            delegate?.updateStories(story:  imageDataBase.addNewStory(name: currentStoryName, isWithAudio: true, image: imageData, drawing: canvasView.drawing.dataRepresentation(), audioPath: musicIdentifier!), storyRow: storyRow)
             self.navigationController?.popViewController(animated: true)
         }
     }
