@@ -205,8 +205,8 @@ extension AudioViewController: UICollectionViewDelegateFlowLayout, UICollectionV
 //        let url: URL = URL(fileURLWithPath: selectedSound)
 //
 //        vc.hidesBottomBarWhenPushed = true
-//        vc.story = stories[indexPath.row]
-//        vc.storyRow = indexPath.row
+        vc.story = stories[indexPath.row]
+        vc.storyRow = indexPath.row
 //        vc.delegate = self
 //
 //        vc.soundFileURL = url

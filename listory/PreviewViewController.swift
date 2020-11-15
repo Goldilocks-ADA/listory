@@ -27,11 +27,11 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
         return imageView
     }()
     
-    let backgroundAlbumView: UIImageView = {
-        let bgAlbum = UIImageView ()
-        bgAlbum.image = UIImage(named: "albumBG")
-        return bgAlbum
-    }()
+//    let backgroundAlbumView: UIImageView = {
+//        let bgAlbum = UIImageView ()
+//        bgAlbum.image = UIImage(named: "albumBG")
+//        return bgAlbum
+//    }()
     
     let playBtn: UIButton = {
         let play = UIButton()
@@ -94,35 +94,38 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
     var toolPicker: PKToolPicker!
     var imageDataBase = DataBaseHelper()
     var delegate: EditAlbumControllerDelegate?
-    var photo: Photo!
     var storyRow: Int!
+    var story: Story!
     var musicIdentifier: String?
     var recordingSession: AVAudioSession!
     var isWithAudio : Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.addSubview(sampleImageView)
-        self.view.addSubview(backgroundAlbumView)
-        self.view.addSubview(playBtn)
-        self.view.addSubview(forwardBtn)
-        self.view.addSubview(backwardBtn)
+//        self.view.addSubview(sampleImageView)
+//        self.view.addSubview(backgroundAlbumView)
+
         tabBarController?.tabBar.isHidden = true
         navigationController?.navigationBar.isHidden = true
 
-        self.backgroundAlbumView.snp.makeConstraints { (make) in
-            make.left.equalTo(self.view.safeAreaInsets)
-            make.top.equalTo(self.view.safeAreaInsets)
-            make.right.equalTo(self.view.safeAreaInsets)
-            make.bottom.equalTo(self.view.safeAreaInsets)
-        }
+        setupData()
+        setupView()
+        self.view.addSubview(playBtn)
+        self.view.addSubview(forwardBtn)
+        self.view.addSubview(backwardBtn)
+//        self.backgroundAlbumView.snp.makeConstraints { (make) in
+//            make.left.equalTo(self.view.safeAreaInsets)
+//            make.top.equalTo(self.view.safeAreaInsets)
+//            make.right.equalTo(self.view.safeAreaInsets)
+//            make.bottom.equalTo(self.view.safeAreaInsets)
+//        }
         
-        self.sampleImageView.snp.makeConstraints { (make) in
-            make.left.equalTo(self.view.safeAreaLayoutGuide)
-            make.right.equalTo(self.view.safeAreaLayoutGuide)
-            make.top.equalTo(self.view.safeAreaLayoutGuide)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide)
-        }
+//        self.sampleImageView.snp.makeConstraints { (make) in
+//            make.left.equalTo(self.view.safeAreaLayoutGuide)
+//            make.right.equalTo(self.view.safeAreaLayoutGuide)
+//            make.top.equalTo(self.view.safeAreaLayoutGuide)
+//            make.bottom.equalTo(self.view.safeAreaLayoutGuide)
+//        }
         
         
         
@@ -150,7 +153,7 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
         backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
         backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
         backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
-        
+//        
         backgroundView.addSubview(backgroundImageView)
         backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
         backgroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
@@ -168,6 +171,20 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
         canvasView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
         canvasView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -0).isActive = true
         canvasView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -0).isActive = true
+    }
+    
+    func setupData(){
+        if let image = story.image{
+            sampleImageView.image = UIImage(data: image)
+            print("image can not be loaded \(image)")
+        }
+        if let drawing = story.drawing{
+            do {
+                try canvasView.drawing = PKDrawing(data: drawing)
+            } catch {
+                print("cannot load data drawing")
+            }
+        }
     }
 
 }
