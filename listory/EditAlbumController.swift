@@ -235,18 +235,31 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         
     }
     
+    @objc func alertTextFieldDidChange(field: UITextField){
+        let alertController:UIAlertController = self.presentedViewController as! UIAlertController;
+        let textField :UITextField  = alertController.textFields![0];
+        let addAction: UIAlertAction = alertController.actions[0];
+        addAction.isEnabled = (textField.text?.count)! > 0;
+
+    }
+    
     func showSaveAlert(){
-        let alert = UIAlertController(title: "Would You Like to Save this File", message: "(Write down the name file", preferredStyle: .alert)
-        alert.addTextField()
+        let alert = UIAlertController(title: "Would You Like to Save this File", message: "(Write down the name file)", preferredStyle: .alert)
+        alert.addTextField { (textField) in
+            textField.addTarget(self, action: #selector(self.alertTextFieldDidChange(field:)), for: UIControl.Event.editingChanged)
+        }
         
-        alert.addAction(UIAlertAction(title: "Submit", style: .default) {[unowned alert] _ in
+        let addAction:UIAlertAction = UIAlertAction(title: "Submit", style: .default) {[unowned alert] _ in
             print("keep was tapped")
             self.fileName = alert.textFields![0].text
             self.audioDuration = self.recorder.currentTime
             print("Test duration", self.recorder.currentTime)
             self.recorder.stop()
             
-        })
+        }
+        addAction.isEnabled = false;
+        alert.addAction(addAction)
+
         alert.addAction(UIAlertAction(title: "Cancel", style: .default) {[unowned self] _ in
             print("Continue the record")
             recorder.record()

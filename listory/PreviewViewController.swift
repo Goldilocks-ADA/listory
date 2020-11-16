@@ -42,11 +42,13 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
     let backwardBtn: UIButton = {
         let backward = UIButton()
         backward.setImage(UIImage(named: "Rewind"), for: .normal)
+        backward.layer.transform = CATransform3DMakeScale(0, 0, 0)
         return backward
     }()
     
     let forwardBtn: UIButton = {
         let forward = UIButton()
+        forward.layer.transform = CATransform3DMakeScale(0, 0, 0)
         forward.setImage(UIImage(named: "Forward"), for: .normal)
         return forward
     }()

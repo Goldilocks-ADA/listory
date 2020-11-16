@@ -115,16 +115,7 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
             make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
         }
     }
-    
-//    override func viewWillAppear(_ animated: Bool) {
-//        tabBarController?.tabBar.isHidden = true
-//    }
-//    
-//    override func viewWillDisappear(_ animated: Bool) {
-//        tabBarController?.tabBar.isHidden = false
-//        player?.stop()
-//    }
-    
+
     func loadStories() {
         if let loadedStories =  DataBaseHelper.shareInstance.retrieveAllStories(){
             stories = loadedStories
@@ -150,18 +141,14 @@ extension AudioViewController: UICollectionViewDelegateFlowLayout, UICollectionV
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let vc = PreviewViewController()
-//
         let searchPaths: [String] = NSSearchPathForDirectoriesInDomains(.documentDirectory, .allDomainsMask, true)
         let documentPath_ = searchPaths.first!
         let audioPath = String(stories[indexPath.row].audioPath!)
         let selectedSound = "\(documentPath_)/\(audioPath)"
         let url: URL = URL(fileURLWithPath: selectedSound)
-//
-//        vc.hidesBottomBarWhenPushed = true
+        
         vc.story = stories[indexPath.row]
         vc.storyRow = indexPath.row
-//        vc.delegate = self
-//
         vc.soundFileURL = url
         
         self.navigationController?.pushViewController(vc, animated: true)
@@ -181,7 +168,6 @@ extension AudioViewController: UICollectionViewDelegateFlowLayout, UICollectionV
         cell.backgroundColor = .white
         cell.nameImage.text = stories[indexPath.row].name!
         cell.lenghtDuration.text = formatTime(timeInterval: stories[indexPath.row].audioDuration)
-//        print("testing duration ", stories[indexPath.row].audioDuration)
         return cell
     }
 }

@@ -175,7 +175,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             let format = DateFormatter()
-            format.dateFormat = "yyyy-MM-dd-HH-mm-ss"
+            format.dateFormat = "yyyy-MM-dd HH:mm:ss"
             let currentPhotoName = "Photo-\(format.string(from: Date()))"
             
             let imageDataBase = DataBaseHelper()
@@ -219,6 +219,7 @@ extension PhotoViewController: UICollectionViewDelegateFlowLayout, UICollectionV
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CustomCell
         cell.backGround.image = UIImage(data: photos[indexPath.row].image!) // Need to repair
         cell.backgroundColor = .white
+        cell.nameImage.text = photos[indexPath.row].name!
         return cell
     }
 }
