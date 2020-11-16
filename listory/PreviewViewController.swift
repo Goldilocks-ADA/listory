@@ -75,6 +75,18 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
         return recordSlider
     }()
     
+    let smallVolume: UIButton = {
+        let lowVolume = UIButton()
+        lowVolume.setImage(UIImage(named: "speaker.1.fill"), for: .normal)
+        return lowVolume
+    }()
+    
+    let bigVolume: UIButton = {
+        let highVolume = UIButton()
+        highVolume.setImage(UIImage(named: "speaker.1.fill"), for: .normal)
+        return highVolume
+    }()
+    
     lazy var backgroundView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -227,7 +239,7 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
     }
     
     @objc func backButton(){
-        navigationController?.pushViewController(AudioViewController(), animated: false)
+        navigationController?.pushViewController(PhotoViewController(), animated: false)
     }
     
     func setupData(){

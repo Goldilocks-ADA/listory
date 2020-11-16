@@ -146,7 +146,7 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
     @objc func backButton(){
         
         print("Test alert")
-        let  backAlert = UIAlertController(title: "Would like you cancel the process?", message: "Press the button", preferredStyle: .actionSheet)
+        let  backAlert = UIAlertController(title: "Would like you cancel the process?", message: "Press the button", preferredStyle: .alert)
         
         backAlert.addAction(UIAlertAction(title: "Yes", style: .cancel, handler: { action in
         print("Back to Photo Controller")

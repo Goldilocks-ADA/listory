@@ -137,7 +137,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
         imagePickerController.delegate = self
         
         //Alert Notification
-        let actionSheet = UIAlertController(title: "Add Image", message: "Would You Like To Take a Picture from: ", preferredStyle: .actionSheet)
+        let actionSheet = UIAlertController(title: "Add Image", message: "Would You Like To Take a Picture from: ", preferredStyle: .alert)
         
         //Photo From Camera
         actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: {(action: UIAlertAction) in
