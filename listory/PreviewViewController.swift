@@ -275,7 +275,7 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
     }
     
     @objc func backButton(){
-        navigationController?.pushViewController(PhotoViewController(), animated: false)
+        navigationController?.pushViewController(AudioViewController(), animated: false)
     }
     
     func setupData(){
@@ -312,7 +312,6 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
                 playBtn.setImage(UIImage(named: "pauseBtn"), for: .normal)
 
             } catch {
-//                self.player = nil
                 print(error.localizedDescription)
                 print("AVAudioPlayer init failed")
             }
