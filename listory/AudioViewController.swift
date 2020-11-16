@@ -160,7 +160,7 @@ extension AudioViewController: UICollectionViewDelegateFlowLayout, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width/4.5, height: collectionView.frame.height/2)
+        return CGSize(width: 350, height: 300)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -170,6 +170,7 @@ extension AudioViewController: UICollectionViewDelegateFlowLayout, UICollectionV
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CustomCell
         cell.backGround.image = UIImage(data: stories[indexPath.row].image!) // Need to repair
+        cell.backgroundColor = .white
         return cell
     }
 }
@@ -188,7 +189,7 @@ private class CustomCell: UICollectionViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 6
+        imageView.layer.cornerRadius = 0
         return imageView
     }()
     
@@ -216,19 +217,21 @@ private class CustomCell: UICollectionViewCell {
         contentView.addSubview(nameImage)
         contentView.addSubview(lenghtDuration)
         self.backGround.snp.makeConstraints { (make) in
-            make.top.equalTo(self.contentView.safeAreaLayoutGuide).offset(13)
+            make.top.equalTo(self.contentView.safeAreaLayoutGuide)
             make.left.equalTo(self.contentView.safeAreaLayoutGuide)
             make.right.equalTo(self.contentView.safeAreaLayoutGuide)
-            make.bottom.equalTo(self.contentView.safeAreaLayoutGuide).offset(-40)
+            make.bottom.equalTo(self.contentView.safeAreaLayoutGuide).offset(-60)
         }
         
         
         self.nameImage.snp.makeConstraints { (make) in
             make.top.equalTo(self.backGround.snp.bottom).offset(10)
+            make.left.equalTo(self.backGround.snp.left).offset(5)
         }
         
         self.lenghtDuration.snp.makeConstraints { (make) in
             make.top.equalTo(self.nameImage.snp.top).offset(25)
+            make.left.equalTo(self.backGround.snp.left).offset(5)
         }
     }
     
