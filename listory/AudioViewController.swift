@@ -181,6 +181,7 @@ extension AudioViewController: UICollectionViewDelegateFlowLayout, UICollectionV
         cell.backgroundColor = .white
         cell.nameImage.text = stories[indexPath.row].name!
         cell.lenghtDuration.text = formatTime(timeInterval: stories[indexPath.row].audioDuration)
+//        print("testing duration ", stories[indexPath.row].audioDuration)
         return cell
     }
 }

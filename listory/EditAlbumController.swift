@@ -110,6 +110,7 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
     var recordingSession: AVAudioSession!
     var isWithAudio : Bool = false
     var fileName: String?
+    var audioDuration: Double?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -236,9 +237,11 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         let alert = UIAlertController(title: "Would You Like to Save this File", message: "(Write down the name file", preferredStyle: .alert)
         alert.addTextField()
         
-        alert.addAction(UIAlertAction(title: "Sumbit", style: .default) {[unowned alert] _ in
+        alert.addAction(UIAlertAction(title: "Submit", style: .default) {[unowned alert] _ in
             print("keep was tapped")
             self.fileName = alert.textFields![0].text
+            self.audioDuration = self.recorder.currentTime
+            print("Test duration", self.recorder.currentTime)
             self.recorder.stop()
             
         })
@@ -256,7 +259,8 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
        // let currentStoryName = "Story-\(format.string(from: Date()))"
         
         if let imageData = sampleImageView.image?.pngData(){
-            delegate?.updateStories(story:  imageDataBase.addNewStory(name: name, isWithAudio: true, image: imageData, drawing: canvasView.drawing.dataRepresentation(), audioPath: musicIdentifier!, audioDuration: recorder.currentTime), storyRow: storyRow)
+            delegate?.updateStories(story:  imageDataBase.addNewStory(name: name, isWithAudio: true, image: imageData, drawing: canvasView.drawing.dataRepresentation(), audioPath: musicIdentifier!, audioDuration: self.audioDuration ?? 0), storyRow: storyRow)
+            print("Audio Duration", self.audioDuration)
             self.navigationController?.popViewController(animated: true)
         }
     }

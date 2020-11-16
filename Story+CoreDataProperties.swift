@@ -2,7 +2,7 @@
 //  Story+CoreDataProperties.swift
 //  
 //
-//  Created by Devi Mandasari on 16/11/20.
+//  Created by Jogi Oktavianus on 16/11/20.
 //
 //
 
@@ -16,12 +16,12 @@ extension Story {
         return NSFetchRequest<Story>(entityName: "Story")
     }
 
+    @NSManaged public var audioDuration: Double
     @NSManaged public var audioPath: String?
     @NSManaged public var drawing: Data?
     @NSManaged public var id: String?
     @NSManaged public var image: Data?
     @NSManaged public var isWithAudio: Bool
     @NSManaged public var name: String?
-    @NSManaged public var audioDuration: Double
 
 }
