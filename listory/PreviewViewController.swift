@@ -157,6 +157,7 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
 
         setupData()
         setupView()
+        setupPlay()
         self.view.addSubview(backBtn)
         self.view.addSubview(playBtn)
         self.view.addSubview(forwardBtn)
@@ -303,12 +304,13 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
                 playBtn.setImage(UIImage(named: "playBtn"), for: .normal)
                 player.pause()
             } else {
+                Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateTime), userInfo: nil, repeats: true)
                 playBtn.setImage(UIImage(named: "pauseBtn"), for: .normal)
                 player.play()
-            } 
+            }
         } else {
             do {
-               setupPlay()
+                setupPlay()
                 Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateTime), userInfo: nil, repeats: true)
                 player.play()
                 playBtn.setImage(UIImage(named: "pauseBtn"), for: .normal)
@@ -322,6 +324,7 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
     
     @objc func updateTime(_ timer: Timer) {
         playRecordSlider.value = Float(player.currentTime)
+        labelStartPlaying.text = formatTime(timeInterval: player.currentTime)
         // Update label
         
         // Update label 
@@ -335,9 +338,17 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
         player.delegate = self
         player.volume = currentVolume
         volumeSlider.setValue(currentVolume, animated: true)
-        playRecordSlider.maximumValue = Float(round(player.duration))
+        playRecordSlider.maximumValue = Float(story.audioDuration)
+        labelResultDefault.text = formatTime(timeInterval: story.audioDuration)
         playRecordSlider.setValue(Float(currentTime), animated: true)
         player.currentTime = currentTime
+    }
+    
+    func formatTime(timeInterval: Double) -> String {
+        let min = Int(timeInterval / 60)
+        let sec = Int(timeInterval.truncatingRemainder(dividingBy: 60))
+        let s = String(format: "%02d:%02d", min, sec)
+        return s
     }
     
     @objc func sliderValueDidChange(_ sender:UISlider!){
