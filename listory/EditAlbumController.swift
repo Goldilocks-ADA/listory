@@ -144,7 +144,25 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
     }
     
     @objc func backButton(){
-        navigationController?.pushViewController(AudioViewController(), animated: true)
+        
+        print("Test alert")
+        let  backAlert = UIAlertController(title: "Would like you cancel the process?", message: "Press the button", preferredStyle: .actionSheet)
+        
+        backAlert.addAction(UIAlertAction(title: "Yes", style: .cancel, handler: { action in
+        print("Back to Photo Controller")
+        self.navigationController?.pushViewController(PhotoViewController(), animated: true)
+            
+        }))
+//        self.present(backAlert, animated: true, completion: nil)
+        
+        //Popover Position
+        if let popoverController = backAlert.popoverPresentationController {
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+            popoverController.permittedArrowDirections = []
+        }
+//        self.present(backAlert, animated: true, completion: nil)
+        self.view.window?.rootViewController?.present(backAlert, animated: true, completion: nil)
     }
     
     //MARK: - Function FOR COREDATA
