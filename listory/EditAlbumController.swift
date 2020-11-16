@@ -98,7 +98,6 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
     }()
     
     var recorder: AVAudioRecorder!
-    var player: AVAudioPlayer!
     var meterTimer: Timer!
     var soundFileURL: URL!
     var recordings = [URL]()
@@ -110,6 +109,7 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
     var musicIdentifier: String?
     var recordingSession: AVAudioSession!
     var isWithAudio : Bool = false
+    var fileName: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -149,7 +149,6 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
     
     override func viewWillDisappear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden = false
-        player?.stop()
     }
     
     @objc func backButton(){
@@ -208,22 +207,12 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         recorder = nil
-        player = nil
     }
     
     @objc private func record(_ sender: UIButton) {
         setupPencilKit()
         print("\(#function)")
         
-        
-        if player != nil && player.isPlaying {
-            print("stopping")
-            player.stop()
-            
-            recordButton.isHidden = true
-            
-            stopButton.isEnabled = true
-        }
         
         if recorder == nil {
             recordButton.setImage(UIImage(named: "stopButton"), for: .normal)
@@ -238,62 +227,38 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         }
         
         if recorder != nil && recorder.isRecording {
-            recorder.stop()
+            recorder.pause()
+            showSaveAlert()
+        }
+        
+    }
+    
+    func showSaveAlert(){
+        let alert = UIAlertController(title: "Would You Like to Save this File", message: "(Write down the name file", preferredStyle: .alert)
+        alert.addTextField()
+        
+        alert.addAction(UIAlertAction(title: "Sumbit", style: .default) {[unowned alert] _ in
+            print("keep was tapped")
+            self.fileName = alert.textFields![0].text
+            self.recorder.stop()
             
-
-        }
+        })
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default) {[unowned self] _ in
+            print("Continue the record")
+            recorder.record()
+        })
         
+        self.present(alert, animated: true, completion: nil)
     }
     
-    @objc private func stop(_ sender: UIButton) {
+    func saveStory(name: String){
+        let format = DateFormatter()
+        format.dateFormat = "yyyy-MM-dd-HH-mm-ss"
+        let currentStoryName = "Story-\(format.string(from: Date()))"
         
-        print("\(#function)")
-        
-        recorder?.stop()
-        player?.stop()
-        
-        meterTimer.invalidate()
-        
-       // recordButton.setTitle("Record", for: .normal)
-        let session = AVAudioSession.sharedInstance()
-        do {
-            try session.setActive(false)
-            playButton.isEnabled = true
-            stopButton.isEnabled = false
-            recordButton.isEnabled = true
-        } catch {
-            print("could not make session inactive")
-            print(error.localizedDescription)
-        }
-        
-        //recorder = nil
-    }
-    
-
-    
-    @objc private func play(_ sender: UIButton) {
-        print("\(#function)")
-        
-        stopButton.setImage(UIImage(named: "stopButton"), for: .normal)
-        var url: URL?
-        if self.recorder != nil {
-            url = self.recorder.url
-        } else {
-            url = self.soundFileURL!
-        }
-//        print("playing \(String(describing: url))")
-//        UserDefaults.standard.set("\(url!)", forKey: "audio")
-        
-        do {
-            self.player = try AVAudioPlayer(contentsOf: url!)
-            stopButton.isEnabled = true
-            player.delegate = self
-            player.prepareToPlay()
-            player.volume = 1.0
-            player.play()
-        } catch {
-            self.player = nil
-            print(error.localizedDescription)
+        if let imageData = sampleImageView.image?.pngData(){
+            delegate?.updateStories(story:  imageDataBase.addNewStory(name: currentStoryName, isWithAudio: true, image: imageData, drawing: canvasView.drawing.dataRepresentation(), audioPath: musicIdentifier!), storyRow: storyRow)
+            self.navigationController?.popViewController(animated: true)
         }
     }
     
@@ -552,35 +517,7 @@ extension EditAlbumController: AVAudioRecorderDelegate {
         print("\(#function)")
         print("finished recording \(flag)")
         stopButton.isEnabled = false
-        showSaveAlert()
-        
-     
-    }
-    
-    func showSaveAlert(){
-        let alert = UIAlertController(title: "Would You Like to Save this File", message: "(Write down the name file", preferredStyle: .alert)
-        alert.addTextField()
-        
-        alert.addAction(UIAlertAction(title: "Sumbit", style: .default) {[unowned alert] _ in
-            print("keep was tapped")
-            self.saveStory(name: alert.textFields![0].text ?? self.photo.name!)
-        })
-        alert.addAction(UIAlertAction(title: "Cancel", style: .default) {[unowned self] _ in
-            print("Continue the record")
-        })
-        
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    func saveStory(name: String){
-        let format = DateFormatter()
-        format.dateFormat = "yyyy-MM-dd-HH-mm-ss"
-        let currentStoryName = "Story-\(format.string(from: Date()))"
-        
-        if let imageData = sampleImageView.image?.pngData(){
-            delegate?.updateStories(story:  imageDataBase.addNewStory(name: currentStoryName, isWithAudio: true, image: imageData, drawing: canvasView.drawing.dataRepresentation(), audioPath: musicIdentifier!), storyRow: storyRow)
-            self.navigationController?.popViewController(animated: true)
-        }
+        self.saveStory(name: self.fileName ?? self.photo.name!)
     }
     
     func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
@@ -611,21 +548,4 @@ extension EditAlbumController: AVAudioRecorderDelegate {
     downloadTask.resume()
     }
     
-}
-
-// MARK: AVAudioPlayerDelegate
-extension EditAlbumController: AVAudioPlayerDelegate {
-    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        print("\(#function)")
-        print("finished playing \(flag)")
-        recordButton.isEnabled = true
-        stopButton.isEnabled = false
-    }
-    
-    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
-        print("\(#function)")
-        if let e = error {
-            print("\(e.localizedDescription)")
-        }
-    }
 }
