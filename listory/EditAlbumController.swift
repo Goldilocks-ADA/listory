@@ -153,9 +153,7 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
     }
     
     @objc func backButton(){
-        
-        print("Test alert")
-        let  backAlert = UIAlertController(title: "Would like you cancel the process?", message: "Press the button", preferredStyle: .alert)
+        let  backAlert = UIAlertController(title: "Would like you cancel the process?", message: "", preferredStyle: .alert)
         
         backAlert.addAction(UIAlertAction(title: "Yes", style: .cancel, handler: { action in
         print("Back to Photo Controller")
@@ -163,7 +161,7 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         }))
         
         backAlert.addAction(UIAlertAction(title: "No", style: .default) {[unowned self] _ in
-            print("delete was tapped")
+            print("Stay")
         })
 
 //        self.present(backAlert, animated: true, completion: nil)
