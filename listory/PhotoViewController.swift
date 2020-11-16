@@ -240,14 +240,28 @@ private class CustomCell: UICollectionViewCell {
         return imageView
     }()
     
+    fileprivate let nameImage: UILabel = {
+       let nameFile = UILabel()
+        nameFile.text = "image.jpg"
+        nameFile.textAlignment = .left
+        nameFile.font = UIFont(name: "PT Sans Bold", size: 20)
+        nameFile.textColor = .black
+        return nameFile
+    }()
+    
     override init(frame: CGRect){
         super.init(frame: frame)
         contentView.addSubview(backGround)
+        contentView.addSubview(nameImage)
         self.backGround.snp.makeConstraints { (make) in
             make.top.equalTo(self.contentView.safeAreaLayoutGuide).offset(13)
             make.left.equalTo(self.contentView.safeAreaLayoutGuide)
             make.right.equalTo(self.contentView.safeAreaLayoutGuide)
             make.bottom.equalTo(self.contentView.safeAreaLayoutGuide)
+        }
+        
+        self.nameImage.snp.makeConstraints { (make) in
+            make.top.equalTo(self.backGround.snp.bottom).offset(10)
         }
     }
     

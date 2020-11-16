@@ -25,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         //go to onboarding
             self.window?.rootViewController = UINavigationController(rootViewController: HomeController())
         }else{
-            self.window?.rootViewController = UINavigationController(rootViewController: ListoryTabbarController())
+            self.window?.rootViewController = UINavigationController(rootViewController: AudioViewController())
         }
         
        

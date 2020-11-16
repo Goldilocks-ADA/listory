@@ -87,6 +87,18 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
         return highVolume
     }()
     
+    let labelStartPlaying: UILabel = {
+        let label = UILabel()
+        label.text = "0"
+        return label
+    }()
+    
+    let labelResultDefault: UILabel = {
+        let label = UILabel()
+        label.text = "03:00"
+        return label
+    }()
+    
     lazy var backgroundView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -154,6 +166,8 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
         self.view.addSubview(bigVolume)
         self.view.addSubview(volumeSlider)
         self.view.addSubview(statusLabel)
+        self.view.addSubview(labelStartPlaying)
+        self.view.addSubview(labelResultDefault)
         
         self.backBtn.snp.makeConstraints { (make) in
             make.left.equalTo(self.view).offset(30)
@@ -207,6 +221,16 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
             make.size.equalTo(CGSize(width: 300, height: 20))
         }
         
+        self.labelStartPlaying.snp.makeConstraints { (make) in
+            make.bottom.equalTo(self.view).offset(-10)
+            make.left.equalTo(self.playRecordSlider.snp.left).offset(-10)
+        }
+        
+        self.labelResultDefault.snp.makeConstraints { (make) in
+            make.bottom.equalTo(self.view).offset(-10)
+            make.left.equalTo(self.playRecordSlider.snp.right).offset(-20)
+        }
+        
         self.backBtn.addTarget(self, action: #selector(backButton), for: .touchUpInside)
         self.playBtn.addTarget(self, action: #selector(play), for: .touchUpInside)
         self.volumeSlider.addTarget(self, action: #selector(sliderValueDidChange(_:)), for: .touchUpInside)
@@ -243,11 +267,11 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
         backgroundImageView2.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -100).isActive = true
         backgroundImageView2.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100).isActive = true
         
-        backgroundView.addSubview(canvasView)
-        canvasView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
-        canvasView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
-        canvasView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -0).isActive = true
-        canvasView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -0).isActive = true
+//        backgroundView.addSubview(canvasView)
+//        canvasView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
+//        canvasView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+//        canvasView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -0).isActive = true
+//        canvasView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -0).isActive = true
     }
     
     @objc func backButton(){

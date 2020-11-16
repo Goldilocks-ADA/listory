@@ -188,18 +188,47 @@ private class CustomCell: UICollectionViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 12
+        imageView.layer.cornerRadius = 6
         return imageView
+    }()
+    
+    fileprivate let nameImage: UILabel = {
+       let nameFile = UILabel()
+        nameFile.text = "image.jpg"
+        nameFile.textAlignment = .left
+        nameFile.font = UIFont(name: "PT Sans Bold", size: 20)
+        nameFile.textColor = .black
+        return nameFile
+    }()
+    
+    fileprivate let lenghtDuration: UILabel = {
+        let lenght = UILabel()
+        lenght.text = "03.21"
+        lenght.textAlignment = .center
+        lenght.textColor = .black
+        lenght.font = UIFont(name: "PT Sans Regular", size: 20)
+        return lenght
     }()
     
     override init(frame: CGRect){
         super.init(frame: frame)
         contentView.addSubview(backGround)
+        contentView.addSubview(nameImage)
+        contentView.addSubview(lenghtDuration)
         self.backGround.snp.makeConstraints { (make) in
             make.top.equalTo(self.contentView.safeAreaLayoutGuide).offset(13)
             make.left.equalTo(self.contentView.safeAreaLayoutGuide)
             make.right.equalTo(self.contentView.safeAreaLayoutGuide)
-            make.bottom.equalTo(self.contentView.safeAreaLayoutGuide)
+            make.bottom.equalTo(self.contentView.safeAreaLayoutGuide).offset(-40)
+        }
+        
+        
+        self.nameImage.snp.makeConstraints { (make) in
+            make.top.equalTo(self.backGround.snp.bottom).offset(10)
+        }
+        
+        self.lenghtDuration.snp.makeConstraints { (make) in
+            make.top.equalTo(self.nameImage.snp.top).offset(25)
         }
     }
     
