@@ -566,8 +566,7 @@ extension EditAlbumController: AVAudioRecorderDelegate {
             self.saveStory(name: alert.textFields![0].text ?? self.photo.name!)
         })
         alert.addAction(UIAlertAction(title: "Cancel", style: .default) {[unowned self] _ in
-            self.navigationController?.pushViewController(PhotoViewController(), animated: true)
-            print("delete was tapped")
+            print("Continue the record")
         })
         
         self.present(alert, animated: true, completion: nil)
