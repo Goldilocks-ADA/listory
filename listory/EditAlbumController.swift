@@ -160,8 +160,12 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         backAlert.addAction(UIAlertAction(title: "Yes", style: .cancel, handler: { action in
         print("Back to Photo Controller")
         self.navigationController?.pushViewController(PhotoViewController(), animated: true)
-            
         }))
+        
+        backAlert.addAction(UIAlertAction(title: "No", style: .default) {[unowned self] _ in
+            print("delete was tapped")
+        })
+
 //        self.present(backAlert, animated: true, completion: nil)
         
         //Popover Position
@@ -562,8 +566,6 @@ extension EditAlbumController: AVAudioRecorderDelegate {
         alert.addAction(UIAlertAction(title: "Sumbit", style: .default) {[unowned alert] _ in
             print("keep was tapped")
             self.saveStory(name: alert.textFields![0].text ?? self.photo.name!)
-            
-            
         })
         alert.addAction(UIAlertAction(title: "Cancel", style: .default) {[unowned self] _ in
             self.navigationController?.pushViewController(PhotoViewController(), animated: true)
