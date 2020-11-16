@@ -135,8 +135,8 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         }
 
         self.statusLabel.snp.makeConstraints{(make)in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(16)
-            make.left.equalTo(self.view.safeAreaLayoutGuide).offset(150 )
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-30)
+            make.left.equalTo(self.view.safeAreaLayoutGuide).offset(150)
         }
         
         self.backBtn.addTarget(self, action: #selector(backButton), for: .touchUpInside)
@@ -566,6 +566,7 @@ extension EditAlbumController: AVAudioRecorderDelegate {
             
         })
         alert.addAction(UIAlertAction(title: "Cancel", style: .default) {[unowned self] _ in
+            self.navigationController?.pushViewController(PhotoViewController(), animated: true)
             print("delete was tapped")
         })
         
