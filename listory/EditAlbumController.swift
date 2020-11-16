@@ -121,7 +121,6 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         self.title = "Listory Image Preview"
         self.view.addSubview(sampleImageView)
         self.tabBarController?.tabBar.isHidden = true
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButton))
 
         stopButton.isEnabled = false
         recordButton.isEnabled = true
@@ -183,13 +182,13 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         }
     }
      
-    @objc func saveButton() {
-        if let imageData = sampleImageView.image?.pngData(){
-            print("Trying to save image")
-            delegate?.updateStories(story: imageDataBase.addNewStory(name: photo.name!, isWithAudio: true, image: imageData, drawing: canvasView.drawing.dataRepresentation(), audioPath: ""), storyRow: storyRow)
-            self.navigationController?.popViewController(animated: true)
-        }
-    }
+//    @objc func saveButton() {
+//        if let imageData = sampleImageView.image?.pngData(){
+//            print("Trying to save image")
+//            delegate?.updateStories(story: imageDataBase.addNewStory(name: photo.name!, isWithAudio: true, image: imageData, drawing: canvasView.drawing.dataRepresentation(), audioPath: ""), storyRow: storyRow)
+//            self.navigationController?.popViewController(animated: true)
+//        }
+//    }
     
     @objc func updateAudioMeter(_ timer: Timer) {
         
@@ -257,7 +256,7 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
        // let currentStoryName = "Story-\(format.string(from: Date()))"
         
         if let imageData = sampleImageView.image?.pngData(){
-            delegate?.updateStories(story:  imageDataBase.addNewStory(name: name, isWithAudio: true, image: imageData, drawing: canvasView.drawing.dataRepresentation(), audioPath: musicIdentifier!), storyRow: storyRow)
+            delegate?.updateStories(story:  imageDataBase.addNewStory(name: name, isWithAudio: true, image: imageData, drawing: canvasView.drawing.dataRepresentation(), audioPath: musicIdentifier!, audioDuration: recorder.currentTime), storyRow: storyRow)
             self.navigationController?.popViewController(animated: true)
         }
     }

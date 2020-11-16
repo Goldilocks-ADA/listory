@@ -131,18 +131,17 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
         }
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            let imageDataBase = DataBaseHelper()
-            addStory(story: imageDataBase.addNewStory(name: "", isWithAudio: false, image: pickedImage.pngData()!, drawing: Data(), audioPath: ""))
-            print("Photo Selected")
-        }
-        picker.dismiss(animated: true, completion: nil)
-    }
-    
     func addStory(story: Story) {
         stories.append(story)
         collectionView.reloadData()
+    }
+    
+    func formatTime(timeInterval: Double) -> String {
+        let min = Int(timeInterval / 60)
+        let sec = Int(timeInterval.truncatingRemainder(dividingBy: 60))
+        let s = String(format: "%02d:%02d", min, sec)
+        
+        return s
     }
 } //Batas Kelas
 
@@ -181,6 +180,7 @@ extension AudioViewController: UICollectionViewDelegateFlowLayout, UICollectionV
         cell.backGround.image = UIImage(data: stories[indexPath.row].image!) // Need to repair
         cell.backgroundColor = .white
         cell.nameImage.text = stories[indexPath.row].name!
+        cell.lenghtDuration.text = formatTime(timeInterval: stories[indexPath.row].audioDuration)
         return cell
     }
 }
@@ -205,7 +205,7 @@ private class CustomCell: UICollectionViewCell {
     
     fileprivate var nameImage: UILabel = {
        let nameFile = UILabel()
-        nameFile.text = "image.jpg"
+        nameFile.text = ""
         nameFile.textAlignment = .left
         nameFile.font = UIFont(name: "PT Sans Bold", size: 20)
         nameFile.textColor = .black
@@ -214,7 +214,7 @@ private class CustomCell: UICollectionViewCell {
     
     fileprivate let lenghtDuration: UILabel = {
         let lenght = UILabel()
-        lenght.text = "03.21"
+        lenght.text = ""
         lenght.textAlignment = .center
         lenght.textColor = .black
         lenght.font = UIFont(name: "PT Sans Regular", size: 20)

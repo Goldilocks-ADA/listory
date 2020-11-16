@@ -14,7 +14,7 @@ class DataBaseHelper {
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-    func addNewStory(name: String, isWithAudio: Bool, image: Data, drawing: Data, audioPath: String) -> Story {
+    func addNewStory(name: String, isWithAudio: Bool, image: Data, drawing: Data, audioPath: String, audioDuration: Double) -> Story {
         let storyInstance = Story (context: context)
         do {
             storyInstance.name = name
@@ -22,6 +22,7 @@ class DataBaseHelper {
             storyInstance.image = image
             storyInstance.drawing = drawing
             storyInstance.audioPath = audioPath
+            storyInstance.audioDuration = audioDuration
             try context.save()
             print("Image is saved", image)
         } catch {

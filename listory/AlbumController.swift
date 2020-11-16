@@ -103,7 +103,7 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         //MARK:- 2. Add Subview to Main View
         self.title = "Listory Image Preview"
         self.view.addSubview(sampleImageView)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButton))
+//        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButton))
         
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
@@ -143,16 +143,16 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         self.present(actionSheet, animated: true, completion: nil)
     }
      
-    @objc func saveButton() {
-        let format = DateFormatter()
-        format.dateFormat = "yyyy-MM-dd-HH-mm-ss"
-        let currentStoryName = "Story-\(format.string(from: Date()))"
-        
-        if let imageData = sampleImageView.image?.pngData(){
-            delegate?.updateStories(story:  imageDataBase.addNewStory(name: currentStoryName, isWithAudio: self.isWithAudio, image: imageData, drawing: canvasView.drawing.dataRepresentation(), audioPath: self.isWithAudio ? musicIdentifier! : ""))
-            self.navigationController?.popViewController(animated: true)
-        }
-    }
+//    @objc func saveButton() {
+//        let format = DateFormatter()
+//        format.dateFormat = "yyyy-MM-dd-HH-mm-ss"
+//        let currentStoryName = "Story-\(format.string(from: Date()))"
+//        
+//        if let imageData = sampleImageView.image?.pngData(){
+//            delegate?.updateStories(story:  imageDataBase.addNewStory(name: currentStoryName, isWithAudio: self.isWithAudio, image: imageData, drawing: canvasView.drawing.dataRepresentation(), audioPath: self.isWithAudio ? musicIdentifier! : ""))
+//            self.navigationController?.popViewController(animated: true)
+//        }
+//    }
     
     @objc func updateAudioMeter(_ timer: Timer) {
         

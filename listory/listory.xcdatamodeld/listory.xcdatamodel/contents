@@ -6,6 +6,7 @@
         <attribute name="name" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Story" representedClassName="Story" syncable="YES" codeGenerationType="class">
+        <attribute name="audioDuration" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="audioPath" optional="YES" attributeType="String"/>
         <attribute name="drawing" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
         <attribute name="id" optional="YES" attributeType="String"/>
@@ -14,7 +15,7 @@
         <attribute name="name" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="Story" positionX="-63" positionY="-18" width="128" height="133"/>
         <element name="Photo" positionX="-63" positionY="18" width="128" height="88"/>
+        <element name="Story" positionX="-63" positionY="-18" width="128" height="148"/>
     </elements>
 </model>
