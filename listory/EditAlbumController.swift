@@ -143,6 +143,15 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         self.recordButton.addTarget(self, action: #selector(record), for: .touchUpInside)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        tabBarController?.tabBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        tabBarController?.tabBar.isHidden = false
+        player?.stop()
+    }
+    
     @objc func backButton(){
         
         print("Test alert")
