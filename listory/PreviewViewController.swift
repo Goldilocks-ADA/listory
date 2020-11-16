@@ -75,15 +75,15 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
         return recordSlider
     }()
     
-    let smallVolume: UIButton = {
-        let lowVolume = UIButton()
-        lowVolume.setImage(UIImage(named: "speaker.1.fill"), for: .normal)
+    let smallVolume: UIImageView = {
+        let lowVolume = UIImageView()
+        lowVolume.image = UIImage(named: "small")
         return lowVolume
     }()
     
-    let bigVolume: UIButton = {
-        let highVolume = UIButton()
-        highVolume.setImage(UIImage(named: "speaker.1.fill"), for: .normal)
+    let bigVolume: UIImageView = {
+        let highVolume = UIImageView()
+        highVolume.image = UIImage(named: "big")
         return highVolume
     }()
     
@@ -150,6 +150,8 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
         self.view.addSubview(forwardBtn)
         self.view.addSubview(backwardBtn)
         self.view.addSubview(playRecordSlider)
+        self.view.addSubview(smallVolume)
+        self.view.addSubview(bigVolume)
         self.view.addSubview(volumeSlider)
         self.view.addSubview(statusLabel)
         
@@ -185,8 +187,18 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
         
         self.volumeSlider.snp.makeConstraints { (make) in
             make.bottom.equalTo(self.view).offset(-30)
-            make.left.equalTo(self.forwardBtn.snp.right).offset(100)
+            make.left.equalTo(self.forwardBtn.snp.right).offset(80)
             make.size.equalTo(CGSize(width: 300, height: 20))
+        }
+        
+        self.smallVolume.snp.makeConstraints { (make) in
+            make.bottom.equalTo(self.view).offset(-30)
+            make.left.equalTo(self.volumeSlider.snp.left).offset(-20)
+        }
+        
+        self.bigVolume.snp.makeConstraints { (make) in
+            make.bottom.equalTo(self.view).offset(-30)
+            make.left.equalTo(self.volumeSlider.snp.right).offset(10)
         }
         
         self.playRecordSlider.snp.makeConstraints { (make) in
