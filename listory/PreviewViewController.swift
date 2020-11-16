@@ -306,22 +306,13 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
             } 
         } else {
             do {
-                print("audio f1")
-                self.player = try AVAudioPlayer(contentsOf: soundFileURL.absoluteURL)
-                print("audio fo")
-                player.prepareToPlay()
-                player.delegate = self
-                player.volume = currentVolume
-                volumeSlider.setValue(currentVolume, animated: true)
-                playRecordSlider.maximumValue = Float(round(player.duration))
-                playRecordSlider.setValue(Float(currentTime), animated: true)
-                player.currentTime = currentTime
+               setupPlay()
                 Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateTime), userInfo: nil, repeats: true)
                 player.play()
                 playBtn.setImage(UIImage(named: "pauseBtn"), for: .normal)
 
             } catch {
-                self.player = nil
+//                self.player = nil
                 print(error.localizedDescription)
                 print("AVAudioPlayer init failed")
             }
@@ -333,6 +324,19 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
         // Update label
         
         // Update label 
+    }
+    
+    func setupPlay(){
+        print("audio f1")
+        self.player = try! AVAudioPlayer(contentsOf: soundFileURL.absoluteURL)
+        print("audio fo")
+        player.prepareToPlay()
+        player.delegate = self
+        player.volume = currentVolume
+        volumeSlider.setValue(currentVolume, animated: true)
+        playRecordSlider.maximumValue = Float(round(player.duration))
+        playRecordSlider.setValue(Float(currentTime), animated: true)
+        player.currentTime = currentTime
     }
     
     @objc func sliderValueDidChange(_ sender:UISlider!){
@@ -378,7 +382,7 @@ extension PreviewViewController: AVAudioPlayerDelegate {
         print("\(#function)")
         print("finished playing \(flag)")
         playBtn.setImage(UIImage(named: "playBtn"), for: .normal)
-        self.player = nil
+//        self.player = nil
     }
     
     func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
