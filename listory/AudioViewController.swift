@@ -180,6 +180,7 @@ extension AudioViewController: UICollectionViewDelegateFlowLayout, UICollectionV
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CustomCell
         cell.backGround.image = UIImage(data: stories[indexPath.row].image!) // Need to repair
         cell.backgroundColor = .white
+        cell.nameImage.text = stories[indexPath.row].name!
         return cell
     }
 }
@@ -202,7 +203,7 @@ private class CustomCell: UICollectionViewCell {
         return imageView
     }()
     
-    fileprivate let nameImage: UILabel = {
+    fileprivate var nameImage: UILabel = {
        let nameFile = UILabel()
         nameFile.text = "image.jpg"
         nameFile.textAlignment = .left
