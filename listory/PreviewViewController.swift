@@ -238,11 +238,13 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        tabBarController?.tabBar.isHidden = true
+        self.tabBarController?.tabBar.isHidden = true
+        print("\(#function)")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        tabBarController?.tabBar.isHidden = false
+        self.tabBarController?.tabBar.isHidden = false
+        print("\(#function)")
         player?.stop()
     }
     
@@ -275,7 +277,7 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
     }
     
     @objc func backButton(){
-        navigationController?.pushViewController(AudioViewController(), animated: false)
+        navigationController?.popViewController(animated: true)
     }
     
     func setupData(){

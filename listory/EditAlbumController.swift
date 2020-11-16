@@ -121,7 +121,7 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         self.view.addSubview(backBtn)
         self.title = "Listory Image Preview"
         self.view.addSubview(sampleImageView)
-        self.tabBarController?.tabBar.isHidden = true
+//        self.tabBarController?.tabBar.isHidden = true
 
         stopButton.isEnabled = false
         recordButton.isEnabled = true
@@ -144,11 +144,13 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        tabBarController?.tabBar.isHidden = true
+        self.tabBarController?.tabBar.isHidden = true
+        print("\(#function)")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        tabBarController?.tabBar.isHidden = false
+        self.tabBarController?.tabBar.isHidden = false
+        print("\(#function)")
     }
     
     @objc func backButton(){
@@ -156,7 +158,7 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         
         backAlert.addAction(UIAlertAction(title: "Yes", style: .cancel, handler: { action in
         print("Back to Photo Controller")
-        self.navigationController?.pushViewController(PhotoViewController(), animated: true)
+        self.navigationController?.popViewController(animated: true)
         }))
         
         backAlert.addAction(UIAlertAction(title: "No", style: .default) {[unowned self] _ in

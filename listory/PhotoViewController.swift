@@ -279,7 +279,7 @@ extension PhotoViewController: EditAlbumControllerDelegate {
         
         vc.addStory(story: story)
                
-                tabBarController?.selectedIndex = 1
+//                tabBarController?.selectedIndex = 1
         
     }
 }
