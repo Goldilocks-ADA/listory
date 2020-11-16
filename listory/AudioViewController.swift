@@ -116,6 +116,15 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
         }
     }
     
+//    override func viewWillAppear(_ animated: Bool) {
+//        tabBarController?.tabBar.isHidden = true
+//    }
+//    
+//    override func viewWillDisappear(_ animated: Bool) {
+//        tabBarController?.tabBar.isHidden = false
+//        player?.stop()
+//    }
+    
     func loadStories() {
         if let loadedStories =  DataBaseHelper.shareInstance.retrieveAllStories(){
             stories = loadedStories

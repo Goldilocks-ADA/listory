@@ -168,7 +168,7 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
         self.view.addSubview(statusLabel)
         self.view.addSubview(labelStartPlaying)
         self.view.addSubview(labelResultDefault)
-        
+        canvasView.drawingGestureRecognizer.isEnabled = false
         self.backBtn.snp.makeConstraints { (make) in
             make.left.equalTo(self.view).offset(30)
             make.top.equalTo(self.view).offset(40)
@@ -267,11 +267,11 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
         backgroundImageView2.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -100).isActive = true
         backgroundImageView2.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100).isActive = true
         
-//        backgroundView.addSubview(canvasView)
-//        canvasView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
-//        canvasView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
-//        canvasView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -0).isActive = true
-//        canvasView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -0).isActive = true
+        backgroundView.addSubview(canvasView)
+        canvasView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
+        canvasView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+        canvasView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -0).isActive = true
+        canvasView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -0).isActive = true
     }
     
     @objc func backButton(){
