@@ -61,7 +61,6 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
     }()
    
     var stories = [Story]()
-//    let viewControllers = UITabBarController()
     var recordings = [URL]()
     var player: AVAudioPlayer!
     
@@ -131,7 +130,6 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
         let min = Int(timeInterval / 60)
         let sec = Int(timeInterval.truncatingRemainder(dividingBy: 60))
         let s = String(format: "%02d:%02d", min, sec)
-        
         return s
     }
 } //Batas Kelas
@@ -264,3 +262,7 @@ extension AudioViewController: ListoryAlbumControllerDelegate {
         
     }
 }
+//
+//extension UIApplication {
+//    guard let AudioViewController = 
+//}

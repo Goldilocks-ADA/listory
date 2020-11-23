@@ -36,7 +36,7 @@ class HomeController: UIViewController, UIScrollViewDelegate {
     
     let skipButton: UIButton = {
         let button = UIButton(type: UIButton.ButtonType.system)
-        button.setTitle("skip", for: .normal)
+        button.setTitle("Skip", for: .normal)
         button.titleLabel?.font = UIFont(name: "PT Sans", size: 42)
         button.tintColor = UIColor(red: 96/255, green: 91/255, blue: 80/255, alpha: 1)
         return button
@@ -74,9 +74,9 @@ class HomeController: UIViewController, UIScrollViewDelegate {
         self.onboardingPageControl.currentPage = pageNumber
         self.scrollView.contentOffset.x = self.scrollView.frame.size.width * CGFloat(pageNumber)
         if(pageNumber == 2){
-            skipButton.setTitle("get started", for: .normal)
+            skipButton.setTitle("Get Started", for: .normal)
         }else{
-            skipButton.setTitle("skip", for: .normal)
+            skipButton.setTitle("Skip", for: .normal)
         }
         if(pageNumber == 0){
             backButton.isHidden = true
@@ -96,9 +96,9 @@ class HomeController: UIViewController, UIScrollViewDelegate {
         self.onboardingPageControl.currentPage = pageNumber
         self.scrollView.contentOffset.x = self.scrollView.frame.size.width * CGFloat(pageNumber)
         if(pageNumber == 2){
-            skipButton.setTitle("get started", for: .normal)
+            skipButton.setTitle("Get started", for: .normal)
         }else{
-            skipButton.setTitle("skip", for: .normal)
+            skipButton.setTitle("Skip", for: .normal)
         }
         
         if(pageNumber == 0){
@@ -205,9 +205,9 @@ class HomeController: UIViewController, UIScrollViewDelegate {
             pageNumber = Int(scrollView.contentOffset.x) / Int(scrollView.frame.size.width)
             self.onboardingPageControl.currentPage = Int(pageNumber)
             if(pageNumber == 2){
-                skipButton.setTitle("get Started", for: .normal)
+                skipButton.setTitle("Get Started", for: .normal)
             }else{
-                skipButton.setTitle("skip", for: .normal)
+                skipButton.setTitle("Skip", for: .normal)
             }
             
             if(pageNumber == 0){

@@ -26,6 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             self.window?.rootViewController = UINavigationController(rootViewController: HomeController())
         }else{
             self.window?.rootViewController = UINavigationController(rootViewController: ListoryTabbarController())
+//            self.window?.rootViewController?.tabBarController?.selectedIndex = 0
         }
         
        

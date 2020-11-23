@@ -121,8 +121,7 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         self.view.addSubview(backBtn)
         self.title = "Listory Image Preview"
         self.view.addSubview(sampleImageView)
-//        self.tabBarController?.tabBar.isHidden = true
-
+        
         stopButton.isEnabled = false
         recordButton.isEnabled = true
         stopButton.isHidden = true
@@ -249,7 +248,7 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
             textField.addTarget(self, action: #selector(self.alertTextFieldDidChange(field:)), for: UIControl.Event.editingChanged)
         }
         
-        let addAction:UIAlertAction = UIAlertAction(title: "Submit", style: .default) {[unowned alert] _ in
+        let addAction:UIAlertAction = UIAlertAction(title: "Save", style: .default) {[unowned alert] _ in
             print("keep was tapped")
             self.fileName = alert.textFields![0].text
             self.audioDuration = self.recorder.currentTime
@@ -530,8 +529,7 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
 // MARK: AVAudioRecorderDelegate
 extension EditAlbumController: AVAudioRecorderDelegate {
     
-    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder,
-                                         successfully flag: Bool) {
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         print("\(#function)")
         print("finished recording \(flag)")
         stopButton.isEnabled = false
