@@ -158,7 +158,6 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
             }
         }))
         
-        
         //Cancel Button
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 //        self.present(actionSheet, animated: true, completion: nil)

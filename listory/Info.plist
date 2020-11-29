@@ -25,11 +25,11 @@
 	<key>NSCameraUsageDescription</key>
 	<string>To take a photo for your listory album you need to allow access to your phone’s camera.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>For using microphone</string>
+	<string>To record a voice for your listory audio album, you need to allow access to your phone&apos;s Audio.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Allowed</string>
+	<string>To take a photo for your listory album, you need to allow access to your phone’s Photo lIbrary.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Because We Can!</string>
+	<string>To take a photo for your listory album, you need to allow access to your phone’s Photo lIbrary.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>PTSans.ttc</string>
