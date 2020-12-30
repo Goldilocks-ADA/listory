@@ -79,3 +79,28 @@ class DashBoardViewController: UIViewController {
     }
 }
 
+import SwiftUI
+
+struct DashBoardViewControllerRepresentable: UIViewControllerRepresentable {
+    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+        // leave this empty
+    }
+    
+    @available(iOS 13.0.0, *)
+    func makeUIViewController(context: Context) -> some UIViewController {
+        DashBoardViewController()
+    }
+}
+
+@available(iOS 13.0.0, *)
+struct DashBoardViewController_Previews: PreviewProvider {
+    
+    static var previews : some View {
+        let height = UIScreen.main.bounds.width
+        let width = UIScreen.main.bounds.height
+        DashBoardViewControllerRepresentable()
+            .previewDevice("iPad (8th generation)")
+            .previewDisplayName("iPad (8th generation)")
+            .previewLayout(PreviewLayout.fixed(width: width, height: height))
+    }
+}

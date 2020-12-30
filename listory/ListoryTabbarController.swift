@@ -82,3 +82,29 @@ extension UITabBar {
         UITabBar.appearance().clipsToBounds = true
     }
 }
+
+
+import SwiftUI
+
+struct ListoryTabbarControllerRepresentable: UIViewControllerRepresentable {
+    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+        
+    }
+    
+    func makeUIViewController(context: Context) -> some UIViewController {
+        ListoryTabbarController()
+    }
+}
+
+struct ListoryTabbarController_Previews: PreviewProvider {
+    static var previews: some View {
+        let height = UIScreen.main.bounds.width //414
+        let width = UIScreen.main.bounds.height //896
+        
+        ListoryTabbarControllerRepresentable()
+            .previewDevice("iPad (8th generation)")
+            .previewDisplayName("iPad (8th generation)")
+            .previewLayout(PreviewLayout.fixed(width: CGFloat(width), height: CGFloat(height)))
+        
+    }
+}

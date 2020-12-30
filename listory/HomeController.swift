@@ -276,3 +276,28 @@ extension UINavigationController {
         setViewControllers(vcs, animated: animated)
     }
 }
+
+import SwiftUI
+
+struct HomeControllerRepresentable: UIViewControllerRepresentable {
+    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+        
+    }
+    
+    func makeUIViewController(context: Context) -> some UIViewController {
+        HomeController()
+    }
+}
+
+struct HomeController_Previews: PreviewProvider {
+    
+    static var previews: some View {
+        let height = UIScreen.main.bounds.width
+        let width = UIScreen.main.bounds.height
+        
+        HomeControllerRepresentable()
+            .previewDevice("iPad (8th generation)")
+            .previewDisplayName("iPad (8th generation)")
+            .previewLayout(PreviewLayout.fixed(width: CGFloat(width), height: CGFloat(height)))
+    }
+}

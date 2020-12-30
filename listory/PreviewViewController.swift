@@ -130,7 +130,12 @@ class PreviewViewController: UIViewController, PKCanvasViewDelegate {
         canvasView.translatesAutoresizingMaskIntoConstraints = false
         canvasView.tool = PKInkingTool(.marker, color: .black, width: 10)
         canvasView.delegate = self
-        canvasView.drawingPolicy = .anyInput
+        if #available(iOS 14.0, *) {
+            canvasView.drawingPolicy = .anyInput
+        } else {
+            // Fallback on earlier versions
+            canvasView.allowsFingerDrawing = true
+        }
         canvasView.backgroundColor = .clear
         canvasView.isOpaque = false
         return canvasView

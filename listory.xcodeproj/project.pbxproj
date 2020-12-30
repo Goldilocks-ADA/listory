@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		02831898255FE35400E36384 /* PTSans.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 02831897255FE35400E36384 /* PTSans.ttc */; };
 		0284F2EC25343A000046AB98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0284F2EB25343A000046AB98 /* AppDelegate.swift */; };
 		0284F2EE25343A000046AB98 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0284F2ED25343A000046AB98 /* SceneDelegate.swift */; };
 		0284F2F625343A000046AB98 /* listory.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0284F2F425343A000046AB98 /* listory.xcdatamodeld */; };
@@ -26,6 +25,7 @@
 		174E025C6E8B63C2959453BB /* Pods_listory_listoryUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6E4AEEA8BD6EDB4C9CFB514 /* Pods_listory_listoryUITests.framework */; };
 		1FF2337D2539D30D003BDC19 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF2337C2539D30D003BDC19 /* DashboardViewController.swift */; };
 		1FF23411253C973C003BDC19 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF23410253C973C003BDC19 /* HomeController.swift */; };
+		A9D139092599E578005B2909 /* PTSans.ttc in Resources */ = {isa = PBXBuildFile; fileRef = A9D139082599E578005B2909 /* PTSans.ttc */; };
 		B2BDFBCCC5F53A80485F68E0 /* Pods_listory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70A15AC0C4DCFF1A304E26EF /* Pods_listory.framework */; };
 		FD2886E405C846B93F9011FB /* Pods_listoryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33B4A766FFB6D0F6DDC4E9FB /* Pods_listoryTests.framework */; };
 /* End PBXBuildFile section */
@@ -48,7 +48,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		02831897255FE35400E36384 /* PTSans.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; name = PTSans.ttc; path = ../../../../../System/Library/Fonts/Supplemental/PTSans.ttc; sourceTree = "<group>"; };
 		0284F2E825343A000046AB98 /* listory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = listory.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0284F2EB25343A000046AB98 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0284F2ED25343A000046AB98 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -77,6 +76,7 @@
 		6896DCDE56D99A118D4BFAAE /* Pods-listory.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-listory.debug.xcconfig"; path = "Target Support Files/Pods-listory/Pods-listory.debug.xcconfig"; sourceTree = "<group>"; };
 		70A15AC0C4DCFF1A304E26EF /* Pods_listory.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_listory.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		772418F212211304CC3458EF /* Pods-listory-listoryUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-listory-listoryUITests.release.xcconfig"; path = "Target Support Files/Pods-listory-listoryUITests/Pods-listory-listoryUITests.release.xcconfig"; sourceTree = "<group>"; };
+		A9D139082599E578005B2909 /* PTSans.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = PTSans.ttc; sourceTree = "<group>"; };
 		BA14E581B696E01FE8E1A068 /* Pods-listory-listoryUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-listory-listoryUITests.debug.xcconfig"; path = "Target Support Files/Pods-listory-listoryUITests/Pods-listory-listoryUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		DBDBF16F08D506A3C2B2C1E8 /* Pods-listoryTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-listoryTests.debug.xcconfig"; path = "Target Support Files/Pods-listoryTests/Pods-listoryTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E6E4AEEA8BD6EDB4C9CFB514 /* Pods_listory_listoryUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_listory_listoryUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -191,7 +191,7 @@
 		1396876325590C4B0018E873 /* Font */ = {
 			isa = PBXGroup;
 			children = (
-				02831897255FE35400E36384 /* PTSans.ttc */,
+				A9D139082599E578005B2909 /* PTSans.ttc */,
 			);
 			path = Font;
 			sourceTree = "<group>";
@@ -316,7 +316,7 @@
 			files = (
 				0284F2FB25343A000046AB98 /* LaunchScreen.storyboard in Resources */,
 				0284F2F825343A000046AB98 /* Assets.xcassets in Resources */,
-				02831898255FE35400E36384 /* PTSans.ttc in Resources */,
+				A9D139092599E578005B2909 /* PTSans.ttc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -554,7 +554,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -609,7 +609,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -627,9 +627,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = 7BB8YZ4KXC;
+				DEVELOPMENT_TEAM = J5T564JM4P;
 				INFOPLIST_FILE = listory/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -651,9 +651,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = 7BB8YZ4KXC;
+				DEVELOPMENT_TEAM = J5T564JM4P;
 				INFOPLIST_FILE = listory/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

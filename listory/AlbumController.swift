@@ -78,7 +78,12 @@ class AlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerObser
         canvasView.translatesAutoresizingMaskIntoConstraints = false
         canvasView.tool = PKInkingTool(.marker, color: .black, width: 10)
         canvasView.delegate = self
-        canvasView.drawingPolicy = .anyInput
+        if #available(iOS 14.0, *) {
+            canvasView.drawingPolicy = .anyInput
+        } else {
+            // Fallback on earlier versions
+            canvasView.allowsFingerDrawing = true
+        }
         canvasView.backgroundColor = .clear
         canvasView.isOpaque = false
         return canvasView
@@ -538,5 +543,32 @@ extension AlbumController: AVAudioPlayerDelegate {
         if let e = error {
             print("\(e.localizedDescription)")
         }
+    }
+}
+
+
+import SwiftUI
+
+struct AlbumControllerRepresentable: UIViewControllerRepresentable {
+    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+        
+    }
+    
+    func makeUIViewController(context: Context) -> some UIViewController {
+        AlbumController()
+    }
+}
+
+struct AlbumController_Previews: PreviewProvider {
+    
+    static var previews: some View {
+        let height = UIScreen.main.bounds.width
+        let width = UIScreen.main.bounds.height
+        
+        AlbumControllerRepresentable()
+            .previewDevice("iPad (8th generation)")
+            .previewDisplayName("iPad (8th generation)")
+            .previewLayout(PreviewLayout.fixed(width: width, height: height))
+        
     }
 }
