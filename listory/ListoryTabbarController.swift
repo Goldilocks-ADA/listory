@@ -13,6 +13,7 @@ struct CustomData {
     var title = String()
     var image = UIImage()
     var url = String()
+    var id = String()
 }
 
 protocol ListoryAlbumControllerDelegate {

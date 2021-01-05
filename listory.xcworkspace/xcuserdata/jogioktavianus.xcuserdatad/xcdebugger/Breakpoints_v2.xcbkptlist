@@ -3,4 +3,193 @@
    uuid = "4975A045-7FA7-4764-B4BA-3D1E8D84F5E1"
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "29A708E2-22DF-4BCC-9E63-A90B88247464"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "listory/ListoryTabbarController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "23"
+            endingLineNumber = "23"
+            landmarkName = "ListoryTabbarController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "29A708E2-22DF-4BCC-9E63-A90B88247464 - 56e3bf4c2ba73c96"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "listory.ListoryTabbarController.__deallocating_deinit"
+                  moduleName = "listory"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jogioktavianus/Documents/listory/listory/ListoryTabbarController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  uuid = "29A708E2-22DF-4BCC-9E63-A90B88247464 - 6f3ad3de3d102ab1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "listory.ListoryTabbarController.__allocating_init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; listory.ListoryTabbarController"
+                  moduleName = "listory"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jogioktavianus/Documents/listory/listory/ListoryTabbarController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "12">
+               </Location>
+               <Location
+                  uuid = "29A708E2-22DF-4BCC-9E63-A90B88247464 - 4a07e7c1738317a9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "listory.ListoryTabbarController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; listory.ListoryTabbarController"
+                  moduleName = "listory"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jogioktavianus/Documents/listory/listory/ListoryTabbarController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "25"
+                  endingLineNumber = "25"
+                  offsetFromSymbolStart = "308">
+               </Location>
+               <Location
+                  uuid = "29A708E2-22DF-4BCC-9E63-A90B88247464 - 125ef0f17c173086"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "listory.ListoryTabbarController.__allocating_init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;listory.ListoryTabbarController&gt;"
+                  moduleName = "listory"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jogioktavianus/Documents/listory/listory/ListoryTabbarController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "12">
+               </Location>
+               <Location
+                  uuid = "29A708E2-22DF-4BCC-9E63-A90B88247464 - 59641e0c610b3eb2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "listory.ListoryTabbarController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;listory.ListoryTabbarController&gt;"
+                  moduleName = "listory"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jogioktavianus/Documents/listory/listory/ListoryTabbarController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "25"
+                  endingLineNumber = "25"
+                  offsetFromSymbolStart = "219">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F04D71C4-E56E-42ED-A097-F8F6D2B5780A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "listory/AudioViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "213"
+            endingLineNumber = "213"
+            landmarkName = "collectionView(_:didSelectItemAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8BF23DF2-134B-4459-AF84-911501FDC6D8"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "listory/ListoryTabbarController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "25"
+            endingLineNumber = "25"
+            landmarkName = "backgroundAlbumView"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "8BF23DF2-134B-4459-AF84-911501FDC6D8 - a0e96bea03d42c"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; __C.UIImageView in variable initialization expression of listory.ListoryTabbarController.backgroundAlbumView : __C.UIImageView"
+                  moduleName = "listory"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jogioktavianus/Documents/listory/listory/ListoryTabbarController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "26"
+                  endingLineNumber = "26"
+                  offsetFromSymbolStart = "22">
+               </Location>
+               <Location
+                  uuid = "8BF23DF2-134B-4459-AF84-911501FDC6D8 - 5f6e584ef00dd66d"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "listory.ListoryTabbarController.backgroundAlbumView.getter : __C.UIImageView"
+                  moduleName = "listory"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jogioktavianus/Documents/listory/listory/ListoryTabbarController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "25"
+                  endingLineNumber = "25"
+                  offsetFromSymbolStart = "56">
+               </Location>
+               <Location
+                  uuid = "8BF23DF2-134B-4459-AF84-911501FDC6D8 - 4a07e7c1738317a9"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "listory.ListoryTabbarController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; listory.ListoryTabbarController"
+                  moduleName = "listory"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jogioktavianus/Documents/listory/listory/ListoryTabbarController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "25"
+                  endingLineNumber = "25"
+                  offsetFromSymbolStart = "308">
+               </Location>
+               <Location
+                  uuid = "8BF23DF2-134B-4459-AF84-911501FDC6D8 - 59641e0c610b3eb2"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "listory.ListoryTabbarController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;listory.ListoryTabbarController&gt;"
+                  moduleName = "listory"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jogioktavianus/Documents/listory/listory/ListoryTabbarController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "25"
+                  endingLineNumber = "25"
+                  offsetFromSymbolStart = "219">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

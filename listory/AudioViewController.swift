@@ -43,7 +43,6 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
 //    }()
     let buttonSelect: UIButton = {
         let btnSelect = UIButton()
-        
         btnSelect.setTitle("Select", for: .normal)
         btnSelect.setTitleColor(UIColor(named: "grey"), for: .normal)
         btnSelect.titleLabel?.font = UIFont(name: "PT Sans Bold", size: 34)
@@ -54,7 +53,6 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
     let buttonTrash: UIButton = {
         let btnTrash = UIButton()
         var image = UIImage(systemName: "trash")
-
         image?.withTintColor(UIColor(named: "grey")!)
         image = image?.resizeImage(targetSize: CGSize(width: 45, height: 45))
         btnTrash.setImage(image, for: .normal)
@@ -159,7 +157,7 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
     
     @objc private func buttonSelectTapped(_ sender: UIButton) {
         if sender.currentTitle == "Select" {
-            sender.setTitle("Clear", for: .normal)
+            sender.setTitle("Done", for: .normal)
             self.collectionView.allowsMultipleSelection = true
         } else {
             sender.setTitle("Select", for: .normal)
@@ -174,7 +172,9 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
     }
     
     @objc private func buttonTrashTapped(_ sender: UIButton) {
+//        DataBaseHelper.shareInstance.deleteStory(object: <#T##NSManagedObject#>)
         print("button delete tapped")
+        
     }
     
     func addStory(story: Story) {
@@ -210,6 +210,9 @@ extension AudioViewController: UICollectionViewDelegateFlowLayout, UICollectionV
         if self.collectionView.allowsMultipleSelection {
             guard let selectedItems = self.collectionView.indexPathsForSelectedItems else { return }
             self.buttonTrash.isHidden = Bool(selectedItems.count == 0)
+            print(cell.data)
+            
+//            DataBaseHelper.shareInstance.deleteStory(object: <#T##NSManagedObject#>)
         }else{
             self.navigationController?.pushViewController(vc, animated: true)
         }
@@ -240,6 +243,7 @@ extension AudioViewController: UICollectionViewDelegateFlowLayout, UICollectionV
 }
 
 private class CustomCell: UICollectionViewCell {
+    
     var data: CustomData? {
         didSet {
             guard let data = data else { return }

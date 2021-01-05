@@ -63,6 +63,17 @@ class DataBaseHelper {
         return storyInstance
     }
     
+    func deleteStory(object: NSManagedObject)  {
+
+        let request: NSFetchRequest<Story> = Story.fetchRequest()
+        do {
+            try context.delete(object)
+                //try context.fetch(request)
+        } catch {
+            print("Error retrieving data \(error)")
+        }
+    }
+    
     func addNewPhoto(name: String, id: String, image: Data) -> Photo {
         let storyInstance = Photo (context: context)
         do {
