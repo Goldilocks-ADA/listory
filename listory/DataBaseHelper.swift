@@ -17,6 +17,7 @@ class DataBaseHelper {
     func addNewStory(name: String, isWithAudio: Bool, image: Data, drawing: Data, audioPath: String, audioDuration: Double) -> Story {
         let storyInstance = Story (context: context)
         do {
+            storyInstance.id = UUID().uuidString
             storyInstance.name = name
             storyInstance.isWithAudio = isWithAudio
             storyInstance.image = image
@@ -63,11 +64,13 @@ class DataBaseHelper {
         return storyInstance
     }
     
-    func deleteStory(object: NSManagedObject)  {
-
+    func deleteStory(objectID: NSManagedObjectID)  {
+        
         let request: NSFetchRequest<Story> = Story.fetchRequest()
         do {
-            try context.delete(object)
+            var dapat = try context.existingObject(with: objectID)
+            try context.delete(dapat)
+            try context.save()
                 //try context.fetch(request)
         } catch {
             print("Error retrieving data \(error)")

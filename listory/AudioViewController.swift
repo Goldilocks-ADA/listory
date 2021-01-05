@@ -210,7 +210,30 @@ extension AudioViewController: UICollectionViewDelegateFlowLayout, UICollectionV
         if self.collectionView.allowsMultipleSelection {
             guard let selectedItems = self.collectionView.indexPathsForSelectedItems else { return }
             self.buttonTrash.isHidden = Bool(selectedItems.count == 0)
-            print(cell.data)
+//            DataBaseHelper.shareInstance.context
+            
+//            let personToRemove = self.items![indexPath.row]
+//
+//            //Remove the Person
+//            self.context.delete(personToRemove)
+//
+//            //Save the Data
+//            do {
+//                try self.context.save()
+//            } catch{
+//
+//            }
+//            //Re-Fetch the Data
+//            self.fetchPeople()
+//
+            let story = stories[indexPath.row]
+            DataBaseHelper.shareInstance.deleteStory(objectID: story.objectID)
+        
+            self.loadStories()
+            self.collectionView.reloadData()
+            print(story.id)
+//            DataBaseHelper.shareInstance.deleteStory(object: <#T##NSManagedObject#>)
+//            print(cell.data)
             
 //            DataBaseHelper.shareInstance.deleteStory(object: <#T##NSManagedObject#>)
         }else{
