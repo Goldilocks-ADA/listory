@@ -174,12 +174,10 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
     }
     
     @objc private func buttonTrashTapped(_ sender: UIButton) {
-//        DataBaseHelper.shareInstance.deleteStory(object: <#T##NSManagedObject#>)
-        print("button delete tapped")
         DataBaseHelper.shareInstance.deleteStories(objectIDs: storiesObjectIDs)
         self.loadStories()
         self.collectionView.reloadData()
-
+        print("button delete tapped")
     }
     
     func addStory(story: Story) {
