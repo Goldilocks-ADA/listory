@@ -528,7 +528,6 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
             })
         }
     }
-
 }
 
 // MARK: AVAudioRecorderDelegate

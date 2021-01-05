@@ -32,6 +32,7 @@ class DataBaseHelper {
     }
     
     func retrieveAllStories() -> [Story]? {
+        
         let request: NSFetchRequest<Story> = Story.fetchRequest()
         do {
             return try context.fetch(request)

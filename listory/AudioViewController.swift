@@ -18,11 +18,11 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
         return bgAlbum
     }()
     
-    let albumControll: UIImageView = {
-        let bgAlbum1 = UIImageView ()
-        bgAlbum1.image = UIImage(named: "albumBG")
-        return bgAlbum1
-    }()
+//    let albumControll: UIImageView = {
+//        let bgAlbum1 = UIImageView ()
+//        bgAlbum1.image = UIImage(named: "albumBG")
+//        return bgAlbum1
+//    }()
     
     let imageLine1: UIImageView = {
        let line1 = UIImageView()
@@ -36,10 +36,31 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
         return line2
     }()
     
-    let buttonAdd: UIButton = {
-       let btnAdd = UIButton()
-        btnAdd.setImage(UIImage(named: "btnAdd"), for: .normal)
-        return btnAdd
+//    let buttonAdd: UIButton = {
+//       let btnAdd = UIButton()
+//        btnAdd.setImage(UIImage(named: "btnAdd"), for: .normal)
+//        return btnAdd
+//    }()
+    let buttonSelect: UIButton = {
+        let btnSelect = UIButton()
+        
+        btnSelect.setTitle("Select", for: .normal)
+        btnSelect.setTitleColor(UIColor(named: "grey"), for: .normal)
+        btnSelect.titleLabel?.font = UIFont(name: "PT Sans Bold", size: 34)
+        
+        return btnSelect
+    }()
+    
+    let buttonTrash: UIButton = {
+        let btnTrash = UIButton()
+        var image = UIImage(systemName: "trash")
+
+        image?.withTintColor(UIColor(named: "grey")!)
+        image = image?.resizeImage(targetSize: CGSize(width: 45, height: 45))
+        btnTrash.setImage(image, for: .normal)
+        btnTrash.isHidden = true
+
+        return btnTrash
     }()
     
     let titleBar: UILabel = {
@@ -72,15 +93,27 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
         self.view.addSubview(collectionView)
         self.view.addSubview(imageLine1)
         self.view.addSubview(imageLine2)
+        self.view.addSubview(buttonSelect)
+        self.view.addSubview(buttonTrash)
         navigationController?.navigationBar.transparentNavigationBar()
         navigationController?.navigationBar.isHidden = true
+        
 //        setupTabBar()
         loadStories()
-        
-        
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = .clear
+        
+        // Constraint
+        self.buttonSelect.snp.makeConstraints{ constraintMaker in
+            constraintMaker.top.equalTo(self.view).offset(35)
+            constraintMaker.right.equalTo(self.view.safeAreaLayoutGuide).offset(-150)
+        }
+        
+        self.buttonTrash.snp.makeConstraints{ constraintMaker in
+            constraintMaker.top.equalTo(self.view).offset(35)
+            constraintMaker.right.equalTo(self.view.safeAreaLayoutGuide).offset(-90)
+        }
         
         //Collection view cell
         self.collectionView.snp.makeConstraints { (make) in
@@ -113,12 +146,35 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
             make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-100)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
         }
+        
+        self.buttonSelect.addTarget(self, action: #selector(buttonSelectTapped), for: .touchUpInside)
+        self.buttonTrash.addTarget(self, action: #selector(buttonTrashTapped), for: .touchUpInside)
     }
 
     func loadStories() {
         if let loadedStories =  DataBaseHelper.shareInstance.retrieveAllStories(){
             stories = loadedStories
         }
+    }
+    
+    @objc private func buttonSelectTapped(_ sender: UIButton) {
+        if sender.currentTitle == "Select" {
+            sender.setTitle("Clear", for: .normal)
+            self.collectionView.allowsMultipleSelection = true
+        } else {
+            sender.setTitle("Select", for: .normal)
+            self.collectionView.allowsMultipleSelection = false
+
+        }
+        guard let selectedItems = self.collectionView.indexPathsForSelectedItems else { return }
+        for indexPath in selectedItems {
+            self.collectionView.deselectItem(at: indexPath, animated: true)
+        }
+        self.buttonTrash.isHidden = true
+    }
+    
+    @objc private func buttonTrashTapped(_ sender: UIButton) {
+        print("button delete tapped")
     }
     
     func addStory(story: Story) {
@@ -149,7 +205,20 @@ extension AudioViewController: UICollectionViewDelegateFlowLayout, UICollectionV
         vc.storyRow = indexPath.row
         vc.soundFileURL = url
         
-        self.navigationController?.pushViewController(vc, animated: true)
+        let cell = collectionView.cellForItem(at: indexPath) as! CustomCell
+        
+        if self.collectionView.allowsMultipleSelection {
+            guard let selectedItems = self.collectionView.indexPathsForSelectedItems else { return }
+            self.buttonTrash.isHidden = Bool(selectedItems.count == 0)
+        }else{
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! CustomCell
+        guard let selectedItems = self.collectionView.indexPathsForSelectedItems else { return }
+        self.buttonTrash.isHidden = Bool(selectedItems.count == 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -218,7 +287,6 @@ private class CustomCell: UICollectionViewCell {
             make.bottom.equalTo(self.contentView.safeAreaLayoutGuide).offset(-60)
         }
         
-        
         self.nameImage.snp.makeConstraints { (make) in
             make.top.equalTo(self.backGround.snp.bottom).offset(10)
             make.left.equalTo(self.backGround.snp.left).offset(5)
@@ -228,6 +296,12 @@ private class CustomCell: UICollectionViewCell {
             make.top.equalTo(self.nameImage.snp.top).offset(25)
             make.left.equalTo(self.backGround.snp.left).offset(5)
         }
+        
+        self.selectedBackgroundView = {
+            let bgView = UIView()
+            bgView.backgroundColor = UIColor.red
+            return bgView
+        }()
     }
     
     required init?(coder: NSCoder) {
