@@ -82,6 +82,7 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
     var stories = [Story]()
     var recordings = [URL]()
     var player: AVAudioPlayer!
+    var storiesObjectIDs: [NSManagedObjectID] = []
     
     
     override func viewDidLoad() {
@@ -157,11 +158,12 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
     
     @objc private func buttonSelectTapped(_ sender: UIButton) {
         if sender.currentTitle == "Select" {
-            sender.setTitle("Done", for: .normal)
+            sender.setTitle("Clear", for: .normal)
             self.collectionView.allowsMultipleSelection = true
         } else {
             sender.setTitle("Select", for: .normal)
             self.collectionView.allowsMultipleSelection = false
+            storiesObjectIDs = []
 
         }
         guard let selectedItems = self.collectionView.indexPathsForSelectedItems else { return }
@@ -174,7 +176,10 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
     @objc private func buttonTrashTapped(_ sender: UIButton) {
 //        DataBaseHelper.shareInstance.deleteStory(object: <#T##NSManagedObject#>)
         print("button delete tapped")
-        
+        DataBaseHelper.shareInstance.deleteStories(objectIDs: storiesObjectIDs)
+        self.loadStories()
+        self.collectionView.reloadData()
+
     }
     
     func addStory(story: Story) {
@@ -210,33 +215,12 @@ extension AudioViewController: UICollectionViewDelegateFlowLayout, UICollectionV
         if self.collectionView.allowsMultipleSelection {
             guard let selectedItems = self.collectionView.indexPathsForSelectedItems else { return }
             self.buttonTrash.isHidden = Bool(selectedItems.count == 0)
-//            DataBaseHelper.shareInstance.context
             
-//            let personToRemove = self.items![indexPath.row]
-//
-//            //Remove the Person
-//            self.context.delete(personToRemove)
-//
-//            //Save the Data
-//            do {
-//                try self.context.save()
-//            } catch{
-//
-//            }
-//            //Re-Fetch the Data
-//            self.fetchPeople()
-//
             let story = stories[indexPath.row]
-            DataBaseHelper.shareInstance.deleteStory(objectID: story.objectID)
-        
-            self.loadStories()
-            self.collectionView.reloadData()
-            print(story.id)
-//            DataBaseHelper.shareInstance.deleteStory(object: <#T##NSManagedObject#>)
-//            print(cell.data)
+            storiesObjectIDs.append(story.objectID)
+//            DataBaseHelper.shareInstance.deleteStory(objectID: story.objectID)
             
-//            DataBaseHelper.shareInstance.deleteStory(object: <#T##NSManagedObject#>)
-        }else{
+        } else {
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -245,6 +229,10 @@ extension AudioViewController: UICollectionViewDelegateFlowLayout, UICollectionV
         let cell = collectionView.cellForItem(at: indexPath) as! CustomCell
         guard let selectedItems = self.collectionView.indexPathsForSelectedItems else { return }
         self.buttonTrash.isHidden = Bool(selectedItems.count == 0)
+        let story = stories[indexPath.row]
+//        storiesObjectIDs.append(story.objectID)
+        storiesObjectIDs.removeAll(where: { story.objectID ==  $0 })
+        print(storiesObjectIDs.count)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -363,7 +351,4 @@ extension AudioViewController: ListoryAlbumControllerDelegate {
         
     }
 }
-//
-//extension UIApplication {
-//    guard let AudioViewController = 
-//}
+

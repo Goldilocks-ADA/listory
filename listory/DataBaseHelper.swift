@@ -66,12 +66,25 @@ class DataBaseHelper {
     
     func deleteStory(objectID: NSManagedObjectID)  {
         
-        let request: NSFetchRequest<Story> = Story.fetchRequest()
+//        let request: NSFetchRequest<Story> = Story.fetchRequest()
         do {
-            var dapat = try context.existingObject(with: objectID)
+            let dapat = try context.existingObject(with: objectID)
             try context.delete(dapat)
             try context.save()
                 //try context.fetch(request)
+        } catch {
+            print("Error retrieving data \(error)")
+        }
+    }
+    
+    func deleteStories(objectIDs: [NSManagedObjectID]){
+//        let request: NSFetchRequest<Story> = Story.fetchRequest()
+        do {
+            for objectID in objectIDs {
+                let dapat = try context.existingObject(with: objectID)
+                try context.delete(dapat)
+            }
+            try context.save()
         } catch {
             print("Error retrieving data \(error)")
         }
