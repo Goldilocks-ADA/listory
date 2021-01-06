@@ -60,13 +60,13 @@ class ListoryTabbarController: UIViewController, UIImagePickerControllerDelegate
         viewControllers.tabBar.barTintColor = .white
         UITabBar.setTransparentTabBar()
         let photoTabBar = UINavigationController(rootViewController: PhotoViewController())
-        photoTabBar.tabBarItem.image = UIImage (named: "btnPhoto")
-        photoTabBar.tabBarItem.selectedImage = UIImage(named: "photoSelected")?.withRenderingMode(.alwaysOriginal)
+        photoTabBar.tabBarItem.image = UIImage (named: "photoViewOpacity")
+        photoTabBar.tabBarItem.selectedImage = UIImage(named: "photoViewGreen")?.withRenderingMode(.alwaysOriginal)
 //        self.tabBarController?.selectedIndex = 0
         
         let audioTabBar = UINavigationController(rootViewController: AudioViewController())
-        audioTabBar.tabBarItem.image = UIImage (named: "btnAudio")
-        audioTabBar.tabBarItem.selectedImage = UIImage(named: "audioSelected")?.withRenderingMode(.alwaysOriginal)
+        audioTabBar.tabBarItem.image = UIImage (named: "audioPhotoViewOpacity")
+        audioTabBar.tabBarItem.selectedImage = UIImage(named: "audioPhotoView")?.withRenderingMode(.alwaysOriginal)
 //        self.tabBarController?.selectedIndex = 1
         
         viewControllers.setViewControllers([photoTabBar, audioTabBar], animated: false)
@@ -106,6 +106,5 @@ struct ListoryTabbarController_Previews: PreviewProvider {
             .previewDevice("iPad (8th generation)")
             .previewDisplayName("iPad (8th generation)")
             .previewLayout(PreviewLayout.fixed(width: CGFloat(width), height: CGFloat(height)))
-        
     }
 }

@@ -57,7 +57,6 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
         image = image?.resizeImage(targetSize: CGSize(width: 45, height: 45))
         btnTrash.setImage(image, for: .normal)
         btnTrash.isHidden = true
-
         return btnTrash
     }()
     
