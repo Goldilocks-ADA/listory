@@ -300,7 +300,7 @@ private class CustomCell: UICollectionViewCell {
         
         self.selectedBackgroundView = {
             let bgView = UIView()
-            bgView.backgroundColor = UIColor.red
+            bgView.backgroundColor = UIColor.green
             return bgView
         }()
     }
