@@ -433,7 +433,7 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
             let window = parent?.view.window
             toolPicker = PKToolPicker.shared(for: window!)
         }
-        toolPicker.setVisible(true, forFirstResponder: canvasView)
+        toolPicker.setVisible(false, forFirstResponder: canvasView)
         toolPicker.addObserver(canvasView)
         toolPicker.addObserver(self)
         updateLayout(for: toolPicker)
