@@ -164,7 +164,7 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
     @objc private func buttonTrashTapped(_ sender: UIButton) {
         let many = storiesObjectIDs.count > 1 ? "s" : ""
         let actionSheet = UIAlertController(title: "", message: "Are you sure want to delete this audio album photo\(many)?", preferredStyle: .alert)
-
+ 
         actionSheet.addAction(UIAlertAction(title: "Delete File\(many)", style: .destructive, handler: { _ in
             DataBaseHelper.shareInstance.deleteStories(objectIDs: self.storiesObjectIDs)
             self.loadStories()
