@@ -162,10 +162,18 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
     }
     
     @objc private func buttonTrashTapped(_ sender: UIButton) {
-        DataBaseHelper.shareInstance.deleteStories(objectIDs: storiesObjectIDs)
-        self.loadStories()
-        self.collectionView.reloadData()
-        print("button delete tapped")
+        let many = storiesObjectIDs.count > 1 ? "s" : ""
+        let actionSheet = UIAlertController(title: "", message: "Are you sure want to delete this audio album photo\(many)?", preferredStyle: .alert)
+
+        actionSheet.addAction(UIAlertAction(title: "Delete File\(many)", style: .destructive, handler: { _ in
+            DataBaseHelper.shareInstance.deleteStories(objectIDs: self.storiesObjectIDs)
+            self.loadStories()
+            self.collectionView.reloadData()
+        } ))
+        
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        self.present(actionSheet, animated: true, completion: nil)
     }
     
     func addStory(story: Story) {
@@ -294,7 +302,7 @@ private class CustomCell: UICollectionViewCell {
         contentView.addSubview(backGround)
         contentView.addSubview(nameImage)
         contentView.addSubview(lenghtDuration)
-        contentView.addSubview(iconSpeaker) 
+        contentView.addSubview(iconSpeaker)
         
         self.backGround.snp.makeConstraints { (make) in
             make.top.equalTo(self.contentView.safeAreaLayoutGuide)
