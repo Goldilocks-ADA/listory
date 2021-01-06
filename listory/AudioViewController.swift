@@ -32,10 +32,10 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
 
     let buttonSelect: UIButton = {
         let btnSelect = UIButton()
-        btnSelect.setTitle("Select", for: .normal)
-        btnSelect.setTitleColor(UIColor(named: "grey"), for: .normal)
-        btnSelect.titleLabel?.font = UIFont(name: "PT Sans Bold", size: 34)
-        
+        btnSelect.setImage(UIImage(named: "buttonSelect"), for: .normal)
+//        btnSelect.setTitle("Select", for: .normal)
+//        btnSelect.setTitleColor(UIColor(named: "grey"), for: .normal)
+//        btnSelect.titleLabel?.font = UIFont(name: "PT Sans Bold", size: 34)
         return btnSelect
     }()
     
@@ -145,12 +145,14 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
     }
     
     @objc private func buttonSelectTapped(_ sender: UIButton) {
-        if sender.currentTitle == "Select" {
-            sender.setTitle("Clear", for: .normal)
+        if sender.currentBackgroundImage == UIImage(named: "buttonSelect") {
+            sender.setImage(UIImage(named: "buttonCancel"), for: .normal)
+            //sender.setTitle("Clear", for: .normal)
             self.collectionView.allowsMultipleSelection = true
             self.buttonTrash.isEnabled = true
         } else {
-            sender.setTitle("Select", for: .normal)
+            //sender.setTitle("Select", for: .normal)
+            sender.setImage(UIImage(named: "buttonSelect"), for: .normal)
             self.collectionView.allowsMultipleSelection = false
             storiesObjectIDs = []
             self.buttonTrash.isEnabled = false
