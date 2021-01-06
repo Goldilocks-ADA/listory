@@ -42,10 +42,10 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
     let buttonTrash: UIButton = {
         let btnTrash = UIButton()
         var image = UIImage(systemName: "trash")
-        image?.withTintColor(UIColor(named: "grey")!)
+        
+        image = image?.withTintColor(UIColor(named: "grey3")!)
         image = image?.resizeImage(targetSize: CGSize(width: 45, height: 45))
         btnTrash.setImage(image, for: .normal)
-        btnTrash.isHidden = true
         return btnTrash
     }()
     
@@ -148,32 +148,39 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
         if sender.currentTitle == "Select" {
             sender.setTitle("Clear", for: .normal)
             self.collectionView.allowsMultipleSelection = true
+            self.buttonTrash.isEnabled = true
         } else {
             sender.setTitle("Select", for: .normal)
             self.collectionView.allowsMultipleSelection = false
             storiesObjectIDs = []
-
+            self.buttonTrash.isEnabled = false
         }
         guard let selectedItems = self.collectionView.indexPathsForSelectedItems else { return }
         for indexPath in selectedItems {
             self.collectionView.deselectItem(at: indexPath, animated: true)
         }
-        self.buttonTrash.isHidden = true
+
+        var image = self.buttonTrash.currentImage
+        image = image?.withTintColor(UIColor(named: "grey3")!)
+        self.buttonTrash.setImage(image, for: .normal)
     }
     
     @objc private func buttonTrashTapped(_ sender: UIButton) {
-        let many = storiesObjectIDs.count > 1 ? "s" : ""
-        let actionSheet = UIAlertController(title: "", message: "Are you sure want to delete this audio album photo\(many)?", preferredStyle: .alert)
- 
-        actionSheet.addAction(UIAlertAction(title: "Delete File\(many)", style: .destructive, handler: { _ in
-            DataBaseHelper.shareInstance.deleteStories(objectIDs: self.storiesObjectIDs)
-            self.loadStories()
-            self.collectionView.reloadData()
-        } ))
-        
-        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        
-        self.present(actionSheet, animated: true, completion: nil)
+        if storiesObjectIDs.count > 0 {
+            let many = storiesObjectIDs.count > 1 ? "s" : ""
+            let actionSheet = UIAlertController(title: "", message: "Are you sure want to delete this audio album photo\(many)?", preferredStyle: .alert)
+     
+            actionSheet.addAction(UIAlertAction(title: "Delete File\(many)", style: .destructive, handler: { _ in
+                DataBaseHelper.shareInstance.deleteStories(objectIDs: self.storiesObjectIDs)
+                self.loadStories()
+                self.collectionView.reloadData()
+                self.buttonSelectTapped(self.buttonSelect)
+            } ))
+            
+            actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            
+            self.present(actionSheet, animated: true, completion: nil)
+        }
     }
     
     func addStory(story: Story) {
@@ -208,10 +215,13 @@ extension AudioViewController: UICollectionViewDelegateFlowLayout, UICollectionV
         
         if self.collectionView.allowsMultipleSelection {
             guard let selectedItems = self.collectionView.indexPathsForSelectedItems else { return }
-            self.buttonTrash.isHidden = Bool(selectedItems.count == 0)
             
             let story = stories[indexPath.row]
             storiesObjectIDs.append(story.objectID)
+            
+            var image = self.buttonTrash.currentImage
+            image = image?.withTintColor(UIColor(named: "greenDark")!)
+            self.buttonTrash.setImage(image, for: .normal)
             
         } else {
             self.navigationController?.pushViewController(vc, animated: true)
@@ -222,7 +232,12 @@ extension AudioViewController: UICollectionViewDelegateFlowLayout, UICollectionV
         let cell = collectionView.cellForItem(at: indexPath) as! CustomCell
         guard let selectedItems = self.collectionView.indexPathsForSelectedItems else { return }
         
-        self.buttonTrash.isHidden = Bool(selectedItems.count == 0)
+        if (selectedItems.count == 0){
+            var image = self.buttonTrash.currentImage
+            image = image?.withTintColor(UIColor(named: "grey3")!)
+            self.buttonTrash.setImage(image, for: .normal)
+        }
+        
         let story = stories[indexPath.row]
         
         storiesObjectIDs.removeAll(where: { story.objectID ==  $0 })
@@ -241,7 +256,6 @@ extension AudioViewController: UICollectionViewDelegateFlowLayout, UICollectionV
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CustomCell
         cell.backGround.image = UIImage(data: stories[indexPath.row].image!) // Need to repair
         
-//        cell.backgroundColor = .white
         cell.backgroundColor = UIColor(named: "white")
         
         cell.nameImage.text = stories[indexPath.row].name!
@@ -358,4 +372,3 @@ extension AudioViewController: ListoryAlbumControllerDelegate {
         
     }
 }
-
