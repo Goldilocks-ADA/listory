@@ -294,7 +294,7 @@ private class CustomCell: UICollectionViewCell {
         contentView.addSubview(backGround)
         contentView.addSubview(nameImage)
         contentView.addSubview(lenghtDuration)
-        contentView.addSubview(iconSpeaker)
+        contentView.addSubview(iconSpeaker) 
         
         self.backGround.snp.makeConstraints { (make) in
             make.top.equalTo(self.contentView.safeAreaLayoutGuide)
