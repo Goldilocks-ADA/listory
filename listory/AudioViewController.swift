@@ -32,10 +32,13 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
 
     let buttonSelect: UIButton = {
         let btnSelect = UIButton()
-        btnSelect.setImage(UIImage(named: "buttonSelect"), for: .normal)
-//        btnSelect.setTitle("Select", for: .normal)
-//        btnSelect.setTitleColor(UIColor(named: "grey"), for: .normal)
-//        btnSelect.titleLabel?.font = UIFont(name: "PT Sans Bold", size: 34)
+        btnSelect.setTitle("Select", for: .normal)
+        btnSelect.setTitleColor(UIColor(named: "white2"), for: .normal)
+        btnSelect.titleLabel?.font = UIFont(name: "PT Sans Bold", size: 34)
+        btnSelect.backgroundColor = UIColor(named: "grey4")
+        btnSelect.layer.cornerRadius = 22
+        btnSelect.clipsToBounds = true
+        btnSelect.contentEdgeInsets = UIEdgeInsets(top: 5,left: 20,bottom: 5,right: 20)
         return btnSelect
     }()
     
@@ -84,6 +87,10 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
         self.view.addSubview(buttonTrash)
         navigationController?.navigationBar.transparentNavigationBar()
         navigationController?.navigationBar.isHidden = true
+        
+        //self.buttonSelect.btnSelect.layer.cornerRadius = btnSelect.frame.size.height/2
+       // self.buttonSelect.layer.cornerRadius = self.buttonSelect.frame.size.height/2
+       // print("corner radius \(self.buttonSelect.frame.size.height/2)")
         
 //        setupTabBar()
         loadStories()
@@ -146,13 +153,11 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
     
     @objc private func buttonSelectTapped(_ sender: UIButton) {
         if sender.currentBackgroundImage == UIImage(named: "buttonSelect") {
-            sender.setImage(UIImage(named: "buttonCancel"), for: .normal)
-            //sender.setTitle("Clear", for: .normal)
+            sender.setTitle("Clear", for: .normal)
             self.collectionView.allowsMultipleSelection = true
             self.buttonTrash.isEnabled = true
         } else {
-            //sender.setTitle("Select", for: .normal)
-            sender.setImage(UIImage(named: "buttonSelect"), for: .normal)
+            sender.setTitle("Select", for: .normal)
             self.collectionView.allowsMultipleSelection = false
             storiesObjectIDs = []
             self.buttonTrash.isEnabled = false
