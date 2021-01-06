@@ -17,13 +17,7 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
         bgAlbum.image = UIImage(named: "albumBG")
         return bgAlbum
     }()
-    
-//    let albumControll: UIImageView = {
-//        let bgAlbum1 = UIImageView ()
-//        bgAlbum1.image = UIImage(named: "albumBG")
-//        return bgAlbum1
-//    }()
-    
+      
     let imageLine1: UIImageView = {
        let line1 = UIImageView()
         line1.image = UIImage (named: "line1")
@@ -35,12 +29,7 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
         line2.image = UIImage (named: "line2")
         return line2
     }()
-    
-//    let buttonAdd: UIButton = {
-//       let btnAdd = UIButton()
-//        btnAdd.setImage(UIImage(named: "btnAdd"), for: .normal)
-//        return btnAdd
-//    }()
+
     let buttonSelect: UIButton = {
         let btnSelect = UIButton()
         btnSelect.setTitle("Select", for: .normal)
@@ -215,7 +204,6 @@ extension AudioViewController: UICollectionViewDelegateFlowLayout, UICollectionV
             
             let story = stories[indexPath.row]
             storiesObjectIDs.append(story.objectID)
-//            DataBaseHelper.shareInstance.deleteStory(objectID: story.objectID)
             
         } else {
             self.navigationController?.pushViewController(vc, animated: true)
@@ -225,9 +213,10 @@ extension AudioViewController: UICollectionViewDelegateFlowLayout, UICollectionV
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! CustomCell
         guard let selectedItems = self.collectionView.indexPathsForSelectedItems else { return }
+        
         self.buttonTrash.isHidden = Bool(selectedItems.count == 0)
         let story = stories[indexPath.row]
-//        storiesObjectIDs.append(story.objectID)
+        
         storiesObjectIDs.removeAll(where: { story.objectID ==  $0 })
         print(storiesObjectIDs.count)
     }
@@ -335,13 +324,6 @@ extension AudioViewController: EditAlbumControllerDelegate {
     }
 }
 
-//extension UINavigationBar {
-//    func transparentNavigationBar() {
-//        self.setBackgroundImage(UIImage(), for: .default)
-//        self.shadowImage = UIImage()
-//        self.isTranslucent = true
-//    }
-//}
 
 extension AudioViewController: ListoryAlbumControllerDelegate {
     func setupTabBar(){
