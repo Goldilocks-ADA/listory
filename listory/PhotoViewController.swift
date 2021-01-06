@@ -217,7 +217,7 @@ extension PhotoViewController: UICollectionViewDelegateFlowLayout, UICollectionV
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CustomCell
         cell.backGround.image = UIImage(data: photos[indexPath.row].image!) // Need to repair
-        cell.backgroundColor = .white
+        cell.backgroundColor = UIColor(named: "white")
         cell.nameImage.text = photos[indexPath.row].name!
         return cell
     }
@@ -233,7 +233,7 @@ private class CustomCell: UICollectionViewCell {
     
     fileprivate let backGround: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "beauty1")
+//        imageView.image = UIImage(named: "albumBG")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -262,8 +262,8 @@ private class CustomCell: UICollectionViewCell {
         }
         
         self.nameImage.snp.makeConstraints { (make) in
-            make.top.equalTo(self.backGround.snp.bottom).offset(10)
-            make.left.equalTo(self.backGround.snp.left).offset(5)
+            make.top.equalTo(self.backGround.snp.bottom).offset(5)
+            make.left.equalTo(self.backGround.snp.left).offset(18)
         }
     }
     

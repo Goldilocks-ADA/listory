@@ -232,9 +232,12 @@ extension AudioViewController: UICollectionViewDelegateFlowLayout, UICollectionV
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CustomCell
         cell.backGround.image = UIImage(data: stories[indexPath.row].image!) // Need to repair
-        cell.backgroundColor = .white
+        
+//        cell.backgroundColor = .white
+        cell.backgroundColor = UIColor(named: "white")
+        
         cell.nameImage.text = stories[indexPath.row].name!
-        cell.lenghtDuration.text = formatTime(timeInterval: stories[indexPath.row].audioDuration)
+        cell.lenghtDuration.text = "\(formatTime(timeInterval: stories[indexPath.row].audioDuration)) sec"
         return cell
     }
 }
@@ -250,7 +253,7 @@ private class CustomCell: UICollectionViewCell {
     
     fileprivate let backGround: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "beauty1")
+        imageView.image = UIImage(named: "albumBG")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -271,9 +274,19 @@ private class CustomCell: UICollectionViewCell {
         let lenght = UILabel()
         lenght.text = ""
         lenght.textAlignment = .center
-        lenght.textColor = .black
+        lenght.textColor = UIColor(named: "grey2")
         lenght.font = UIFont(name: "PT Sans Regular", size: 20)
         return lenght
+    }()
+    
+    fileprivate let iconSpeaker: UIImageView = {
+        var image = UIImage(systemName: "speaker.3.fill")
+        let imageView = UIImageView()
+        
+        image?.withTintColor(.black)
+        image = image?.resizeImage(targetSize: CGSize(width: 60, height: 60))
+        imageView.image = image
+        return imageView
     }()
     
     override init(frame: CGRect){
@@ -281,6 +294,8 @@ private class CustomCell: UICollectionViewCell {
         contentView.addSubview(backGround)
         contentView.addSubview(nameImage)
         contentView.addSubview(lenghtDuration)
+        contentView.addSubview(iconSpeaker)
+        
         self.backGround.snp.makeConstraints { (make) in
             make.top.equalTo(self.contentView.safeAreaLayoutGuide)
             make.left.equalTo(self.contentView.safeAreaLayoutGuide)
@@ -289,13 +304,18 @@ private class CustomCell: UICollectionViewCell {
         }
         
         self.nameImage.snp.makeConstraints { (make) in
-            make.top.equalTo(self.backGround.snp.bottom).offset(10)
-            make.left.equalTo(self.backGround.snp.left).offset(5)
+            make.top.equalTo(self.backGround.snp.bottom).offset(5)
+            make.left.equalTo(self.backGround.snp.left).offset(18)
         }
         
         self.lenghtDuration.snp.makeConstraints { (make) in
-            make.top.equalTo(self.nameImage.snp.top).offset(25)
-            make.left.equalTo(self.backGround.snp.left).offset(5)
+            make.top.equalTo(self.nameImage.snp.bottom)
+            make.left.equalTo(self.nameImage.snp.left)
+        }
+        
+        self.iconSpeaker.snp.makeConstraints{ make in
+            make.top.equalTo(self.nameImage.snp.top)
+            make.right.equalTo(self.backGround.snp.right).offset(-10)
         }
         
         self.selectedBackgroundView = {
