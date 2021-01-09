@@ -59,15 +59,29 @@ class ListoryTabbarController: UIViewController, UIImagePickerControllerDelegate
     func setupTabBar(){
         viewControllers.tabBar.barTintColor = .white
         UITabBar.setTransparentTabBar()
+
+
+        let appereance = UITabBarItem.appearance()
+        
+        let attributes = [NSAttributedString.Key.font:UIFont(name: "Helvetica-bold", size: 20)]
+        
+        appereance.setTitleTextAttributes(attributes as [NSAttributedString.Key: Any] , for: .normal)
+
+
         let photoTabBar = UINavigationController(rootViewController: PhotoViewController())
         photoTabBar.tabBarItem.image = UIImage (named: "photoViewOpacity")
         photoTabBar.tabBarItem.selectedImage = UIImage(named: "photoViewGreen")?.withRenderingMode(.alwaysOriginal)
 //        self.tabBarController?.selectedIndex = 0
-        
+
+
         let audioTabBar = UINavigationController(rootViewController: AudioViewController())
-        audioTabBar.tabBarItem.image = UIImage (named: "audioPhotoViewOpacity")
-        audioTabBar.tabBarItem.selectedImage = UIImage(named: "audioPhotoView")?.withRenderingMode(.alwaysOriginal)
+        let audioTabBarItem = UITabBarItem(title: "Audio Photos", image: UIImage(named: "audioPhoto"), selectedImage: UIImage(named: "audioPhoto"))
+
+        audioTabBar.tabBarItem = audioTabBarItem
+        
 //        self.tabBarController?.selectedIndex = 1
+        viewControllers.tabBar.tintColor = UIColor(named: "greenGray")
+        viewControllers.tabBar.unselectedItemTintColor = UIColor(named: "grey")
         
         viewControllers.setViewControllers([photoTabBar, audioTabBar], animated: false)
         viewControllers.modalPresentationStyle = .fullScreen

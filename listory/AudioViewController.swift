@@ -375,7 +375,5 @@ extension AudioViewController: EditAlbumControllerDelegate {
 
 
 extension AudioViewController: ListoryAlbumControllerDelegate {
-    func setupTabBar(){
-        
-    }
+    func setupTabBar(){}
 }
