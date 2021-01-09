@@ -88,10 +88,6 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
         navigationController?.navigationBar.transparentNavigationBar()
         navigationController?.navigationBar.isHidden = true
         
-        //self.buttonSelect.btnSelect.layer.cornerRadius = btnSelect.frame.size.height/2
-       // self.buttonSelect.layer.cornerRadius = self.buttonSelect.frame.size.height/2
-       // print("corner radius \(self.buttonSelect.frame.size.height/2)")
-        
 //        setupTabBar()
         loadStories()
         collectionView.delegate = self
@@ -152,8 +148,8 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
     }
     
     @objc private func buttonSelectTapped(_ sender: UIButton) {
-        if sender.currentBackgroundImage == UIImage(named: "buttonSelect") {
-            sender.setTitle("Clear", for: .normal)
+        if sender.currentTitle == "Select" {
+            sender.setTitle("Cancel", for: .normal)
             self.collectionView.allowsMultipleSelection = true
             self.buttonTrash.isEnabled = true
         } else {
