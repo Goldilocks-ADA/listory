@@ -69,8 +69,8 @@ class ListoryTabbarController: UIViewController, UIImagePickerControllerDelegate
 
 
         let photoTabBar = UINavigationController(rootViewController: PhotoViewController())
-        photoTabBar.tabBarItem.image = UIImage (named: "photoViewOpacity")
-        photoTabBar.tabBarItem.selectedImage = UIImage(named: "photoViewGreen")?.withRenderingMode(.alwaysOriginal)
+        let photoTabBarItem = UITabBarItem(title: "Photo", image: UIImage(named: "photo"), selectedImage: UIImage (named: "photo"))
+        photoTabBar.tabBarItem = photoTabBarItem
 //        self.tabBarController?.selectedIndex = 0
 
 
