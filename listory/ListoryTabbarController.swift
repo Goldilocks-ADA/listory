@@ -60,26 +60,28 @@ class ListoryTabbarController: UIViewController, UIImagePickerControllerDelegate
         viewControllers.tabBar.barTintColor = .white
         UITabBar.setTransparentTabBar()
 
-
         let appereance = UITabBarItem.appearance()
-        
         let attributes = [NSAttributedString.Key.font:UIFont(name: "Helvetica-bold", size: 20)]
+        let cGSize = CGSize(width: 62, height: 62)
         
         appereance.setTitleTextAttributes(attributes as [NSAttributedString.Key: Any] , for: .normal)
 
-
         let photoTabBar = UINavigationController(rootViewController: PhotoViewController())
-        let photoTabBarItem = UITabBarItem(title: "Photo", image: UIImage(named: "photo"), selectedImage: UIImage (named: "photo"))
+        var photos = UIImage(systemName: "photo.on.rectangle.fill")
+        
+        photos = photos?.resizeImage(targetSize: cGSize)
+        let photoTabBarItem = UITabBarItem(title: "Photo", image: photos, selectedImage: photos)
         photoTabBar.tabBarItem = photoTabBarItem
-//        self.tabBarController?.selectedIndex = 0
 
-
+        
         let audioTabBar = UINavigationController(rootViewController: AudioViewController())
-        let audioTabBarItem = UITabBarItem(title: "Audio Photos", image: UIImage(named: "audioPhoto"), selectedImage: UIImage(named: "audioPhoto"))
-
+        var photoAudio = UIImage(named: "audioPhoto")
+        
+        photoAudio = photoAudio?.resizeImage(targetSize: cGSize)
+        let audioTabBarItem = UITabBarItem(title: "Audio Photos", image: photoAudio, selectedImage: photoAudio)
+        
         audioTabBar.tabBarItem = audioTabBarItem
         
-//        self.tabBarController?.selectedIndex = 1
         viewControllers.tabBar.tintColor = UIColor(named: "greenGray")
         viewControllers.tabBar.unselectedItemTintColor = UIColor(named: "grey")
         

@@ -278,7 +278,6 @@ extension PhotoViewController: EditAlbumControllerDelegate {
         let vc = navVC.topViewController as! AudioViewController
         vc.addStory(story: story)
         tabBarController?.selectedIndex = 1
-        
     }
 }
 
@@ -292,6 +291,5 @@ extension UINavigationBar {
 
 extension PhotoViewController: ListoryAlbumControllerDelegate {
     func setupTabBar(){
-        
     }
 }
