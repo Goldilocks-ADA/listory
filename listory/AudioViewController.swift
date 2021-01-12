@@ -34,7 +34,7 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
         let btnSelect = UIButton()
         btnSelect.setTitle("Select", for: .normal)
         btnSelect.setTitleColor(UIColor(named: "white2"), for: .normal)
-        btnSelect.titleLabel?.font = UIFont(name: "PT Sans Bold", size: 34)
+        btnSelect.titleLabel?.font = UIFont(name: "PT Sans Bold", size: 27)
         btnSelect.backgroundColor = UIColor(named: "grey4")
         btnSelect.layer.cornerRadius = 22
         btnSelect.clipsToBounds = true
