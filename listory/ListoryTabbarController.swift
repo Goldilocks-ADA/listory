@@ -78,6 +78,7 @@ class ListoryTabbarController: UIViewController, UIImagePickerControllerDelegate
         var photoAudio = UIImage(named: "audioPhoto")
         
         photoAudio = photoAudio?.resizeImage(targetSize: cGSize)
+        
         let audioTabBarItem = UITabBarItem(title: "Audio Photos", image: photoAudio, selectedImage: photoAudio)
         
         audioTabBar.tabBarItem = audioTabBarItem
