@@ -35,3 +35,5 @@ extension UIImage {
         return newImage!
     }
 }
+
+var isIOS = UIDevice.current.userInterfaceIdiom == .phone
