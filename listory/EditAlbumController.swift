@@ -161,7 +161,6 @@ class EditAlbumController: UIViewController, PKCanvasViewDelegate, PKToolPickerO
         let  backAlert = UIAlertController(title: "Would like you cancel the process?", message: "", preferredStyle: .alert)
         
         backAlert.addAction(UIAlertAction(title: "Yes", style: .cancel, handler: { action in
-        print("Back to Photo Controller")
         self.navigationController?.popViewController(animated: true)
         }))
         

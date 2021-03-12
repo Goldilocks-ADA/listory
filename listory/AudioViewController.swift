@@ -34,7 +34,7 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
         let btnSelect = UIButton()
         btnSelect.setTitle("Select", for: .normal)
         btnSelect.setTitleColor(UIColor(named: "white2"), for: .normal)
-        btnSelect.titleLabel?.font = UIFont(name: "PT Sans Bold", size: 34)
+        btnSelect.titleLabel?.font = UIFont(name: "PT Sans Bold", size: 27)
         btnSelect.backgroundColor = UIColor(named: "grey4")
         btnSelect.layer.cornerRadius = 22
         btnSelect.clipsToBounds = true
@@ -78,6 +78,7 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("AudioViewController");
         self.view.addSubview(backgroundAlbumView)
         self.view.addSubview(titleBar)
         self.view.addSubview(collectionView)
@@ -87,10 +88,6 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
         self.view.addSubview(buttonTrash)
         navigationController?.navigationBar.transparentNavigationBar()
         navigationController?.navigationBar.isHidden = true
-        
-        //self.buttonSelect.btnSelect.layer.cornerRadius = btnSelect.frame.size.height/2
-       // self.buttonSelect.layer.cornerRadius = self.buttonSelect.frame.size.height/2
-       // print("corner radius \(self.buttonSelect.frame.size.height/2)")
         
 //        setupTabBar()
         loadStories()
@@ -152,8 +149,8 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
     }
     
     @objc private func buttonSelectTapped(_ sender: UIButton) {
-        if sender.currentBackgroundImage == UIImage(named: "buttonSelect") {
-            sender.setTitle("Clear", for: .normal)
+        if sender.currentTitle == "Select" {
+            sender.setTitle("Cancel", for: .normal)
             self.collectionView.allowsMultipleSelection = true
             self.buttonTrash.isEnabled = true
         } else {
@@ -375,7 +372,5 @@ extension AudioViewController: EditAlbumControllerDelegate {
 
 
 extension AudioViewController: ListoryAlbumControllerDelegate {
-    func setupTabBar(){
-        
-    }
+    func setupTabBar(){}
 }

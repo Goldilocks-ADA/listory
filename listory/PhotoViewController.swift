@@ -18,11 +18,12 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
         return bgAlbum
     }()
     
-    let albumControll: UIImageView = {
-        let bgAlbum1 = UIImageView ()
-        bgAlbum1.image = UIImage(named: "albumBG")
-        return bgAlbum1
-    }()
+    // below this variable is unused, will be removed
+//    let albumControll: UIImageView = {
+//        let bgAlbum1 = UIImageView ()
+//        bgAlbum1.image = UIImage(named: "albumBG")
+//        return bgAlbum1
+//    }()
     
     let imageLine1: UIImageView = {
        let line1 = UIImageView()
@@ -38,13 +39,20 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
     
     let buttonAdd: UIButton = {
        let btnAdd = UIButton()
-        btnAdd.setImage(UIImage(named: "btnAdd"), for: .normal)
+        var image = UIImage(named: "btnAdd")
+        
+        if isIOS {
+            image = image?.resizeImage(targetSize: CGSize(width: 30, height: 30))
+        }
+        btnAdd.setImage(image, for: .normal)
         return btnAdd
     }()
     
     let titleBar: UILabel = {
         let titleLabel = UILabel()
-        titleLabel.font = UIFont(name: "PT Sans Bold", size: 50)
+        
+        titleLabel.font = UIFont(name: "PT Sans Bold", size: isIOS ? titleLabel.font.pointSize * 2 : 50)
+        
         titleLabel.text = "Listory Album Photo"
         titleLabel.textColor = .darkGray
         titleLabel.textAlignment = .center
@@ -53,7 +61,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
     
     fileprivate let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
+        layout.scrollDirection = isIOS ? .horizontal : .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(CustomCell.self, forCellWithReuseIdentifier: "cell")
@@ -84,7 +92,11 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
         // Constraint
         self.buttonAdd.snp.makeConstraints { (make) in
             make.top.equalTo(self.view).offset(30)
-            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-140)
+            if isIOS {
+                make.right.equalTo(self.view.safeAreaLayoutGuide)
+            }else {
+                make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-140)
+            }
         }
         
         self.collectionView.snp.makeConstraints { (make) in
@@ -102,23 +114,36 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
         
         self.titleBar.snp.makeConstraints { (make) in
             make.top.equalTo(self.view).offset(30)
-            make.left.equalTo(self.view)
-            make.right.equalTo(self.view)
+            if isIOS {
+                make.left.equalTo(self.view.safeAreaLayoutGuide)
+            } else {
+                make.left.equalTo(self.view)
+                make.right.equalTo(self.view)
+            }
         }
         
         self.imageLine1.snp.makeConstraints { (make) in
-            make.top.equalTo(self.titleBar.snp.bottom).offset(10)
-            make.left.equalTo(self.view.safeAreaLayoutGuide).offset(100)
-            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-100)
+            if isIOS {
+                make.top.equalTo(self.titleBar.snp.bottom)
+            }else {
+                make.top.equalTo(self.titleBar.snp.bottom).offset(10)
+                make.left.equalTo(self.view.safeAreaLayoutGuide).offset(100)
+                make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-100)
+            }
         }
         
         self.imageLine2.snp.makeConstraints { (make) in
-            make.left.equalTo(self.view.safeAreaLayoutGuide).offset(100)
-            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-100)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+            if isIOS {
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide)
+            }else {
+                make.left.equalTo(self.view.safeAreaLayoutGuide).offset(100)
+                make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-100)
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+            }
         }
         
         self.buttonAdd.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+        print("PhotoViewController")
     }
     
     @objc private func backButton(){
@@ -132,7 +157,6 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
     }
     
     @objc private func didTapButton(_ sender: Any){
-        print("test")
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         
@@ -278,7 +302,6 @@ extension PhotoViewController: EditAlbumControllerDelegate {
         let vc = navVC.topViewController as! AudioViewController
         vc.addStory(story: story)
         tabBarController?.selectedIndex = 1
-        
     }
 }
 
@@ -292,6 +315,5 @@ extension UINavigationBar {
 
 extension PhotoViewController: ListoryAlbumControllerDelegate {
     func setupTabBar(){
-        
     }
 }

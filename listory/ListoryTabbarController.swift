@@ -28,14 +28,15 @@ class ListoryTabbarController: UIViewController, UIImagePickerControllerDelegate
         return bgAlbum
     }()
     
-    let titleBar: UILabel = {
-        let titleLabel = UILabel()
-        titleLabel.font = UIFont(name: "PT Sans Bold", size: 50)
-        titleLabel.text = "Listory Album Photo"
-        titleLabel.textColor = .darkGray
-        titleLabel.textAlignment = .center
-        return titleLabel
-    }()
+    // this titleBar variable is unused, can be remove
+//    let titleBar: UILabel = {
+//        let titleLabel = UILabel()
+//        titleLabel.font = UIFont(name: "PT Sans Bold", size: 50)
+//        titleLabel.text = "Listory Album Photo"
+//        titleLabel.textColor = .darkGray
+//        titleLabel.textAlignment = .center
+//        return titleLabel
+//    }()
     
     var stories = [Story]()
     let viewControllers = UITabBarController()
@@ -48,6 +49,7 @@ class ListoryTabbarController: UIViewController, UIImagePickerControllerDelegate
         navigationController?.navigationBar.isHidden = true
         setupTabBar()
         loadStories()
+        print("ListoryTabbarController")
     }
     
     func loadStories() {
@@ -59,15 +61,30 @@ class ListoryTabbarController: UIViewController, UIImagePickerControllerDelegate
     func setupTabBar(){
         viewControllers.tabBar.barTintColor = .white
         UITabBar.setTransparentTabBar()
+
+        let appereance = UITabBarItem.appearance()
+        let attributes = [NSAttributedString.Key.font:UIFont(name: "Helvetica-bold", size: 20)]
+        let cGSize = CGSize(width: 62, height: 62)
+        
+        appereance.setTitleTextAttributes(attributes as [NSAttributedString.Key: Any] , for: .normal)
+
         let photoTabBar = UINavigationController(rootViewController: PhotoViewController())
-        photoTabBar.tabBarItem.image = UIImage (named: "photoViewOpacity")
-        photoTabBar.tabBarItem.selectedImage = UIImage(named: "photoViewGreen")?.withRenderingMode(.alwaysOriginal)
-//        self.tabBarController?.selectedIndex = 0
+        var photos = UIImage(systemName: "photo.on.rectangle.fill")
+        
+        photos = photos?.resizeImage(targetSize: cGSize)
+        let photoTabBarItem = UITabBarItem(title: "Photo", image: photos, selectedImage: photos)
+        photoTabBar.tabBarItem = photoTabBarItem
+
         
         let audioTabBar = UINavigationController(rootViewController: AudioViewController())
-        audioTabBar.tabBarItem.image = UIImage (named: "audioPhotoViewOpacity")
-        audioTabBar.tabBarItem.selectedImage = UIImage(named: "audioPhotoView")?.withRenderingMode(.alwaysOriginal)
-//        self.tabBarController?.selectedIndex = 1
+        var photoAudio = UIImage(named: "audioPhoto")
+        
+        photoAudio = photoAudio?.resizeImage(targetSize: cGSize)
+        let audioTabBarItem = UITabBarItem(title: "Audio Photos", image: photoAudio, selectedImage: photoAudio)
+        audioTabBar.tabBarItem = audioTabBarItem
+        
+        viewControllers.tabBar.tintColor = UIColor(named: "greenGray")
+        viewControllers.tabBar.unselectedItemTintColor = UIColor(named: "grey")
         
         viewControllers.setViewControllers([photoTabBar, audioTabBar], animated: false)
         viewControllers.modalPresentationStyle = .fullScreen
