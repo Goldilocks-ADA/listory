@@ -56,7 +56,7 @@ class HomeController: UIViewController, UIScrollViewDelegate {
         return button
     }()
     
-    let onboardingImages = ["onboarding1", "onboarding2", "onboarding_3"]
+    let onboardingImages = ["onboarding1", "onboarding2", "onboarding_3"] //Change image on boarding
     let onboardingTexts = ["Choose your memorable photo from your library or taking picture from your family albums", "Tell your story about the photo in recording audio mode", "Save your memorable stories with a unique name so they can be replayed in the future"]
     
     
