@@ -54,7 +54,9 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
     
     let titleBar: UILabel = {
         let titleLabel = UILabel()
-        titleLabel.font = UIFont(name: "PT Sans Bold", size: 50)
+        
+        titleLabel.font = UIFont(name: "PT Sans Bold", size: isIOS ? titleLabel.font.pointSize * 2 : 50)
+        
         titleLabel.text = "Audio Album Photo"
         titleLabel.textColor = .darkGray
         titleLabel.textAlignment = .center
@@ -127,15 +129,23 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
         }
         
         self.imageLine1.snp.makeConstraints { (make) in
-            make.top.equalTo(self.titleBar.snp.bottom).offset(10)
-            make.left.equalTo(self.view.safeAreaLayoutGuide).offset(100)
-            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-100)
+            if isIOS {
+                make.top.equalTo(self.titleBar.snp.bottom)
+            }else {
+                make.top.equalTo(self.titleBar.snp.bottom).offset(10)
+                make.left.equalTo(self.view.safeAreaLayoutGuide).offset(100)
+                make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-100)
+            }
         }
         
         self.imageLine2.snp.makeConstraints { (make) in
-            make.left.equalTo(self.view.safeAreaLayoutGuide).offset(100)
-            make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-100)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+            if isIOS {
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide)
+            }else {
+                make.left.equalTo(self.view.safeAreaLayoutGuide).offset(100)
+                make.right.equalTo(self.view.safeAreaLayoutGuide).offset(-100)
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+            }
         }
         
         self.buttonSelect.addTarget(self, action: #selector(buttonSelectTapped), for: .touchUpInside)
