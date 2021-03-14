@@ -32,6 +32,18 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
 
     let buttonSelect: UIButton = {
         let btnSelect = UIButton()
+        var image = UIImage(named: "btnSelect")
+        
+        if isIOS {
+           // image = image?.resizeImage(targetSize: CGSize(width: 30, height: 30))
+            btnSelect.setTitle("Select", for: .normal)
+            btnSelect.setTitleColor(UIColor(named: "white2"), for: .normal)
+            btnSelect.titleLabel?.font = UIFont(name: "PT Sans Bold", size: 27)
+            btnSelect.backgroundColor = UIColor(named: "grey4")
+            btnSelect.layer.cornerRadius = 22
+            btnSelect.clipsToBounds = true
+            btnSelect.contentEdgeInsets = UIEdgeInsets(top: 5,left: 20,bottom: 5,right: 20)
+        } else {
         btnSelect.setTitle("Select", for: .normal)
         btnSelect.setTitleColor(UIColor(named: "white2"), for: .normal)
         btnSelect.titleLabel?.font = UIFont(name: "PT Sans Bold", size: 27)
@@ -39,15 +51,20 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
         btnSelect.layer.cornerRadius = 22
         btnSelect.clipsToBounds = true
         btnSelect.contentEdgeInsets = UIEdgeInsets(top: 5,left: 20,bottom: 5,right: 20)
+        }
         return btnSelect
     }()
     
     let buttonTrash: UIButton = {
         let btnTrash = UIButton()
         var image = UIImage(systemName: "trash")
-        
+        if isIOS {
+            image = image?.resizeImage(targetSize: CGSize(width: 30, height: 30))
+        } else {
+            image = image?.resizeImage(targetSize: CGSize(width: 45, height: 45))
+        }
         image = image?.withTintColor(UIColor(named: "grey3")!)
-        image = image?.resizeImage(targetSize: CGSize(width: 45, height: 45))
+        
         btnTrash.setImage(image, for: .normal)
         return btnTrash
     }()
@@ -98,14 +115,25 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
         collectionView.backgroundColor = .clear
         
         // Constraint
+        
         self.buttonSelect.snp.makeConstraints{ constraintMaker in
+            if isIOS {
+                constraintMaker.top.equalTo(self.view).offset(25)
+                constraintMaker.right.equalTo(self.view.safeAreaLayoutGuide).offset(-40)
+            } else {
             constraintMaker.top.equalTo(self.view).offset(35)
             constraintMaker.right.equalTo(self.view.safeAreaLayoutGuide).offset(-150)
+            }
         }
         
-        self.buttonTrash.snp.makeConstraints{ constraintMaker in
-            constraintMaker.top.equalTo(self.view).offset(35)
-            constraintMaker.right.equalTo(self.view.safeAreaLayoutGuide).offset(-90)
+        self.buttonTrash.snp.makeConstraints { (constraintMaker) in
+            constraintMaker.top.equalTo(self.view).offset(30)
+            if isIOS {
+                constraintMaker.right.equalTo(self.view.safeAreaLayoutGuide)
+            }else {
+                constraintMaker.top.equalTo(self.view).offset(35)
+                constraintMaker.right.equalTo(self.view.safeAreaLayoutGuide).offset(-90)
+            }
         }
         
         //Collection view cell
