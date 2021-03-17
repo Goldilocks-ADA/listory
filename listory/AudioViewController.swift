@@ -152,8 +152,12 @@ class AudioViewController: UIViewController, UIImagePickerControllerDelegate & U
         
         self.titleBar.snp.makeConstraints { (make) in
             make.top.equalTo(self.view).offset(30)
-            make.left.equalTo(self.view)
-            make.right.equalTo(self.view)
+            if isIOS {
+                make.left.equalTo(self.view.safeAreaLayoutGuide)
+            } else {
+                make.left.equalTo(self.view)
+                make.right.equalTo(self.view)
+            }
         }
         
         self.imageLine1.snp.makeConstraints { (make) in
