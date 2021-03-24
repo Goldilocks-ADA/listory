@@ -291,6 +291,9 @@ extension AudioViewController: UICollectionViewDelegateFlowLayout, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if isIOS {
+            return CGSize(width: 350, height: 250)
+        }
         return CGSize(width: 350, height: 300)
     }
     
