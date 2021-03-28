@@ -61,7 +61,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate & U
     
     fileprivate let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = isIOS ? .horizontal : .vertical
+        layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(CustomCell.self, forCellWithReuseIdentifier: "cell")
